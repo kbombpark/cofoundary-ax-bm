@@ -643,7 +643,7 @@ a{color:var(--accent)}
     const lines = [];
     if (mods.length) { lines.push("[내용]"); mods.forEach((b) => lines.push("- " + b.value + " " + b.dataset.title)); }
     if (opts.length) {
-      lines.push("[운영 방식]");
+      lines.push("[고른 선택지]");
       const groups = {};
       opts.forEach((b) => (groups[b.dataset.group] ||= []).push(b.dataset.title));
       Object.entries(groups).forEach(([g, v]) => lines.push("- " + g + ": " + v.join(", ")));
