@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>AX 프로그램 BM</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500&family=Plus+Jakarta+Sans:wght@500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+/* Layout: single reading column (max 880px) with wide tables in scroll boxes; Cofoundary Brand System (company-landing): navy #050B16, brand blue #1E70FF, Plus Jakarta Sans + JetBrains Mono, Pretendard for Korean */
+:root{
+  --bg:#F8FAFC; --surface:#FFFFFF; --ink:#050B16; --muted:#4A5768; --line:#E2E8F0;
+  --accent:#1E70FF; --accent-soft:#E8F0FF; --navy:#050B16; --on-navy:#F8FAFC; --on-navy-2:#8E9CAE; --good:#15803D;
+  --glow:rgba(30,112,255,.3);
+  --f-display:"Plus Jakarta Sans","Pretendard Variable",Pretendard,system-ui,sans-serif;
+  --f-body:"Pretendard Variable",Pretendard,"Plus Jakarta Sans",system-ui,-apple-system,"Apple SD Gothic Neo",sans-serif;
+  --f-num:"JetBrains Mono",ui-monospace,"SFMono-Regular",monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#000000; --surface:#050B16; --ink:#FFFFFF; --muted:#8E9CAE; --line:#1A2433;
+  --accent:#4D8DFF; --accent-soft:#0B1A33; --navy:#050B16; --on-navy:#FFFFFF; --on-navy-2:#8E9CAE; --good:#4ADE80; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#000000; --surface:#050B16; --ink:#FFFFFF; --muted:#8E9CAE; --line:#1A2433;
+  --accent:#4D8DFF; --accent-soft:#0B1A33; --navy:#050B16; --on-navy:#FFFFFF; --on-navy-2:#8E9CAE; --good:#4ADE80; color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15.5px;line-height:1.7;letter-spacing:-0.01em;word-break:keep-all;overflow-wrap:break-word;-webkit-font-smoothing:antialiased;padding-inline:20px;padding-block:40px 72px}
+.wrap{max-width:880px;margin:0 auto;display:flex;flex-direction:column;gap:48px}
+header{display:flex;flex-direction:column;gap:12px;background:var(--navy);color:var(--on-navy);border:1px solid var(--line);border-radius:16px;padding:36px 32px;background-image:radial-gradient(60% 90% at 90% 0%,var(--glow),transparent 70%)}
+header .meta{color:var(--on-navy-2)}
+header .eyebrow{color:#4D8DFF}
+.eyebrow{font-family:var(--f-num);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+h1{font-family:var(--f-display);font-weight:800;letter-spacing:-0.02em;font-size:clamp(28px,5vw,40px);line-height:1.25;margin:0;text-wrap:balance}
+h2{font-family:var(--f-display);font-weight:700;font-size:22px;margin:0 0 4px;text-wrap:balance}
+h3{font-family:var(--f-display);font-size:15px;margin:8px 0 0}
+p{margin:0;max-width:68ch}
+.lead{font-size:17px}
+.meta{font-size:13px;color:var(--muted)}
+section{display:flex;flex-direction:column;gap:16px}
+.note{font-size:13px;color:var(--muted)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-top:3px solid var(--accent);border-radius:10px;padding:16px 18px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.kpi b{font-family:var(--f-num);font-size:22px;color:var(--accent);font-weight:500}
+.kpi span{font-size:13px;color:var(--muted)}
+ul,ol{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:6px;max-width:72ch}
+.scroll{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:14px}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:12.5px;color:var(--muted);font-weight:500;background:color-mix(in srgb,var(--bg) 60%,var(--surface))}
+tr:last-child td{border-bottom:0}
+td:first-child{white-space:nowrap}
+td.num{font-family:var(--f-num);font-variant-numeric:tabular-nums;white-space:nowrap}
+.pill{display:inline-block;font-size:12px;padding:1px 9px;border-radius:999px;border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.pill.on{border-color:var(--good);color:var(--good)}
+.pill.new{border-color:var(--accent);color:var(--accent)}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px 20px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.card h3{margin:0;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.card .price{font-family:var(--f-num);color:var(--accent);font-size:14px}
+.card ul{font-size:14px}
+.fig{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px;overflow-x:auto}
+.fig svg{display:block;width:100%;min-width:680px;height:auto}
+.fig figcaption{font-size:12.5px;color:var(--muted);padding:6px 4px 0}
+figure{margin:0}
+.callout{background:var(--navy);color:var(--on-navy);border-radius:10px;padding:18px 20px;display:flex;flex-direction:column;gap:6px}
+.callout b{color:var(--accent)}
+.tasks{list-style:none;padding:0}
+.tasks li{display:flex;gap:10px;align-items:flex-start}
+.tasks li::before{content:"";flex:0 0 16px;height:16px;margin-top:5px;border:1.5px solid var(--muted);border-radius:4px}
+footer{font-size:12.5px;color:var(--muted);border-top:1px solid var(--line);padding-top:20px}
+/* svg tokens */
+.s-ink{fill:var(--ink)} .s-muted{fill:var(--muted)} .s-box{fill:var(--surface);stroke:var(--line)}
+.s-hi{fill:var(--accent-soft);stroke:var(--accent)} .s-line{stroke:var(--muted);fill:none}
+.s-acc{stroke:var(--accent);fill:none} .s-accfill{fill:var(--accent)} .s-mutedfill{fill:var(--muted)}
+@media (max-width:520px){body{padding-inline:16px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="eyebrow">Cofoundary · 팀 논의용 초안 · 2026.11.09</div>
+  <h1>AX 프로그램 BM: 개별 판매 + 연계 혜택</h1>
+  <p class="lead">지난주에는 강의 → 커피챗 → 4주 컨설팅 → 크레딧·Fractional로 올라가는 사다리였습니다. 이번 안은 다섯 상품을 <strong>각각 따로 판매</strong>하고, 앞 상품을 산 고객이 다음 상품을 사면 <strong>혜택</strong>을 주는 구조입니다.</p>
+  <p class="meta">기준: 2026.11.06 사업구조 재설계안 + 2026.10.19 대표 방향(어드바이저리 크레딧 + 멤버십) + 11.09 논의(개별 판매, 다채널 강의, 대표 타겟). 이익률은 이후에 정합니다. 가격은 VAT 별도이고, 강의만 소비자가입니다.</p>
+</header>
+
+<section>
+  <h2>한 장 요약</h2>
+  <div class="kpis">
+    <div class="kpi"><b>5만 원</b><span>온라인 강의 · 완강 시 90% 환급</span></div>
+    <div class="kpi"><b>5만 원</b><span>커피챗 1시간 · 수료자 무료</span></div>
+    <div class="kpi"><b>450만 원</b><span>4주 컨설팅 (반제품) · 회사당</span></div>
+    <div class="kpi"><b>250만 원~</b><span>어드바이저리 크레딧 · 멤버십 포함</span></div>
+    <div class="kpi"><b>협의</b><span>Fractional · 월 단위 계약</span></div>
+  </div>
+  <ul>
+    <li><strong>무엇을:</strong> 고객은 지금 필요한 상품부터 바로 삽니다. 강의를 거치지 않아도 됩니다.</li>
+    <li><strong>왜:</strong> 대표 고객은 소개나 파트너를 통해 4주 컨설팅이나 크레딧으로 바로 들어오는 경우가 많습니다. 사다리를 강제하면 이 고객을 놓칩니다.</li>
+    <li><strong>어떻게 묶나:</strong> 앞 상품의 비용을 차감하거나 크레딧을 얹어 줍니다. 그래서 순서대로 사는 고객이 항상 유리합니다.</li>
+    <li><strong>매출 중심:</strong> 강의와 커피챗은 유입용입니다. 매출은 4주 컨설팅과 크레딧에서 나오고, Fractional은 월 반복 매출입니다.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>지난주 구조와 달라진 점</h2>
+  <div class="scroll"><table>
+    <thead><tr><th>항목</th><th>지난주 (11.06)</th><th>이번 안 (11.09)</th></tr></thead>
+    <tbody>
+      <tr><td>구조</td><td>사다리. 강의 → 커피챗을 거쳐야 다음 상품</td><td>메뉴 + 연계 혜택. 어느 상품이든 바로 구매</td></tr>
+      <tr><td>4주 컨설팅</td><td>커피챗의 과제 정의서를 받고 시작</td><td>바로 산 고객용 <strong>W0 과제 정의 세션</strong>을 포함</td></tr>
+      <tr><td>크레딧</td><td>'컨설팅 바우처'라는 이름으로 뒤 단계에 배치</td><td>대표 안 이름 <strong>'어드바이저리 크레딧'</strong>으로 단독 판매</td></tr>
+      <tr><td>Fractional</td><td>앞 상품 고객에게 제안</td><td>별도 영업(소개·파트너 미팅)으로 단독 판매</td></tr>
+      <tr><td>강의 채널</td><td>인프런 단독</td><td>인프런 + 클래스101 + 자사 사이트 + 유튜브 티저. 수료 인증은 자사 사이트 한 곳</td></tr>
+      <tr><td>타겟</td><td>강의 수강자 (실무자 포함)</td><td>대표 중심. 실무자는 강의로 유입</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section>
+  <h2>전체 흐름</h2>
+  <figure class="fig">
+    <svg viewBox="0 0 760 240" role="img" aria-label="다섯 상품 모두 바로 구매할 수 있고, 강의에서 커피챗, 커피챗에서 4주 컨설팅, 4주 컨설팅에서 크레딧, 크레딧에서 Fractional로 이어 사면 혜택을 받는 구조">
+      <defs>
+        <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="s-mutedfill"/></marker>
+        <marker id="ara" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="s-accfill"/></marker>
+      </defs>
+      <text x="380" y="18" text-anchor="middle" font-size="13" font-weight="700" class="s-ink">고객 · 어느 상품이든 바로 구매</text>
+      <path d="M74 28 V66" class="s-line" stroke-width="1.5" marker-end="url(#ar)"/>
+      <path d="M226 28 V66" class="s-line" stroke-width="1.5" marker-end="url(#ar)"/>
+      <path d="M378 28 V66" class="s-line" stroke-width="1.5" marker-end="url(#ar)"/>
+      <path d="M530 28 V66" class="s-line" stroke-width="1.5" marker-end="url(#ar)"/>
+      <path d="M682 28 V66" class="s-line" stroke-width="1.5" marker-end="url(#ar)"/>
+      <rect x="10" y="70" width="128" height="64" rx="8" class="s-box"/>
+      <text x="74" y="97" text-anchor="middle" font-size="14" font-weight="700" class="s-ink">온라인 강의</text>
+      <text x="74" y="118" text-anchor="middle" font-size="11.5" class="s-muted">5만 원 · 90% 환급</text>
+      <rect x="162" y="70" width="128" height="64" rx="8" class="s-box"/>
+      <text x="226" y="97" text-anchor="middle" font-size="14" font-weight="700" class="s-ink">커피챗 1시간</text>
+      <text x="226" y="118" text-anchor="middle" font-size="11.5" class="s-muted">5만 원</text>
+      <rect x="314" y="70" width="128" height="64" rx="8" class="s-hi"/>
+      <text x="378" y="97" text-anchor="middle" font-size="14" font-weight="700" class="s-ink">4주 컨설팅</text>
+      <text x="378" y="118" text-anchor="middle" font-size="11.5" class="s-muted">450만 원</text>
+      <rect x="466" y="70" width="128" height="64" rx="8" class="s-hi"/>
+      <text x="530" y="97" text-anchor="middle" font-size="13" font-weight="700" class="s-ink">어드바이저리 크레딧</text>
+      <text x="530" y="118" text-anchor="middle" font-size="11.5" class="s-muted">250만 원~</text>
+      <rect x="618" y="70" width="128" height="64" rx="8" class="s-box"/>
+      <text x="682" y="97" text-anchor="middle" font-size="14" font-weight="700" class="s-ink">Fractional</text>
+      <text x="682" y="118" text-anchor="middle" font-size="11.5" class="s-muted">협의 · 월 계약</text>
+      <path d="M74 136 Q150 186 222 138" class="s-acc" stroke-width="2" marker-end="url(#ara)"/>
+      <path d="M226 136 Q302 186 374 138" class="s-acc" stroke-width="2" marker-end="url(#ara)"/>
+      <path d="M378 136 Q454 186 526 138" class="s-acc" stroke-width="2" marker-end="url(#ara)"/>
+      <path d="M530 136 Q606 186 678 138" class="s-acc" stroke-width="2" marker-end="url(#ara)"/>
+      <text x="150" y="196" text-anchor="middle" font-size="11.5" class="s-ink">수료하면 무료</text>
+      <text x="302" y="196" text-anchor="middle" font-size="11.5" class="s-ink">커피챗비 차감</text>
+      <text x="454" y="196" text-anchor="middle" font-size="11.5" class="s-ink">웰컴 2크레딧</text>
+      <text x="606" y="196" text-anchor="middle" font-size="11.5" class="s-ink">잔여 크레딧</text>
+      <text x="606" y="212" text-anchor="middle" font-size="11.5" class="s-ink">계약금 전환</text>
+      <text x="380" y="234" text-anchor="middle" font-size="11" class="s-muted">파란 화살표 = 이어서 사면 받는 혜택</text>
+    </svg>
+  </figure>
+</section>
+
+<section>
+  <h2>상품별 정의</h2>
+  <div class="cards">
+    <div class="card">
+      <h3>① 온라인 강의 <span class="pill">유입</span></h3>
+      <div class="price">5만 원 · 완강 시 90% 환급</div>
+      <ul>
+        <li><strong>내용:</strong> 1기 1~3주차 이론. 문제 정의 → Claude Code 활용 → 과제 정의서.</li>
+        <li><strong>대상:</strong> AI를 처음 써 보려는 대표·실무자.</li>
+        <li><strong>결과물:</strong> 우리 회사 과제 정의서.</li>
+        <li><strong>채널:</strong> 인프런, 클래스101, 자사 사이트, 유튜브 티저.</li>
+        <li><strong>다음 혜택:</strong> 수료 인증하면 커피챗 무료.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>② 커피챗 1시간 <span class="pill">유입 · 진단</span></h3>
+      <div class="price">5만 원 · 강의 수료자 무료</div>
+      <ul>
+        <li><strong>내용:</strong> 1:1로 과제를 정리하고 맞는 다음 상품을 추천합니다.</li>
+        <li><strong>대상:</strong> 무엇부터 할지 정하고 싶은 대표.</li>
+        <li><strong>결과물:</strong> 과제 요약 1장 + 추천 상품.</li>
+        <li><strong>채널:</strong> 자사 사이트, 파트너(디캠프·드림플러스·AC).</li>
+        <li><strong>다음 혜택:</strong> 30일 안에 4주 컨설팅을 계약하면 5만 원 차감. <span class="pill new">신규</span></li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>③ 4주 컨설팅 (반제품) <span class="pill on">핵심 매출</span></h3>
+      <div class="price">450만 원 · 회사당</div>
+      <ul>
+        <li><strong>내용:</strong> 기본 구조를 우리가 먼저 만들고, 4주 동안 함께 완성합니다.</li>
+        <li><strong>단독 구매 시:</strong> W0에 과제 정의 세션(2시간)을 넣어 커피챗을 대신합니다.</li>
+        <li><strong>대상:</strong> 만들 것이 정해졌거나, 빠르게 결과물이 필요한 회사.</li>
+        <li><strong>결과물:</strong> 회사 안에서 돌아가는 버전 + 데모.</li>
+        <li><strong>다음 혜택:</strong> 웰컴 2크레딧 + 3개월 멤버십 체험. 체험 기간 안에 크레딧을 사면 +20%.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>④ 어드바이저리 크레딧 <span class="pill on">핵심 매출</span></h3>
+      <div class="price">10cr 250만 · 30cr 660만 · 100cr 2,000만</div>
+      <ul>
+        <li><strong>내용:</strong> 1크레딧 = 일반 멘토 60분 (시니어 2크레딧). 진단·조언·검토. 구현은 범위 밖입니다.</li>
+        <li><strong>포함:</strong> 기간 동안 멤버십(조찬·커뮤니티). 100cr은 2인 + 분기 AX 점검.</li>
+        <li><strong>대상:</strong> 직접 만들 사람이 있고 방향 검토가 필요한 회사.</li>
+        <li><strong>유효기간:</strong> 6개월 / 1년 / 1년. 남으면 소멸, 3개월 연장 1회.</li>
+        <li><strong>다음 혜택:</strong> 남은 크레딧을 4주 컨설팅·Fractional 계약금으로 전환.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>⑤ Fractional <span class="pill">반복 매출</span></h3>
+      <div class="price">협의 · 월 단위 계약</div>
+      <ul>
+        <li><strong>내용:</strong> 매주 하루 회사에 방문해 AX를 맡습니다.</li>
+        <li><strong>대상:</strong> 회사 안에 AX를 이끌 사람이 없는 중견·성장 기업.</li>
+        <li><strong>결과물:</strong> 월간 AX 로드맵과 실행 관리.</li>
+        <li><strong>채널:</strong> 대표 직접 영업, 투자사·AC 소개.</li>
+        <li><strong>진입 혜택:</strong> 4주 컨설팅·크레딧 고객에게 첫 달 조건 우대(협의).</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>연계 혜택 정리</h2>
+  <p>원칙: 앞 상품에 쓴 돈은 다음 상품에서 돌려받습니다. 할인율 대신 <strong>차감·크레딧·전환</strong>으로 줍니다.</p>
+  <div class="scroll"><table>
+    <thead><tr><th>앞 상품</th><th>다음 상품</th><th>혜택</th><th>조건</th></tr></thead>
+    <tbody>
+      <tr><td>강의 수료</td><td>커피챗</td><td>무료 (5만 원 → 0원)</td><td>자사 사이트에서 수료 인증</td></tr>
+      <tr><td>커피챗 (유료)</td><td>4주 컨설팅</td><td>커피챗비 5만 원 차감</td><td>30일 안에 계약 <span class="pill new">신규</span></td></tr>
+      <tr><td>강의 수료</td><td>4주 컨설팅</td><td>과제 정의서로 W0 단축</td><td>가격은 같음</td></tr>
+      <tr><td>4주 컨설팅</td><td>크레딧</td><td>웰컴 2크레딧 + 구매 시 +20%</td><td>완료 후 3개월 안</td></tr>
+      <tr><td>크레딧 잔여</td><td>4주 컨설팅 · Fractional</td><td>계약금으로 전환</td><td>유효기간 안</td></tr>
+      <tr><td>4주 컨설팅 · 크레딧</td><td>Fractional</td><td>첫 달 조건 우대</td><td>협의</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">웰컴 2크레딧, +20%, 잔여 크레딧 전환은 대표 안(10.19)에 있던 조건입니다. 커피챗비 차감과 Fractional 우대는 이번에 새로 넣은 가안입니다.</p>
+</section>
+
+<section>
+  <h2>고객별 경로 (대표 타겟)</h2>
+  <div class="scroll"><table>
+    <thead><tr><th>고객</th><th>들어오는 곳</th><th>첫 상품</th><th>다음 상품</th></tr></thead>
+    <tbody>
+      <tr><td>A. 탐색형 대표</td><td>강의 플랫폼, 유튜브</td><td>온라인 강의</td><td>커피챗 → 4주 컨설팅</td></tr>
+      <tr><td>B. 고민 중인 대표</td><td>파트너 오피스아워, 조찬</td><td>커피챗</td><td>4주 컨설팅</td></tr>
+      <tr><td>C. 결과가 급한 대표</td><td>AC·투자사 소개</td><td>4주 컨설팅</td><td>크레딧</td></tr>
+      <tr><td>D. 개발팀이 있는 회사</td><td>소개, 멤버십 조찬</td><td>크레딧</td><td>4주 컨설팅 (전환)</td></tr>
+      <tr><td>E. 중견·성장 기업</td><td>대표 직접 영업</td><td>Fractional</td><td>크레딧 (임직원)</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section>
+  <h2>판매 채널</h2>
+  <div class="scroll"><table>
+    <thead><tr><th>채널</th><th>곳</th><th>파는 상품</th></tr></thead>
+    <tbody>
+      <tr><td>강의 플랫폼</td><td>인프런, 클래스101, 자사 사이트, 유튜브</td><td>강의</td></tr>
+      <tr><td>입주·커뮤니티</td><td>디캠프, 드림플러스, 내러티브클럽</td><td>커피챗, 4주 컨설팅</td></tr>
+      <tr><td>AC·투자사 포트폴리오</td><td>퓨처플레이, 스파크랩 등, 기존 투자자</td><td>포트폴리오 패키지 (커피챗 무료 + 4주 컨설팅·크레딧)</td></tr>
+      <tr><td>미디어</td><td>EO, 디스콰이엇</td><td>강의, 세미나 → 커피챗</td></tr>
+      <tr><td>정부 지원</td><td>혁신바우처, AI 바우처, 서울 AI 허브</td><td>4주 컨설팅, 크레딧</td></tr>
+      <tr><td>직접 영업</td><td>대표 네트워크, 월간 조찬</td><td>Fractional, 100cr</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">파트너 소개 수수료율은 정하지 않았습니다. 기관별 실제 조건도 담당자 확인이 필요합니다.</p>
+</section>
+
+<section>
+  <h2>운영에 생기는 변화</h2>
+  <ul>
+    <li><strong>4주 컨설팅 W0:</strong> 바로 산 고객은 과제 정의가 없으므로 2시간 세션이 늘어납니다. 동시 진행 가능 회사 수를 정해야 합니다.</li>
+    <li><strong>수료 인증:</strong> 플랫폼이 여러 개여도 인증과 환급은 자사 사이트 한 곳에서 처리합니다.</li>
+    <li><strong>크레딧 관리:</strong> 회사별 잔여 크레딧, 유효기간, 전환 내역을 Lark Base 한 테이블에서 관리합니다.</li>
+    <li><strong>멘토 풀:</strong> 크레딧 단독 판매가 늘면 AX Crew(신재동, 류성태, 아난, Robin, Timo)의 일정 확보가 먼저입니다.</li>
+    <li><strong>웹:</strong> /v3 홈을 '사다리'에서 '메뉴 + 혜택'으로 바꾸고, 상품 이름을 맞춥니다.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>짚고 넘어갈 점</h2>
+  <ul>
+    <li><strong>강의 90% 현금 환급:</strong> 플랫폼이 수수료를 뗀 뒤 정산하므로, 4.5만 원을 돌려주면 강의당 손해가 날 수 있습니다. 플랫폼마다 수수료가 달라 관리도 복잡해집니다. 쿠폰 리워드로 바꾸는 안을 다시 검토해야 합니다.</li>
+    <li><strong>4주 컨설팅 단독 가격:</strong> W0 세션이 추가되는데 가격이 같으면 커피챗 경로의 이점이 줄어듭니다. 단독 구매는 480~500만 원으로 두는 안도 있습니다.</li>
+    <li><strong>크레딧과 4주 컨설팅의 경계:</strong> 크레딧 상담이 구현으로 번지지 않게 범위를 계약서에 적어야 합니다.</li>
+    <li><strong>Fractional 영업 부담:</strong> 단독 판매는 대표가 직접 영업해야 합니다. 누가 몇 건을 맡을지 정해야 합니다.</li>
+  </ul>
+</section>
+
+
+<footer>Cofoundary · AX 프로그램 BM (개별 판매 + 연계 혜택) · 2026년 11월 9일 기준 · 내부 공유용 초안</footer>
+
+</div>
+</body>
+</html>
