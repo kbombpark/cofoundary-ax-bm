@@ -11,3 +11,4 @@
 - 솔로 코파운더 (Zero to One Build) 프로그램 설계: https://kbombpark.github.io/cofoundary-ax-bm/zero-to-one-sprint.html
 
 웹페이지는 정적 미리보기라 신청서는 접수되지 않습니다.
+- 솔로 코파운더 웹페이지 (공유용 미리보기): https://kbombpark.github.io/cofoundary-ax-bm/solo-cofounder/
