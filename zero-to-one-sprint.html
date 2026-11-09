@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>제로투원 스프린트</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500&family=Plus+Jakarta+Sans:wght@500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+/* Layout: single reading column (max 880px) with wide tables in scroll boxes; Cofoundary Brand System (company-landing): navy #050B16, brand blue #1E70FF, Plus Jakarta Sans + JetBrains Mono, Pretendard for Korean */
+:root{
+  --bg:#F8FAFC; --surface:#FFFFFF; --ink:#050B16; --muted:#4A5768; --line:#E2E8F0;
+  --accent:#1E70FF; --accent-soft:#E8F0FF; --navy:#050B16; --on-navy:#F8FAFC; --on-navy-2:#8E9CAE; --good:#15803D;
+  --glow:rgba(30,112,255,.3);
+  --f-display:"Plus Jakarta Sans","Pretendard Variable",Pretendard,system-ui,sans-serif;
+  --f-body:"Pretendard Variable",Pretendard,"Plus Jakarta Sans",system-ui,-apple-system,"Apple SD Gothic Neo",sans-serif;
+  --f-num:"JetBrains Mono",ui-monospace,"SFMono-Regular",monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#000000; --surface:#050B16; --ink:#FFFFFF; --muted:#8E9CAE; --line:#1A2433;
+  --accent:#4D8DFF; --accent-soft:#0B1A33; --navy:#050B16; --on-navy:#FFFFFF; --on-navy-2:#8E9CAE; --good:#4ADE80; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#000000; --surface:#050B16; --ink:#FFFFFF; --muted:#8E9CAE; --line:#1A2433;
+  --accent:#4D8DFF; --accent-soft:#0B1A33; --navy:#050B16; --on-navy:#FFFFFF; --on-navy-2:#8E9CAE; --good:#4ADE80; color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15.5px;line-height:1.7;letter-spacing:-0.01em;word-break:keep-all;overflow-wrap:break-word;-webkit-font-smoothing:antialiased;padding-inline:20px;padding-block:40px 72px}
+.wrap{max-width:880px;margin:0 auto;display:flex;flex-direction:column;gap:48px}
+header{display:flex;flex-direction:column;gap:12px;background:var(--navy);color:var(--on-navy);border:1px solid var(--line);border-radius:16px;padding:36px 32px;background-image:radial-gradient(60% 90% at 90% 0%,var(--glow),transparent 70%)}
+header .meta{color:var(--on-navy-2)}
+header .eyebrow{color:#4D8DFF}
+.eyebrow{font-family:var(--f-num);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+h1{font-family:var(--f-display);font-weight:800;letter-spacing:-0.02em;font-size:clamp(28px,5vw,40px);line-height:1.25;margin:0;text-wrap:balance}
+h2{font-family:var(--f-display);font-weight:700;font-size:22px;margin:0 0 4px;text-wrap:balance}
+h3{font-family:var(--f-display);font-size:15px;margin:8px 0 0}
+p{margin:0;max-width:68ch}
+.lead{font-size:17px}
+.meta{font-size:13px;color:var(--muted)}
+section{display:flex;flex-direction:column;gap:16px}
+.note{font-size:13px;color:var(--muted)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-top:3px solid var(--accent);border-radius:10px;padding:16px 18px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.kpi b{font-family:var(--f-num);font-size:22px;color:var(--accent);font-weight:500}
+.kpi span{font-size:13px;color:var(--muted)}
+ul,ol{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:6px;max-width:72ch}
+.scroll{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:14px}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:12.5px;color:var(--muted);font-weight:500;background:color-mix(in srgb,var(--bg) 60%,var(--surface))}
+tr:last-child td{border-bottom:0}
+td:first-child{white-space:nowrap}
+td.num{font-family:var(--f-num);font-variant-numeric:tabular-nums;white-space:nowrap}
+.pill{display:inline-block;font-size:12px;padding:1px 9px;border-radius:999px;border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.pill.on{border-color:var(--good);color:var(--good)}
+.pill.new{border-color:var(--accent);color:var(--accent)}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px 20px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.card h3{margin:0;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.card .price{font-family:var(--f-num);color:var(--accent);font-size:14px}
+.card ul{font-size:14px}
+.fig{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px;overflow-x:auto}
+.fig svg{display:block;width:100%;min-width:680px;height:auto}
+.fig figcaption{font-size:12.5px;color:var(--muted);padding:6px 4px 0}
+figure{margin:0}
+.callout{background:var(--navy);color:var(--on-navy);border-radius:10px;padding:18px 20px;display:flex;flex-direction:column;gap:6px}
+.callout b{color:var(--accent)}
+.tasks{list-style:none;padding:0}
+.tasks li{display:flex;gap:10px;align-items:flex-start}
+.tasks li::before{content:"";flex:0 0 16px;height:16px;margin-top:5px;border:1.5px solid var(--muted);border-radius:4px}
+footer{font-size:12.5px;color:var(--muted);border-top:1px solid var(--line);padding-top:20px}
+/* svg tokens */
+.s-ink{fill:var(--ink)} .s-muted{fill:var(--muted)} .s-box{fill:var(--surface);stroke:var(--line)}
+.s-hi{fill:var(--accent-soft);stroke:var(--accent)} .s-line{stroke:var(--muted);fill:none}
+.s-acc{stroke:var(--accent);fill:none} .s-accfill{fill:var(--accent)} .s-mutedfill{fill:var(--muted)}
+@media (max-width:520px){body{padding-inline:16px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="eyebrow">Cofoundary · 팀 논의용 초안 · 2026.11.09</div>
+  <h1>제로투원 스프린트: 프로그램 설계</h1>
+  <p class="lead">아이디어는 있지만 혼자 구체화하지 못하는 사람이 <strong>12주 안에 첫 유료 고객과 첫 매출</strong>을 만들도록 돕는 선발형 기수 프로그램입니다. 입문 과정은 넓게 열고, 본과정은 선발해서 깊게 끌고 갑니다.</p>
+  <p class="meta">1기·2기(대표 대상 AX 교육)와 별개 프로그램입니다. 가격·인원·지분 비율·일정은 모두 시장 확인 전 가안이고, 지분은 법적 요건 확인 뒤 확정합니다.</p>
+</header>
+
+<section>
+  <h2>한 장 요약</h2>
+  <div class="kpis">
+    <div class="kpi"><b>9.9만 원</b><span>입문 과정 (온라인 4주) · 본과정 합격 시 차감</span></div>
+    <div class="kpi"><b>12명</b><span>본과정 기수당 선발 인원</span></div>
+    <div class="kpi"><b>12주</b><span>검증 → 만들기 → 팔기 → 데모데이</span></div>
+    <div class="kpi"><b>290만 원</b><span>본과정 참가비 (VAT 포함) · 3회 분할</span></div>
+    <div class="kpi"><b>첫 매출</b><span>도착점 · 달성 팀에 지분 옵션 제안</span></div>
+  </div>
+  <ul>
+    <li><strong>누구:</strong> 특정 분야 경험이 있고 아이디어도 있지만, 기획·개발·영업 중 하나 이상에서 막혀 시작하지 못한 사람. 1인 또는 2인 팀.</li>
+    <li><strong>무엇:</strong> AI로 서비스를 직접 만들고, 우리가 기획·영업·고객 연결을 함께 해서 첫 매출까지 갑니다.</li>
+    <li><strong>왜 우리:</strong> 1기·2기 대표 네트워크가 첫 고객 후보가 됩니다. 다른 창업 교육이 주기 어려운 연결입니다.</li>
+    <li><strong>돈:</strong> 기본은 입문 과정과 본과정 참가비입니다. 첫 매출을 낸 팀 중 희망하는 팀과 후속 지원 계약을 맺고 소수 지분이나 매출 쉐어를 받습니다.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>전체 흐름</h2>
+  <figure class="fig">
+    <svg viewBox="0 0 760 200" role="img" aria-label="모집, 입문 과정 4주, 지원과 인터뷰, 본과정 12주, 데모데이, 첫 매출 팀 후속 지원으로 이어지는 흐름">
+      <defs>
+        <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="s-mutedfill"/></marker>
+      </defs>
+      <rect x="10" y="40" width="104" height="70" rx="8" class="s-box"/>
+      <text x="62" y="70" text-anchor="middle" font-size="13.5" font-weight="700" class="s-ink">모집</text>
+      <text x="62" y="92" text-anchor="middle" font-size="11" class="s-muted">강의·커뮤니티</text>
+      <rect x="134" y="40" width="114" height="70" rx="8" class="s-box"/>
+      <text x="191" y="70" text-anchor="middle" font-size="13.5" font-weight="700" class="s-ink">입문 과정</text>
+      <text x="191" y="92" text-anchor="middle" font-size="11" class="s-muted">온라인 4주 · 9.9만</text>
+      <rect x="268" y="40" width="104" height="70" rx="8" class="s-box"/>
+      <text x="320" y="70" text-anchor="middle" font-size="13.5" font-weight="700" class="s-ink">선발</text>
+      <text x="320" y="92" text-anchor="middle" font-size="11" class="s-muted">지원서 + 인터뷰</text>
+      <rect x="392" y="40" width="124" height="70" rx="8" class="s-hi"/>
+      <text x="454" y="70" text-anchor="middle" font-size="13.5" font-weight="700" class="s-ink">본과정 12주</text>
+      <text x="454" y="92" text-anchor="middle" font-size="11" class="s-muted">12명 · 290만</text>
+      <rect x="536" y="40" width="94" height="70" rx="8" class="s-box"/>
+      <text x="583" y="70" text-anchor="middle" font-size="13.5" font-weight="700" class="s-ink">데모데이</text>
+      <text x="583" y="92" text-anchor="middle" font-size="11" class="s-muted">첫 매출 발표</text>
+      <rect x="650" y="40" width="100" height="70" rx="8" class="s-hi"/>
+      <text x="700" y="70" text-anchor="middle" font-size="13.5" font-weight="700" class="s-ink">후속 지원</text>
+      <text x="700" y="92" text-anchor="middle" font-size="11" class="s-muted">6개월 · 지분 옵션</text>
+      <path d="M114 75 H130" class="s-line" stroke-width="1.5" marker-end="url(#ar)"/>
+      <path d="M248 75 H264" class="s-line" stroke-width="1.5" marker-end="url(#ar)"/>
+      <path d="M372 75 H388" class="s-line" stroke-width="1.5" marker-end="url(#ar)"/>
+      <path d="M516 75 H532" class="s-line" stroke-width="1.5" marker-end="url(#ar)"/>
+      <path d="M630 75 H646" class="s-line" stroke-width="1.5" marker-end="url(#ar)"/>
+      <text x="191" y="140" text-anchor="middle" font-size="11.5" class="s-ink">누구나 · 단독 상품</text>
+      <text x="320" y="140" text-anchor="middle" font-size="11.5" class="s-ink">입문 4명 중 1명 합격</text>
+      <text x="454" y="140" text-anchor="middle" font-size="11.5" class="s-ink">드림플러스 주 1회</text>
+      <text x="700" y="140" text-anchor="middle" font-size="11.5" class="s-ink">희망 팀만</text>
+      <text x="380" y="180" text-anchor="middle" font-size="11" class="s-muted">입문 과정만 듣고 끝나도 상품으로 성립하게 만듭니다</text>
+    </svg>
+  </figure>
+</section>
+
+<section>
+  <h2>입문 과정 (온라인 4주)</h2>
+  <p>누구나 듣는 단독 상품이면서 본과정 지원서를 만드는 과정입니다. 녹화 강의 + 과제 + 주 1회 온라인 라이브 Q&A로 운영합니다.</p>
+  <div class="scroll"><table>
+    <thead><tr><th>주</th><th>사업 질문</th><th>과제</th><th>산출물</th></tr></thead>
+    <tbody>
+      <tr><td>1주</td><td>내 아이디어를 한 문장으로 말할 수 있나</td><td>AI와 대화하며 아이디어 정리</td><td>아이디어 한 장 (고객, 문제, 해결)</td></tr>
+      <tr><td>2주</td><td>그 문제를 진짜 겪는 사람이 있나</td><td>잠재 고객 3명 인터뷰, AI로 요약</td><td>인터뷰 요약 3건</td></tr>
+      <tr><td>3주</td><td>하루 만에 보여 줄 수 있나</td><td>AI로 랜딩페이지 만들기</td><td>랜딩페이지 1개 + 관심 고객 반응</td></tr>
+      <tr><td>4주</td><td>12주 동안 무엇을 증명할 것인가</td><td>본과정 지원서 작성</td><td>지원서 (목표 고객, 첫 매출 계획)</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">가격: 9.9만 원 (가안). 본과정에 합격하면 전액 차감합니다. 1기·2기 온라인 강의 중 '과제 정의', 'AI에게 일 맡기기' 부분을 재사용합니다.</p>
+</section>
+
+<section>
+  <h2>선발</h2>
+  <div class="cards">
+    <div class="card">
+      <h3>뽑는 기준</h3>
+      <ul>
+        <li><strong>문제 경험:</strong> 그 문제를 직접 겪었거나 그 업계에서 일해 봤다.</li>
+        <li><strong>실행 증거:</strong> 입문 과정 과제를 모두 했고, 인터뷰 3건이 실제다.</li>
+        <li><strong>시간:</strong> 주 10시간 이상, 12주 동안 쓸 수 있다.</li>
+        <li><strong>받아들이는 힘:</strong> 아이디어를 바꾸라는 말을 들을 수 있다.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>이번 기수에서 받지 않는 경우</h3>
+      <ul>
+        <li>인허가가 먼저 필요한 사업 (의료, 금융 등)</li>
+        <li>큰 하드웨어 제작이 필요한 사업</li>
+        <li>12주 안에 첫 매출을 낼 경로가 보이지 않는 경우</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>절차</h3>
+      <ul>
+        <li>입문 과정 수료 → 지원서 제출</li>
+        <li>서류 검토 (코치 2명)</li>
+        <li>30분 인터뷰: 아이디어보다 실행과 태도를 봅니다</li>
+        <li>합격 12명 + 대기 3명</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>본과정 12주</h2>
+  <p>세 단계로 나눕니다. 각 주는 사업 질문 하나에 답하고, 산출물과 숫자를 남깁니다.</p>
+  <div class="scroll"><table>
+    <thead><tr><th>주</th><th>사업 질문</th><th>실습</th><th>산출물</th><th>숫자</th></tr></thead>
+    <tbody>
+      <tr><td colspan="5"><strong>1단계 · 검증 (1~3주)</strong></td></tr>
+      <tr><td>1주</td><td>누구의 어떤 문제를 푸는가</td><td>고객·문제 정의, 인터뷰 질문 설계</td><td>고객 정의서</td><td>인터뷰 대상 20명 목록</td></tr>
+      <tr><td>2주</td><td>고객이 정말 돈을 낼 만큼 아픈가</td><td>인터뷰 10건, AI로 패턴 정리</td><td>인터뷰 분석</td><td>인터뷰 10건</td></tr>
+      <tr><td>3주</td><td>무엇을 얼마에 팔 것인가</td><td>가치 제안, 가격, 첫 상품 정의</td><td>사전 판매 페이지</td><td>사전 신청·관심 수</td></tr>
+      <tr><td colspan="5"><strong>2단계 · 만들기 (4~7주)</strong></td></tr>
+      <tr><td>4주</td><td>첫 고객에게 꼭 필요한 기능은 무엇인가</td><td>MVP 범위 정하기, 창업 키트 셋업</td><td>MVP 범위표</td><td>핵심 기능 3개 이하</td></tr>
+      <tr><td>5주</td><td>핵심 기능이 돌아가는가</td><td>AI로 핵심 기능 구현</td><td>동작하는 화면</td><td>핵심 흐름 완성 여부</td></tr>
+      <tr><td>6주</td><td>돈을 받고 운영할 수 있는가</td><td>결제, 문의, 알림 붙이기</td><td>결제 가능한 MVP</td><td>시험 결제 성공</td></tr>
+      <tr><td>7주</td><td>실제 사용자가 쓰는가</td><td>베타 사용자 운영, 피드백 반영</td><td>베타 피드백 정리</td><td>베타 사용자 5명</td></tr>
+      <tr><td colspan="5"><strong>3단계 · 팔기 (8~11주)</strong></td></tr>
+      <tr><td>8주</td><td>고객을 어디서 만나는가</td><td>영업 채널, 메시지 작성</td><td>영업 계획 + 메시지</td><td>연락한 고객 수</td></tr>
+      <tr><td>9주</td><td>첫 미팅에서 무엇을 말하는가</td><td>미팅 연습, 가격 제안</td><td>제안서</td><td>미팅 수</td></tr>
+      <tr><td>10주</td><td>기업 고객을 만날 수 있는가</td><td><strong>기업 매칭 데이</strong>: 1기·2기 대표와 만남</td><td>매칭 결과</td><td>기업 미팅 수</td></tr>
+      <tr><td>11주</td><td>결제까지 갈 수 있는가</td><td>계약·결제, 반복 업무 자동화</td><td>첫 매출 증빙</td><td>유료 고객 수, 매출</td></tr>
+      <tr><td colspan="5"><strong>마무리</strong></td></tr>
+      <tr><td>12주</td><td>다음 90일 동안 무엇을 할 것인가</td><td>데모데이 발표, 지분 옵션 상담</td><td>발표 + 90일 계획</td><td>첫 매출 달성 팀 수</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section>
+  <h2>주간 운영</h2>
+  <div class="scroll"><table>
+    <thead><tr><th>무엇</th><th>언제</th><th>내용</th></tr></thead>
+    <tbody>
+      <tr><td>정규 세션</td><td>주 1회 저녁 3시간, 드림플러스</td><td>지난주 숫자 공유 30분 → 강의·실습 60분 → 팀별 코칭 60분 → 다음 주 약속 30분</td></tr>
+      <tr><td>오피스아워</td><td>주중 1회 30분, 온라인</td><td>담당 코치와 1:1. 막힌 곳만 다룹니다.</td></tr>
+      <tr><td>커뮤니티</td><td>상시</td><td>기수 단톡·게시판. 과제 인증과 질문.</td></tr>
+      <tr><td>멘토 특강</td><td>단계마다 1회</td><td>AX Crew 멘토와 선배 창업자 (검증, 만들기, 팔기)</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">과제는 '이번 주 숫자 채우기' 하나로 통일합니다. 2주 연속 숫자가 없으면 코치가 따로 면담합니다.</p>
+</section>
+
+<section>
+  <h2>창업 키트</h2>
+  <p>개발자가 아니어도 4~7주 안에 결제되는 서비스를 만들 수 있게 공통 뼈대와 문서를 줍니다. 우리가 쓰는 웹 스택을 바탕으로 만듭니다.</p>
+  <div class="cards">
+    <div class="card">
+      <h3>서비스 뼈대</h3>
+      <ul>
+        <li>랜딩페이지와 사전 신청</li>
+        <li>회원가입·로그인</li>
+        <li>결제 연동 (국내 결제 서비스)</li>
+        <li>관리자 화면, 고객 문의, 알림</li>
+        <li>방문·전환 분석</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>사업 문서</h3>
+      <ul>
+        <li>고객 인터뷰 질문지와 요약 틀</li>
+        <li>가격 계산표</li>
+        <li>영업 메시지·제안서 틀</li>
+        <li>이용약관·계약서 틀 (법률 검토 후)</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>AI 작업 틀</h3>
+      <ul>
+        <li>주차별 AI 지시문 모음</li>
+        <li>기능 추가·수정용 작업 순서</li>
+        <li>출시 전 점검표</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>첫 매출 지원</h2>
+  <ul>
+    <li><strong>영업 코칭 (8~11주):</strong> 고객 목록, 메시지, 미팅, 가격 제안, 계약을 실습합니다.</li>
+    <li><strong>기업 매칭 데이 (10주):</strong> 1기·2기 대표에게서 미리 받은 '해결하고 싶은 문제' 목록을 창업자에게 공개하고, 맞는 팀끼리 미팅을 잡습니다. 대표는 해결책을, 창업자는 첫 기업 고객 후보를 얻습니다.</li>
+    <li><strong>데모데이 (12주):</strong> 잠재 고객, 1기·2기 대표, 투자자를 초대합니다. 판매와 피칭을 같이 합니다.</li>
+    <li><strong>판매 채널 입점:</strong> 개인 고객 대상 서비스는 크몽 같은 마켓 입점을 돕습니다.</li>
+  </ul>
+  <div class="callout">
+    <b>'첫 매출'의 기준 (가안)</b>
+    <p>가족·지인이 아닌 고객이 실제로 결제한 건이 1건 이상 있고, 결제 내역이나 세금계산서로 확인되는 상태. 이 기준이 지분 옵션의 조건이 됩니다.</p>
+  </div>
+</section>
+
+<section>
+  <h2>지분 옵션</h2>
+  <p>원칙: 교육비는 성과와 상관없이 같습니다. 지분 옵션은 첫 매출을 낸 팀 중 <strong>원하는 팀만</strong> 맺는 별도 계약이고, 거절해도 불이익이 없습니다.</p>
+  <div class="scroll"><table>
+    <thead><tr><th>항목</th><th>내용 (가안)</th></tr></thead>
+    <tbody>
+      <tr><td>대상</td><td>첫 매출 기준을 넘긴 팀 중 희망 팀</td></tr>
+      <tr><td>우리가 주는 것</td><td>6개월 후속 지원: 월 2회 코칭, 개발 지원 크레딧, 기업 고객 추가 연결, 정부 지원사업·투자 연결</td></tr>
+      <tr><td>법인 팀</td><td>소수 지분 3~5%</td></tr>
+      <tr><td>개인사업자 팀</td><td>12개월 매출의 3~5% 쉐어. 법인 전환 시 지분으로 바꿀 수 있음</td></tr>
+      <tr><td>확인할 것</td><td>코파운더리가 직접 지분을 받을 수 있는지, 창업기획자(액셀러레이터) 등록 같은 요건이 필요한지, 계약서 형식</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section>
+  <h2>돈의 흐름 (1개 기수, 가안)</h2>
+  <div class="scroll"><table>
+    <thead><tr><th>항목</th><th>계산</th><th class="num">금액</th></tr></thead>
+    <tbody>
+      <tr><td>입문 과정</td><td>50명 × 9.9만 원 − 합격자 12명 차감</td><td class="num">약 376만 원</td></tr>
+      <tr><td>본과정</td><td>12명 × 290만 원</td><td class="num">3,480만 원</td></tr>
+      <tr><td>합계 (현금)</td><td></td><td class="num">약 3,856만 원</td></tr>
+      <tr><td>지분·매출 쉐어</td><td>첫 매출 팀 중 희망 팀</td><td class="num">장기 가치</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">비용(코치비, 장소, 키트 제작, 식대)과 이익률은 다음 단계에서 1기 실제 비용을 바탕으로 계산합니다. 입문 과정 50명은 모집 목표 가안입니다.</p>
+</section>
+
+<section>
+  <h2>팀과 역할</h2>
+  <div class="scroll"><table>
+    <thead><tr><th>역할</th><th>인원</th><th>하는 일</th></tr></thead>
+    <tbody>
+      <tr><td>프로그램 리드</td><td class="num">1</td><td>커리큘럼, 선발, 데모데이, 지분 옵션 상담</td></tr>
+      <tr><td>사업 코치</td><td class="num">3</td><td>코치 1명당 4팀 담당. 검증·영업 코칭, 오피스아워</td></tr>
+      <tr><td>AI 코치</td><td class="num">1</td><td>만들기 단계 실습 지원, 창업 키트 관리</td></tr>
+      <tr><td>운영 매니저</td><td class="num">1</td><td>모집, 일정, 장소, 결제, 커뮤니티</td></tr>
+      <tr><td>멘토</td><td>필요 시</td><td>AX Crew, 선배 창업자 특강</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section>
+  <h2>첫 기수 일정 (가안)</h2>
+  <div class="scroll"><table>
+    <thead><tr><th>시기</th><th>할 일</th></tr></thead>
+    <tbody>
+      <tr><td>2026년 12월</td><td>입문 과정 녹화, 창업 키트 1차 제작, 1기 대표에게 문제 목록 요청</td></tr>
+      <tr><td>2027년 1월</td><td>입문 과정 오픈과 모집 (강의 플랫폼, 커뮤니티, 콘텐츠)</td></tr>
+      <tr><td>2027년 2월</td><td>지원서 마감, 인터뷰, 합격 발표</td></tr>
+      <tr><td>2027년 3~5월</td><td>본과정 12주</td></tr>
+      <tr><td>2027년 5월 말</td><td>데모데이, 지분 옵션 계약</td></tr>
+      <tr><td>2027년 6~11월</td><td>후속 지원 6개월</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">2기 일정과 코치·장소가 겹치지 않는지 확인해야 합니다.</p>
+</section>
+
+<section>
+  <h2>성과 지표</h2>
+  <div class="kpis">
+    <div class="kpi"><b>50%</b><span>입문 과정 → 본과정 지원 비율 (목표, 약 2:1 경쟁)</span></div>
+    <div class="kpi"><b>80%</b><span>본과정 완주율 (목표)</span></div>
+    <div class="kpi"><b>90%</b><span>결제되는 MVP 완성 비율 (목표)</span></div>
+    <div class="kpi"><b>50%</b><span>첫 매출 달성 비율 (목표)</span></div>
+    <div class="kpi"><b>6개월</b><span>데모데이 뒤 매출 유지 팀 비율 추적</span></div>
+  </div>
+  <p class="note">목표치는 첫 기수 기준 가안입니다. 첫 기수 결과로 다시 정합니다.</p>
+</section>
+
+
+
+<footer>Cofoundary · 제로투원 스프린트 프로그램 설계 · 2026년 11월 9일 기준 · 내부 논의용 초안</footer>
+
+</div>
+</body>
+</html>
