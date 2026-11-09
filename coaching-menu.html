@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>AI 비즈니스 코칭 메뉴</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500&family=Plus+Jakarta+Sans:wght@500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+/* Layout: single reading column (max 880px) with wide tables in scroll boxes; Cofoundary Brand System (company-landing): navy #050B16, brand blue #1E70FF, Plus Jakarta Sans + JetBrains Mono, Pretendard for Korean */
+:root{
+  --bg:#F8FAFC; --surface:#FFFFFF; --ink:#050B16; --muted:#4A5768; --line:#E2E8F0;
+  --accent:#1E70FF; --accent-soft:#E8F0FF; --navy:#050B16; --on-navy:#F8FAFC; --on-navy-2:#8E9CAE; --good:#15803D;
+  --glow:rgba(30,112,255,.3);
+  --f-display:"Plus Jakarta Sans","Pretendard Variable",Pretendard,system-ui,sans-serif;
+  --f-body:"Pretendard Variable",Pretendard,"Plus Jakarta Sans",system-ui,-apple-system,"Apple SD Gothic Neo",sans-serif;
+  --f-num:"JetBrains Mono",ui-monospace,"SFMono-Regular",monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#000000; --surface:#050B16; --ink:#FFFFFF; --muted:#8E9CAE; --line:#1A2433;
+  --accent:#4D8DFF; --accent-soft:#0B1A33; --navy:#050B16; --on-navy:#FFFFFF; --on-navy-2:#8E9CAE; --good:#4ADE80; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#000000; --surface:#050B16; --ink:#FFFFFF; --muted:#8E9CAE; --line:#1A2433;
+  --accent:#4D8DFF; --accent-soft:#0B1A33; --navy:#050B16; --on-navy:#FFFFFF; --on-navy-2:#8E9CAE; --good:#4ADE80; color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15.5px;line-height:1.7;letter-spacing:-0.01em;word-break:keep-all;overflow-wrap:break-word;-webkit-font-smoothing:antialiased;padding-inline:20px;padding-block:40px 72px}
+.wrap{max-width:880px;margin:0 auto;display:flex;flex-direction:column;gap:48px}
+header{display:flex;flex-direction:column;gap:12px;background:var(--navy);color:var(--on-navy);border:1px solid var(--line);border-radius:16px;padding:36px 32px;background-image:radial-gradient(60% 90% at 90% 0%,var(--glow),transparent 70%)}
+header .meta{color:var(--on-navy-2)}
+header .eyebrow{color:#4D8DFF}
+.eyebrow{font-family:var(--f-num);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+h1{font-family:var(--f-display);font-weight:800;letter-spacing:-0.02em;font-size:clamp(28px,5vw,40px);line-height:1.25;margin:0;text-wrap:balance}
+h2{font-family:var(--f-display);font-weight:700;font-size:22px;margin:0 0 4px;text-wrap:balance}
+h3{font-family:var(--f-display);font-size:15px;margin:8px 0 0}
+p{margin:0;max-width:68ch}
+.lead{font-size:17px}
+.meta{font-size:13px;color:var(--muted)}
+section{display:flex;flex-direction:column;gap:16px}
+.note{font-size:13px;color:var(--muted)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-top:3px solid var(--accent);border-radius:10px;padding:16px 18px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.kpi b{font-family:var(--f-num);font-size:22px;color:var(--accent);font-weight:500}
+.kpi span{font-size:13px;color:var(--muted)}
+ul,ol{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:6px;max-width:72ch}
+.scroll{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:14px}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:12.5px;color:var(--muted);font-weight:500;background:color-mix(in srgb,var(--bg) 60%,var(--surface))}
+tr:last-child td{border-bottom:0}
+td:first-child{white-space:nowrap}
+td.num{font-family:var(--f-num);font-variant-numeric:tabular-nums;white-space:nowrap}
+.pill{display:inline-block;font-size:12px;padding:1px 9px;border-radius:999px;border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.pill.on{border-color:var(--good);color:var(--good)}
+.pill.new{border-color:var(--accent);color:var(--accent)}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px 20px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.card h3{margin:0;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.card .price{font-family:var(--f-num);color:var(--accent);font-size:14px}
+.card ul{font-size:14px}
+.fig{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px;overflow-x:auto}
+.fig svg{display:block;width:100%;min-width:680px;height:auto}
+.fig figcaption{font-size:12.5px;color:var(--muted);padding:6px 4px 0}
+figure{margin:0}
+.callout{background:var(--navy);color:var(--on-navy);border-radius:10px;padding:18px 20px;display:flex;flex-direction:column;gap:6px}
+.callout b{color:var(--accent)}
+.tasks{list-style:none;padding:0}
+.tasks li{display:flex;gap:10px;align-items:flex-start}
+.tasks li::before{content:"";flex:0 0 16px;height:16px;margin-top:5px;border:1.5px solid var(--muted);border-radius:4px}
+footer{font-size:12.5px;color:var(--muted);border-top:1px solid var(--line);padding-top:20px}
+/* svg tokens */
+.s-ink{fill:var(--ink)} .s-muted{fill:var(--muted)} .s-box{fill:var(--surface);stroke:var(--line)}
+.s-hi{fill:var(--accent-soft);stroke:var(--accent)} .s-line{stroke:var(--muted);fill:none}
+.s-acc{stroke:var(--accent);fill:none} .s-accfill{fill:var(--accent)} .s-mutedfill{fill:var(--muted)}
+@media (max-width:520px){body{padding-inline:16px}}
+
+.toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+button{font:inherit;font-size:14px;padding:8px 14px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+button:hover{border-color:var(--accent)}
+button.primary{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
+.count{font-size:13px;color:var(--muted)}
+.mods{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:10px}
+.mod{display:flex;gap:12px;align-items:flex-start;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;cursor:pointer;min-width:0}
+.mod:has(input:checked){border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+.mod input,.chk input{width:18px;height:18px;margin-top:3px;accent-color:var(--accent);flex:0 0 auto}
+.mod-body{display:flex;flex-direction:column;gap:6px;min-width:0}
+.mod-head{margin:0;line-height:1.45}
+.mid{font-family:var(--f-num);font-size:12px;color:var(--accent);margin-right:6px}
+.star{color:#F59E0B;margin-right:2px}
+.mod dl{margin:0;display:flex;flex-direction:column;gap:3px;font-size:13.5px}
+.mod dl div{display:grid;grid-template-columns:3.6em 1fr;gap:8px}
+.mod dt{color:var(--muted)}
+.mod dd{margin:0}
+.tags{margin:2px 0 0;display:flex;gap:6px;flex-wrap:wrap}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px}
+.opt{margin:0;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 16px 14px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.opt legend{font-family:var(--f-display);font-weight:700;font-size:14px;padding:0 4px}
+.chk{display:flex;gap:10px;align-items:flex-start;font-size:14px;cursor:pointer}
+textarea{width:100%;font:inherit;font-size:14px;line-height:1.6;padding:12px 14px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--ink);resize:vertical}
+a{color:var(--accent)}
+</style>
+</head>
+
+<body>
+<div class="wrap">
+
+<header>
+  <div class="eyebrow">Cofoundary · 팀 논의용 초안 · 2026.11.09</div>
+  <h1>AI 비즈니스 코칭: 내용 메뉴</h1>
+  <p class="lead">기술 교육이 아니라 AI를 도구로 써서 사업을 <strong>자동화 → 자율화 → 신사업</strong>으로 바꾸는 코칭에 필요한 내용을 기간 제약 없이 모두 모았습니다. 필요한 항목을 고르면, 고른 것만으로 프로그램을 구체화합니다.</p>
+  <p class="meta">사용법: 항목 왼쪽 체크박스로 고릅니다. 맨 아래 '고른 항목 복사'를 누르면 목록이 복사되니 대화창에 붙여 주세요. 고른 상태는 이 브라우저에 저장됩니다. ★는 이 방향에서 꼭 필요하다고 보는 항목입니다.</p>
+</header>
+
+<section>
+  <h2>구성</h2>
+  <div class="scroll"><table>
+    <thead><tr><th>영역</th><th>무엇을 하나</th><th>항목</th></tr></thead>
+    <tbody>
+      <tr><td><a href="#area-A">A. 출발점 · 진단</a></td><td>대표가 지금 위치와 문제를 숫자로 보는 단계</td><td class="num">4개 (★4)</td></tr>
+      <tr><td><a href="#area-B">B. 자동화 · 지금 일을 AI로</a></td><td>반복 업무를 AI에게 넘겨 시간을 되찾는 단계</td><td class="num">8개 (★4)</td></tr>
+      <tr><td><a href="#area-C">C. 자율화 · AI가 돌리고 사람은 판단</a></td><td>사람 없이 업무 흐름이 돌아가게 하는 단계</td><td class="num">6개 (★4)</td></tr>
+      <tr><td><a href="#area-D">D. 조직 전환</a></td><td>AI가 들어온 뒤 사람과 역할을 다시 짜는 단계</td><td class="num">5개 (★2)</td></tr>
+      <tr><td><a href="#area-E">E. 사업 재설계</a></td><td>비용·가격·고객 경험을 AI 기준으로 다시 계산하는 단계</td><td class="num">4개 (★2)</td></tr>
+      <tr><td><a href="#area-F">F. 신사업 만들기</a></td><td>AI로 새로 가능해진 상품·고객을 찾고 검증하는 단계</td><td class="num">6개 (★4)</td></tr>
+      <tr><td><a href="#area-G">G. 실행 · 지속</a></td><td>교육이 끝난 뒤에도 성과가 이어지게 하는 단계</td><td class="num">5개 (★3)</td></tr>
+    </tbody>
+  </table></div>
+  <div class="toolbar">
+    <button type="button" data-act="core">★ 항목만 고르기</button>
+    <button type="button" data-act="clear">모두 해제</button>
+    <span class="count" id="count">0개 선택</span>
+  </div>
+</section>
+<section id="area-A">
+  <h2>A. 출발점 · 진단</h2>
+  <p class="note">대표가 지금 위치와 문제를 숫자로 보는 단계</p>
+  <div class="mods">
+    <label class="mod">
+      <input type="checkbox" value="A1" data-title="AI가 들어오면 우리 업종은 무엇이 바뀌나" data-core="1">
+      <div class="mod-body">
+        <p class="mod-head"><span class="mid">A1</span><span class="star" title="꼭 필요">★</span> <strong>AI가 들어오면 우리 업종은 무엇이 바뀌나</strong></p>
+        <dl>
+          <div><dt>내용</dt><dd>비용 구조·속도·인력 구조 변화, 업종별 실제 사례</dd></div>
+          <div><dt>AI 실습</dt><dd>AI로 우리 업종 변화 리서치하기</dd></div>
+          <div><dt>산출물</dt><dd>우리 업종 변화 메모 1장</dd></div>
+        </dl>
+        <p class="tags"><span class="pill">대표</span> <span class="pill">강의·세미나</span></p>
+      </div>
+    </label>
+    <label class="mod">
+      <input type="checkbox" value="A2" data-title="우리 회사는 AX를 할 준비가 되어 있나" data-core="1">
+      <div class="mod-body">
+        <p class="mod-head"><span class="mid">A2</span><span class="star" title="꼭 필요">★</span> <strong>우리 회사는 AX를 할 준비가 되어 있나</strong></p>
+        <dl>
+          <div><dt>내용</dt><dd>업무·데이터·조직·대표 의지 4개 축 진단</dd></div>
+          <div><dt>AI 실습</dt><dd>진단 설문 + AI 요약 리포트</dd></div>
+          <div><dt>산출물</dt><dd>AX 준비도 진단표</dd></div>
+        </dl>
+        <p class="tags"><span class="pill">대표</span> <span class="pill">사전 과제·온라인</span></p>
+      </div>
+    </label>
+    <label class="mod">
+      <input type="checkbox" value="A3" data-title="돈과 시간은 어디서 새는가" data-core="1">
+      <div class="mod-body">
+        <p class="mod-head"><span class="mid">A3</span><span class="star" title="꼭 필요">★</span> <strong>돈과 시간은 어디서 새는가</strong></p>
+        <dl>
+          <div><dt>내용</dt><dd>가치사슬, 업무 인벤토리, 업무별 소요 시간</dd></div>
+          <div><dt>AI 실습</dt><dd>AI와 대화하며 업무 지도 그리기</dd></div>
+          <div><dt>산출물</dt><dd>사업 지도 + 업무 시간표</dd></div>
+        </dl>
+        <p class="tags"><span class="pill">대표 + 실무자</span> <span class="pill">워크숍</span></p>
+      </div>
+    </label>
+    <label class="mod">
+      <input type="checkbox" value="A4" data-title="무엇부터 고칠 것인가" data-core="1">
+      <div class="mod-body">
+        <p class="mod-head"><span class="mid">A4</span><span class="star" title="꼭 필요">★</span> <strong>무엇부터 고칠 것인가</strong></p>
+        <dl>
+          <div><dt>내용</dt><dd>영향 × 난이도로 우선순위, 성공 기준을 숫자로</dd></div>
+          <div><dt>AI 실습</dt><dd>후보 비교표를 AI로 만들고 토론</dd></div>
+          <div><dt>산출물</dt><dd>개선 후보 3개 + 성공 기준</dd></div>
+        </dl>
+        <p class="tags"><span class="pill">대표</span> <span class="pill">워크숍·코칭</span></p>
+      </div>
+    </label>
+  </div>
+</section>
+
+<section id="area-B">
+  <h2>B. 자동화 · 지금 일을 AI로</h2>
+  <p class="note">반복 업무를 AI에게 넘겨 시간을 되찾는 단계</p>
+  <div class="mods">
+    <label class="mod">
+      <input type="checkbox" value="B1" data-title="AI에게 일을 어떻게 맡기나" data-core="1">
+      <div class="mod-body">
+        <p class="mod-head"><span class="mid">B1</span><span class="star" title="꼭 필요">★</span> <strong>AI에게 일을 어떻게 맡기나</strong></p>
+        <dl>
+          <div><dt>내용</dt><dd>맥락 주기, 예시, 검토 요청. 도구 고르는 기준</dd></div>
+          <div><dt>AI 실습</dt><dd>실제 업무 하나로 프롬프트 다듬기</dd></div>
+          <div><dt>산출물</dt><dd>업무별 지시문 모음</dd></div>
+        </dl>
+        <p class="tags"><span class="pill">전원</span> <span class="pill">강의·실습</span></p>
+      </div>
+    </label>
+    <label class="mod">
+      <input type="checkbox" value="B2" data-title="보고서·제안서·회의록을 줄인다" data-core="0">
+      <div class="mod-body">
+        <p class="mod-head"><span class="mid">B2</span> <strong>보고서·제안서·회의록을 줄인다</strong></p>
+        <dl>
+          <div><dt>내용</dt><dd>문서 업무 흐름 분석, 템플릿화</dd></div>
+          <div><dt>AI 실습</dt><dd>회의록 → 할 일 → 보고서 자동 생성</dd></div>
+          <div><dt>산출물</dt><dd>문서 자동화 1개</dd></div>
+        </dl>
+        <p class="tags"><span class="pill">실무자</span> <span class="pill">실습</span></p>
+      </div>
+    </label>
+    <label class="mod">
+      <input type="checkbox" value="B3" data-title="엑셀·데이터 업무를 줄인다" data-core="0">
+      <div class="mod-body">
+        <p class="mod-head"><span class="mid">B3</span> <strong>엑셀·데이터 업무를 줄인다</strong></p>
+        <dl>
+          <div><dt>내용</dt><dd>집계, 정리, 대시보드</dd></div>
+          <div><dt>AI 실습</dt><dd>AI로 데이터 정리·차트 만들기</dd></div>
+          <div><dt>산출물</dt><dd>데이터 자동화 1개</dd></div>
+        </dl>
+        <p class="tags"><span class="pill">실무자</span> <span class="pill">실습</span></p>
+      </div>
+    </label>
+    <label class="mod">
+      <input type="checkbox" value="B4" data-title="반복 입력·검색을 없앤다" data-core="1">
+      <div class="mod-body">
+        <p class="mod-head"><span class="mid">B4</span><span class="star" title="꼭 필요">★</span> <strong>반복 입력·검색을 없앤다</strong></p>
+        <dl>
+          <div><dt>내용</dt><dd>웹 조회, 시스템 입력 같은 손작업</dd></div>
+          <div><dt>AI 실습</dt><dd>브라우저 자동화로 조회·입력 대신하기</dd></div>
+          <div><dt>산출물</dt><dd>입력 자동화 1개</dd></div>
+        </dl>
+        <p class="tags"><span class="pill">실무자</span> <span class="pill">실습</span></p>
+      </div>
+    </label>
+    <label class="mod">
+      <input type="checkbox" value="B5" data-title="고객 응대·영업을 빠르게 한다" data-core="0">
+      <div class="mod-body">
+        <p class="mod-head"><span class="mid">B5</span> <strong>고객 응대·영업을 빠르게 한다</strong></p>
+        <dl>
+          <div><dt>내용</dt><dd>문의 응답, 견적, CRM 정리</dd></div>
+          <div><dt>AI 실습</dt><dd>문의 분류·답변 초안 자동화</dd></div>
+          <div><dt>산출물</dt><dd>응대 자동화 1개</dd></div>
+        </dl>
+        <p class="tags"><span class="pill">대표 + 실무자</span> <span class="pill">실습</span></p>
+      </div>
+    </label>
+    <label class="mod">
+      <input type="checkbox" value="B6" data-title="마케팅 콘텐츠를 꾸준히 만든다" data-core="0">
+      <div class="mod-body">
+        <p class="mod-head"><span class="mid">B6</span> <strong>마케팅 콘텐츠를 꾸준히 만든다</strong></p>
+        <dl>
+          <div><dt>내용</dt><dd>콘텐츠 기획, 제작, 배포 흐름</dd></div>
+          <div><dt>AI 실습</dt><dd>한 주 콘텐츠를 AI로 기획·제작</dd></div>
+          <div><dt>산출물</dt><dd>콘텐츠 제작 흐름</dd></div>
+        </dl>
+        <p class="tags"><span class="pill">실무자</span> <span class="pill">실습</span></p>
+      </div>
+    </label>
+    <label class="mod">
+      <input type="checkbox" value="B7" data-title="필요한 사내 도구를 직접 만든다" data-core="1">
+      <div class="mod-body">
+        <p class="mod-head"><span class="mid">B7</span><span class="star" title="꼭 필요">★</span> <strong>필요한 사내 도구를 직접 만든다</strong></p>
+        <dl>
+          <div><dt>내용</dt><dd>외주 없이 작은 도구 만들기</dd></div>
+          <div><dt>AI 실습</dt><dd>Claude Code로 내부 도구 만들기</dd></div>
+          <div><dt>산출물</dt><dd>동작하는 내부 도구</dd></div>
+        </dl>
+        <p class="tags"><span class="pill">대표 + 실무자</span> <span class="pill">실습·코칭</span></p>
+      </div>
+    </label>
+    <label class="mod">
+      <input type="checkbox" value="B8" data-title="AI 결과를 믿을 수 있게 한다" data-core="1">
+      <div class="mod-body">
+        <p class="mod-head"><span class="mid">B8</span><span class="star" title="꼭 필요">★</span> <strong>AI 결과를 믿을 수 있게 한다</strong></p>
+        <dl>
+          <div><dt>내용</dt><dd>검증 체크리스트, 사람이 확인할 지점</dd></div>
+          <div><dt>AI 실습</dt><dd>결과 검증 절차 만들기</dd></div>
+          <div><dt>산출물</dt><dd>검증 체크리스트</dd></div>
+        </dl>
+        <p class="tags"><span class="pill">전원</span> <span class="pill">실습</span></p>
+      </div>
+    </label>
+  </div>
+</section>
+
+<section id="area-C">
+  <h2>C. 자율화 · AI가 돌리고 사람은 판단</h2>
+  <p class="note">사람 없이 업무 흐름이 돌아가게 하는 단계</p>
+  <div class="mods">
+    <label class="mod">
+      <input type="checkbox" value="C1" data-title="대표 머릿속 판단 기준을 꺼낸다" data-core="1">
+      <div class="mod-body">
+        <p class="mod-head"><span class="mid">C1</span><span class="star" title="꼭 필요">★</span> <strong>대표 머릿속 판단 기준을 꺼낸다</strong></p>
+        <dl>
+          <div><dt>내용</dt><dd>판단 기준을 규칙과 예시로 문서화</dd></div>
+          <div><dt>AI 실습</dt><dd>판단 사례를 AI와 정리해 기준표 만들기</dd></div>
+          <div><dt>산출물</dt><dd>판단 기준표</dd></div>
+        </dl>
+        <p class="tags"><span class="pill">대표</span> <span class="pill">코칭</span></p>
+      </div>
+    </label>
+    <label class="mod">
+      <input type="checkbox" value="C2" data-title="사람은 어디서만 개입하나" data-core="1">
+      <div class="mod-body">
+        <p class="mod-head"><span class="mid">C2</span><span class="star" title="꼭 필요">★</span> <strong>사람은 어디서만 개입하나</strong></p>
+        <dl>
+          <div><dt>내용</dt><dd>입력, 판단, 예외, 승인 지점 설계</dd></div>
+          <div><dt>AI 실습</dt><dd>에이전트 흐름도 그리기</dd></div>
+          <div><dt>산출물</dt><dd>자율 운영 흐름도</dd></div>
+        </dl>
+        <p class="tags"><span class="pill">대표 + 실무자</span> <span class="pill">워크숍</span></p>
+      </div>
+    </label>
+    <label class="mod">
+      <input type="checkbox" value="C3" data-title="흐름을 실제로 연결해 돌린다" data-core="1">
+      <div class="mod-body">
+        <p class="mod-head"><span class="mid">C3</span><span class="star" title="꼭 필요">★</span> <strong>흐름을 실제로 연결해 돌린다</strong></p>
+        <dl>
+          <div><dt>내용</dt><dd>데이터 연결, 정기 실행, 알림·보고</dd></div>
+          <div><dt>AI 실습</dt><dd>일주일 돌아가는 흐름 구현</dd></div>
+          <div><dt>산출물</dt><dd>실제로 돌아가는 자율 흐름</dd></div>
+        </dl>
+        <p class="tags"><span class="pill">실무자</span> <span class="pill">실습·코칭</span></p>
+      </div>
+    </label>
+    <label class="mod">
+      <input type="checkbox" value="C4" data-title="멈추거나 틀리면 어떻게 하나" data-core="0">
+      <div class="mod-body">
+        <p class="mod-head"><span class="mid">C4</span> <strong>멈추거나 틀리면 어떻게 하나</strong></p>
+        <dl>
+          <div><dt>내용</dt><dd>모니터링, 실패 대응, 되돌리기</dd></div>
+          <div><dt>AI 실습</dt><dd>실패 시나리오와 대응 규칙 만들기</dd></div>
+          <div><dt>산출물</dt><dd>운영 점검표</dd></div>
+        </dl>
+        <p class="tags"><span class="pill">실무자</span> <span class="pill">실습</span></p>
+      </div>
+    </label>
+    <label class="mod">
+      <input type="checkbox" value="C5" data-title="보안·개인정보는 괜찮은가" data-core="1">
+      <div class="mod-body">
+        <p class="mod-head"><span class="mid">C5</span><span class="star" title="꼭 필요">★</span> <strong>보안·개인정보는 괜찮은가</strong></p>
+        <dl>
+          <div><dt>내용</dt><dd>권한, 데이터 반출, 개인정보, 계약</dd></div>
+          <div><dt>AI 실습</dt><dd>우리 회사 AI 사용 위험 점검</dd></div>
+          <div><dt>산출물</dt><dd>보안 점검표</dd></div>
+        </dl>
+        <p class="tags"><span class="pill">대표</span> <span class="pill">강의</span></p>
+      </div>
+    </label>
+    <label class="mod">
+      <input type="checkbox" value="C6" data-title="AI 비용은 얼마이고 남는가" data-core="0">
+      <div class="mod-body">
+        <p class="mod-head"><span class="mid">C6</span> <strong>AI 비용은 얼마이고 남는가</strong></p>
+        <dl>
+          <div><dt>내용</dt><dd>사용료, 절감 효과, 투자 대비 효과 계산</dd></div>
+          <div><dt>AI 실습</dt><dd>AI로 ROI 계산표 만들기</dd></div>
+          <div><dt>산출물</dt><dd>AX ROI 계산표</dd></div>
+        </dl>
+        <p class="tags"><span class="pill">대표</span> <span class="pill">실습</span></p>
+      </div>
+    </label>
+  </div>
+</section>
+
+<section id="area-D">
+  <h2>D. 조직 전환</h2>
+  <p class="note">AI가 들어온 뒤 사람과 역할을 다시 짜는 단계</p>
+  <div class="mods">
+    <label class="mod">
+      <input type="checkbox" value="D1" data-title="누가 무엇을 판단하나" data-core="1">
+      <div class="mod-body">
+        <p class="mod-head"><span class="mid">D1</span><span class="star" title="꼭 필요">★</span> <strong>누가 무엇을 판단하나</strong></p>
+        <dl>
+          <div><dt>내용</dt><dd>역할 재배치, 사람이 남겨야 할 일</dd></div>
+          <div><dt>AI 실습</dt><dd>역할 재배치 시뮬레이션</dd></div>
+          <div><dt>산출물</dt><dd>새 역할표</dd></div>
+        </dl>
+        <p class="tags"><span class="pill">대표</span> <span class="pill">코칭</span></p>
+      </div>
+    </label>
+    <label class="mod">
+      <input type="checkbox" value="D2" data-title="회사 안에 AX를 이끌 사람을 키운다" data-core="1">
+      <div class="mod-body">
+        <p class="mod-head"><span class="mid">D2</span><span class="star" title="꼭 필요">★</span> <strong>회사 안에 AX를 이끌 사람을 키운다</strong></p>
+        <dl>
+          <div><dt>내용</dt><dd>AX 담당자 선정·육성</dd></div>
+          <div><dt>AI 실습</dt><dd>담당자 성장 계획 작성</dd></div>
+          <div><dt>산출물</dt><dd>AX 담당자 계획</dd></div>
+        </dl>
+        <p class="tags"><span class="pill">대표</span> <span class="pill">코칭</span></p>
+      </div>
+    </label>
+    <label class="mod">
+      <input type="checkbox" value="D3" data-title="팀이 실제로 쓰게 만든다" data-core="0">
+      <div class="mod-body">
+        <p class="mod-head"><span class="mid">D3</span> <strong>팀이 실제로 쓰게 만든다</strong></p>
+        <dl>
+          <div><dt>내용</dt><dd>저항 관리, 사내 교육, 작은 성공 공유</dd></div>
+          <div><dt>AI 실습</dt><dd>사내 공유 자료 AI로 만들기</dd></div>
+          <div><dt>산출물</dt><dd>팀 도입 계획</dd></div>
+        </dl>
+        <p class="tags"><span class="pill">대표 + 실무자</span> <span class="pill">워크숍</span></p>
+      </div>
+    </label>
+    <label class="mod">
+      <input type="checkbox" value="D4" data-title="AI 사용 규칙을 정한다" data-core="0">
+      <div class="mod-body">
+        <p class="mod-head"><span class="mid">D4</span> <strong>AI 사용 규칙을 정한다</strong></p>
+        <dl>
+          <div><dt>내용</dt><dd>사용 정책, 금지 사항, 승인 절차</dd></div>
+          <div><dt>AI 실습</dt><dd>우리 회사 AI 가이드라인 초안</dd></div>
+          <div><dt>산출물</dt><dd>AI 사용 가이드라인</dd></div>
+        </dl>
+        <p class="tags"><span class="pill">대표</span> <span class="pill">실습</span></p>
+      </div>
+    </label>
+    <label class="mod">
+      <input type="checkbox" value="D5" data-title="채용·외주 기준이 바뀐다" data-core="0">
+      <div class="mod-body">
+        <p class="mod-head"><span class="mid">D5</span> <strong>채용·외주 기준이 바뀐다</strong></p>
+        <dl>
+          <div><dt>내용</dt><dd>뽑을 사람, 맡길 일, 내재화할 일</dd></div>
+          <div><dt>AI 실습</dt><dd>채용·외주 기준표 정리</dd></div>
+          <div><dt>산출물</dt><dd>인력 운영 기준</dd></div>
+        </dl>
+        <p class="tags"><span class="pill">대표</span> <span class="pill">코칭</span></p>
+      </div>
+    </label>
+  </div>
+</section>
+
+<section id="area-E">
+  <h2>E. 사업 재설계</h2>
+  <p class="note">비용·가격·고객 경험을 AI 기준으로 다시 계산하는 단계</p>
+  <div class="mods">
+    <label class="mod">
+      <input type="checkbox" value="E1" data-title="비용 구조는 어떻게 바뀌나" data-core="1">
+      <div class="mod-body">
+        <p class="mod-head"><span class="mid">E1</span><span class="star" title="꼭 필요">★</span> <strong>비용 구조는 어떻게 바뀌나</strong></p>
+        <dl>
+          <div><dt>내용</dt><dd>단위경제, 고정비·변동비 변화</dd></div>
+          <div><dt>AI 실습</dt><dd>AI로 비용 구조 전·후 계산</dd></div>
+          <div><dt>산출물</dt><dd>비용 구조 비교표</dd></div>
+        </dl>
+        <p class="tags"><span class="pill">대표</span> <span class="pill">워크숍</span></p>
+      </div>
+    </label>
+    <label class="mod">
+      <input type="checkbox" value="E2" data-title="가격과 수익 모델을 바꿀 수 있나" data-core="1">
+      <div class="mod-body">
+        <p class="mod-head"><span class="mid">E2</span><span class="star" title="꼭 필요">★</span> <strong>가격과 수익 모델을 바꿀 수 있나</strong></p>
+        <dl>
+          <div><dt>내용</dt><dd>시간 단가 → 성과·구독·제품형</dd></div>
+          <div><dt>AI 실습</dt><dd>가격 시나리오 시뮬레이션</dd></div>
+          <div><dt>산출물</dt><dd>수익 모델 대안 2개</dd></div>
+        </dl>
+        <p class="tags"><span class="pill">대표</span> <span class="pill">코칭</span></p>
+      </div>
+    </label>
+    <label class="mod">
+      <input type="checkbox" value="E3" data-title="고객 경험을 다시 설계한다" data-core="0">
+      <div class="mod-body">
+        <p class="mod-head"><span class="mid">E3</span> <strong>고객 경험을 다시 설계한다</strong></p>
+        <dl>
+          <div><dt>내용</dt><dd>응대 속도, 맞춤화, 셀프서비스</dd></div>
+          <div><dt>AI 실습</dt><dd>고객 여정 지도 AI로 그리기</dd></div>
+          <div><dt>산출물</dt><dd>고객 여정 개선안</dd></div>
+        </dl>
+        <p class="tags"><span class="pill">대표 + 실무자</span> <span class="pill">워크숍</span></p>
+      </div>
+    </label>
+    <label class="mod">
+      <input type="checkbox" value="E4" data-title="경쟁 구도는 어떻게 바뀌나" data-core="0">
+      <div class="mod-body">
+        <p class="mod-head"><span class="mid">E4</span> <strong>경쟁 구도는 어떻게 바뀌나</strong></p>
+        <dl>
+          <div><dt>내용</dt><dd>진입장벽 변화, 우리만의 강점</dd></div>
+          <div><dt>AI 실습</dt><dd>경쟁사 AI 활용 리서치</dd></div>
+          <div><dt>산출물</dt><dd>경쟁 대응 메모</dd></div>
+        </dl>
+        <p class="tags"><span class="pill">대표</span> <span class="pill">세미나</span></p>
+      </div>
+    </label>
+  </div>
+</section>
+
+<section id="area-F">
+  <h2>F. 신사업 만들기</h2>
+  <p class="note">AI로 새로 가능해진 상품·고객을 찾고 검증하는 단계</p>
+  <div class="mods">
+    <label class="mod">
+      <input type="checkbox" value="F1" data-title="우리 자산으로 새로 할 수 있는 것은" data-core="1">
+      <div class="mod-body">
+        <p class="mod-head"><span class="mid">F1</span><span class="star" title="꼭 필요">★</span> <strong>우리 자산으로 새로 할 수 있는 것은</strong></p>
+        <dl>
+          <div><dt>내용</dt><dd>데이터·고객·노하우 자산 정리, 기회 찾기</dd></div>
+          <div><dt>AI 실습</dt><dd>자산 목록 → 기회 아이디어 AI 발산</dd></div>
+          <div><dt>산출물</dt><dd>신사업 기회 목록</dd></div>
+        </dl>
+        <p class="tags"><span class="pill">대표</span> <span class="pill">워크숍</span></p>
+      </div>
+    </label>
+    <label class="mod">
+      <input type="checkbox" value="F2" data-title="우리 노하우를 상품으로 만든다" data-core="1">
+      <div class="mod-body">
+        <p class="mod-head"><span class="mid">F2</span><span class="star" title="꼭 필요">★</span> <strong>우리 노하우를 상품으로 만든다</strong></p>
+        <dl>
+          <div><dt>내용</dt><dd>서비스 → 소프트웨어·에이전트 상품화</dd></div>
+          <div><dt>AI 실습</dt><dd>노하우를 에이전트로 만들어 보기</dd></div>
+          <div><dt>산출물</dt><dd>상품화 가설 1장</dd></div>
+        </dl>
+        <p class="tags"><span class="pill">대표</span> <span class="pill">코칭</span></p>
+      </div>
+    </label>
+    <label class="mod">
+      <input type="checkbox" value="F3" data-title="고객이 정말 원하나" data-core="1">
+      <div class="mod-body">
+        <p class="mod-head"><span class="mid">F3</span><span class="star" title="꼭 필요">★</span> <strong>고객이 정말 원하나</strong></p>
+        <dl>
+          <div><dt>내용</dt><dd>인터뷰 설계, 반응 측정</dd></div>
+          <div><dt>AI 실습</dt><dd>인터뷰 질문·요약 AI로 처리</dd></div>
+          <div><dt>산출물</dt><dd>고객 인터뷰 5건 요약</dd></div>
+        </dl>
+        <p class="tags"><span class="pill">대표</span> <span class="pill">실습</span></p>
+      </div>
+    </label>
+    <label class="mod">
+      <input type="checkbox" value="F4" data-title="하루 만에 시제품을 만든다" data-core="1">
+      <div class="mod-body">
+        <p class="mod-head"><span class="mid">F4</span><span class="star" title="꼭 필요">★</span> <strong>하루 만에 시제품을 만든다</strong></p>
+        <dl>
+          <div><dt>내용</dt><dd>랜딩페이지, 데모, 시제품</dd></div>
+          <div><dt>AI 실습</dt><dd>AI로 랜딩페이지·시제품 제작</dd></div>
+          <div><dt>산출물</dt><dd>시제품 + 랜딩페이지</dd></div>
+        </dl>
+        <p class="tags"><span class="pill">대표 + 실무자</span> <span class="pill">실습</span></p>
+      </div>
+    </label>
+    <label class="mod">
+      <input type="checkbox" value="F5" data-title="첫 고객과 첫 매출을 만든다" data-core="0">
+      <div class="mod-body">
+        <p class="mod-head"><span class="mid">F5</span> <strong>첫 고객과 첫 매출을 만든다</strong></p>
+        <dl>
+          <div><dt>내용</dt><dd>가격 실험, 사전 판매</dd></div>
+          <div><dt>AI 실습</dt><dd>사전 판매 페이지·메시지 작성</dd></div>
+          <div><dt>산출물</dt><dd>첫 매출 실험 결과</dd></div>
+        </dl>
+        <p class="tags"><span class="pill">대표</span> <span class="pill">코칭</span></p>
+      </div>
+    </label>
+    <label class="mod">
+      <input type="checkbox" value="F6" data-title="자금과 지원을 끌어온다" data-core="0">
+      <div class="mod-body">
+        <p class="mod-head"><span class="mid">F6</span> <strong>자금과 지원을 끌어온다</strong></p>
+        <dl>
+          <div><dt>내용</dt><dd>정부 지원사업, 바우처, 투자 IR</dd></div>
+          <div><dt>AI 실습</dt><dd>지원사업 신청서·IR 초안 AI로 작성</dd></div>
+          <div><dt>산출물</dt><dd>지원사업·IR 초안</dd></div>
+        </dl>
+        <p class="tags"><span class="pill">대표</span> <span class="pill">코칭</span></p>
+      </div>
+    </label>
+  </div>
+</section>
+
+<section id="area-G">
+  <h2>G. 실행 · 지속</h2>
+  <p class="note">교육이 끝난 뒤에도 성과가 이어지게 하는 단계</p>
+  <div class="mods">
+    <label class="mod">
+      <input type="checkbox" value="G1" data-title="다음 90일 동안 무엇을 하나" data-core="1">
+      <div class="mod-body">
+        <p class="mod-head"><span class="mid">G1</span><span class="star" title="꼭 필요">★</span> <strong>다음 90일 동안 무엇을 하나</strong></p>
+        <dl>
+          <div><dt>내용</dt><dd>우선순위, 담당, 마감</dd></div>
+          <div><dt>AI 실습</dt><dd>90일 로드맵 AI와 작성</dd></div>
+          <div><dt>산출물</dt><dd>90일 로드맵</dd></div>
+        </dl>
+        <p class="tags"><span class="pill">대표</span> <span class="pill">코칭</span></p>
+      </div>
+    </label>
+    <label class="mod">
+      <input type="checkbox" value="G2" data-title="성과를 어떻게 재나" data-core="1">
+      <div class="mod-body">
+        <p class="mod-head"><span class="mid">G2</span><span class="star" title="꼭 필요">★</span> <strong>성과를 어떻게 재나</strong></p>
+        <dl>
+          <div><dt>내용</dt><dd>주당 절감 시간, 사람 개입 횟수, 고객 반응</dd></div>
+          <div><dt>AI 실습</dt><dd>회사별 성과 대시보드 만들기</dd></div>
+          <div><dt>산출물</dt><dd>성과 대시보드</dd></div>
+        </dl>
+        <p class="tags"><span class="pill">대표 + 실무자</span> <span class="pill">실습</span></p>
+      </div>
+    </label>
+    <label class="mod">
+      <input type="checkbox" value="G3" data-title="성과를 발표하고 사례로 남긴다" data-core="1">
+      <div class="mod-body">
+        <p class="mod-head"><span class="mid">G3</span><span class="star" title="꼭 필요">★</span> <strong>성과를 발표하고 사례로 남긴다</strong></p>
+        <dl>
+          <div><dt>내용</dt><dd>데모데이, 사례 정리</dd></div>
+          <div><dt>AI 실습</dt><dd>발표 자료·사례 글 AI로 작성</dd></div>
+          <div><dt>산출물</dt><dd>데모데이 발표 + 사례</dd></div>
+        </dl>
+        <p class="tags"><span class="pill">대표</span> <span class="pill">행사</span></p>
+      </div>
+    </label>
+    <label class="mod">
+      <input type="checkbox" value="G4" data-title="같은 고민을 하는 대표와 이어진다" data-core="0">
+      <div class="mod-body">
+        <p class="mod-head"><span class="mid">G4</span> <strong>같은 고민을 하는 대표와 이어진다</strong></p>
+        <dl>
+          <div><dt>내용</dt><dd>동료 대표 그룹, 조찬, 커뮤니티</dd></div>
+          
+          <div><dt>산출물</dt><dd>동료 그룹 참여</dd></div>
+        </dl>
+        <p class="tags"><span class="pill">대표</span> <span class="pill">멤버십</span></p>
+      </div>
+    </label>
+    <label class="mod">
+      <input type="checkbox" value="G5" data-title="막히면 어디서 도움을 받나" data-core="0">
+      <div class="mod-body">
+        <p class="mod-head"><span class="mid">G5</span> <strong>막히면 어디서 도움을 받나</strong></p>
+        <dl>
+          <div><dt>내용</dt><dd>커피챗, 4주 컨설팅, 크레딧, Fractional 연결</dd></div>
+          
+          <div><dt>산출물</dt><dd>후속 지원 경로 안내</dd></div>
+        </dl>
+        <p class="tags"><span class="pill">대표</span> <span class="pill">상품 연결</span></p>
+      </div>
+    </label>
+  </div>
+</section>
+
+<section id="options">
+  <h2>운영 방식 선택지</h2>
+  <p class="note">위 내용을 어떤 이름으로, 어떤 형식과 구성으로 운영할지 고릅니다. 여러 개를 골라도 됩니다.</p>
+  <div class="opts">
+    <fieldset class="opt"><legend>포지셔닝 문장</legend>
+      <label class="chk"><input type="checkbox" value="P1" data-title="AI로 사업을 다시 짜는 대표 코칭" data-group="포지셔닝 문장"> <span>AI로 사업을 다시 짜는 대표 코칭</span></label>
+      <label class="chk"><input type="checkbox" value="P2" data-title="AI 비즈니스 코칭 · 기술이 아니라 사업을 바꿉니다" data-group="포지셔닝 문장"> <span>AI 비즈니스 코칭 · 기술이 아니라 사업을 바꿉니다</span></label>
+      <label class="chk"><input type="checkbox" value="P3" data-title="자동화에서 신사업까지, AI 사업 전환 랩" data-group="포지셔닝 문장"> <span>자동화에서 신사업까지, AI 사업 전환 랩</span></label>
+      <label class="chk"><input type="checkbox" value="P4" data-title="대표가 직접 만들어 보는 AI 사업 설계" data-group="포지셔닝 문장"> <span>대표가 직접 만들어 보는 AI 사업 설계</span></label>
+    </fieldset>
+    <fieldset class="opt"><legend>진행 형식</legend>
+      <label class="chk"><input type="checkbox" value="O1" data-title="온라인 강의 (녹화)" data-group="진행 형식"> <span>온라인 강의 (녹화)</span></label>
+      <label class="chk"><input type="checkbox" value="O2" data-title="라이브 워크숍 (오프라인 기수제)" data-group="진행 형식"> <span>라이브 워크숍 (오프라인 기수제)</span></label>
+      <label class="chk"><input type="checkbox" value="O3" data-title="회사별 코칭 (사업 코치 배정)" data-group="진행 형식"> <span>회사별 코칭 (사업 코치 배정)</span></label>
+      <label class="chk"><input type="checkbox" value="O4" data-title="멘토 1:1 (어드바이저리 크레딧)" data-group="진행 형식"> <span>멘토 1:1 (어드바이저리 크레딧)</span></label>
+      <label class="chk"><input type="checkbox" value="O5" data-title="동료 대표 그룹 (월간 조찬·커뮤니티)" data-group="진행 형식"> <span>동료 대표 그룹 (월간 조찬·커뮤니티)</span></label>
+      <label class="chk"><input type="checkbox" value="O6" data-title="현장 방문 (Fractional)" data-group="진행 형식"> <span>현장 방문 (Fractional)</span></label>
+      <label class="chk"><input type="checkbox" value="O7" data-title="비공개 클리닉 (교육 중·후)" data-group="진행 형식"> <span>비공개 클리닉 (교육 중·후)</span></label>
+    </fieldset>
+    <fieldset class="opt"><legend>참가 구성</legend>
+      <label class="chk"><input type="checkbox" value="T1" data-title="대표 단독" data-group="참가 구성"> <span>대표 단독</span></label>
+      <label class="chk"><input type="checkbox" value="T2" data-title="대표 + 실무자 2인 1조" data-group="참가 구성"> <span>대표 + 실무자 2인 1조</span></label>
+      <label class="chk"><input type="checkbox" value="T3" data-title="업종별 기수 (제조, 유통, 서비스 등)" data-group="참가 구성"> <span>업종별 기수 (제조, 유통, 서비스 등)</span></label>
+      <label class="chk"><input type="checkbox" value="T4" data-title="규모별 기수 (1인·초기 / 성장 기업)" data-group="참가 구성"> <span>규모별 기수 (1인·초기 / 성장 기업)</span></label>
+    </fieldset>
+    <fieldset class="opt"><legend>코치·멘토 구성</legend>
+      <label class="chk"><input type="checkbox" value="R1" data-title="AI 코치: 실습과 구현 지원" data-group="코치·멘토 구성"> <span>AI 코치: 실습과 구현 지원</span></label>
+      <label class="chk"><input type="checkbox" value="R2" data-title="사업 코치: 회사별 적용과 재설계" data-group="코치·멘토 구성"> <span>사업 코치: 회사별 적용과 재설계</span></label>
+      <label class="chk"><input type="checkbox" value="R3" data-title="업종 멘토: 업종 경험 공유" data-group="코치·멘토 구성"> <span>업종 멘토: 업종 경험 공유</span></label>
+      <label class="chk"><input type="checkbox" value="R4" data-title="선배 대표: 1기 수료 대표의 경험 공유" data-group="코치·멘토 구성"> <span>선배 대표: 1기 수료 대표의 경험 공유</span></label>
+    </fieldset>
+    <fieldset class="opt"><legend>성과 측정</legend>
+      <label class="chk"><input type="checkbox" value="M1" data-title="주당 절감 시간" data-group="성과 측정"> <span>주당 절감 시간</span></label>
+      <label class="chk"><input type="checkbox" value="M2" data-title="자율 흐름의 사람 개입 횟수" data-group="성과 측정"> <span>자율 흐름의 사람 개입 횟수</span></label>
+      <label class="chk"><input type="checkbox" value="M3" data-title="신사업 고객 반응 수" data-group="성과 측정"> <span>신사업 고객 반응 수</span></label>
+      <label class="chk"><input type="checkbox" value="M4" data-title="월 비용 변화" data-group="성과 측정"> <span>월 비용 변화</span></label>
+      <label class="chk"><input type="checkbox" value="M5" data-title="참가 전·후 AX 준비도 점수" data-group="성과 측정"> <span>참가 전·후 AX 준비도 점수</span></label>
+    </fieldset>
+    <fieldset class="opt"><legend>결과물 형태</legend>
+      <label class="chk"><input type="checkbox" value="K1" data-title="AX 사업 보드 (회사별 산출물 누적)" data-group="결과물 형태"> <span>AX 사업 보드 (회사별 산출물 누적)</span></label>
+      <label class="chk"><input type="checkbox" value="K2" data-title="90일 로드맵" data-group="결과물 형태"> <span>90일 로드맵</span></label>
+      <label class="chk"><input type="checkbox" value="K3" data-title="데모데이 발표 + 사례 페이지" data-group="결과물 형태"> <span>데모데이 발표 + 사례 페이지</span></label>
+      <label class="chk"><input type="checkbox" value="K4" data-title="실제로 돌아가는 자동화·자율 흐름" data-group="결과물 형태"> <span>실제로 돌아가는 자동화·자율 흐름</span></label>
+    </fieldset>
+  </div>
+</section>
+
+<section id="picked">
+  <h2>고른 항목</h2>
+  <textarea id="out" readonly rows="8" aria-label="고른 항목 목록">아직 고른 항목이 없습니다.</textarea>
+  <div class="toolbar">
+    <button type="button" class="primary" data-act="copy">고른 항목 복사</button>
+    <span class="count" id="copied" aria-live="polite"></span>
+  </div>
+</section>
+
+<footer>Cofoundary · AI 비즈니스 코칭 내용 메뉴 · 2026년 11월 9일 기준 · 내부 논의용 초안</footer>
+
+</div>
+<script>
+(() => {
+  const KEY = "cof-ax-menu-v1";
+  const boxes = [...document.querySelectorAll('input[type="checkbox"]')];
+  const out = document.getElementById("out");
+  const count = document.getElementById("count");
+  const copied = document.getElementById("copied");
+
+  const load = () => { try { return JSON.parse(localStorage.getItem(KEY) || "[]"); } catch { return []; } };
+  const save = (ids) => { try { localStorage.setItem(KEY, JSON.stringify(ids)); } catch {} };
+
+  function render() {
+    const on = boxes.filter((b) => b.checked);
+    save(on.map((b) => b.value));
+    count.textContent = on.length + "개 선택";
+    const mods = on.filter((b) => !b.dataset.group);
+    const opts = on.filter((b) => b.dataset.group);
+    const lines = [];
+    if (mods.length) { lines.push("[내용]"); mods.forEach((b) => lines.push("- " + b.value + " " + b.dataset.title)); }
+    if (opts.length) {
+      lines.push("[운영 방식]");
+      const groups = {};
+      opts.forEach((b) => (groups[b.dataset.group] ||= []).push(b.dataset.title));
+      Object.entries(groups).forEach(([g, v]) => lines.push("- " + g + ": " + v.join(", ")));
+    }
+    out.value = lines.length ? lines.join("\n") : "아직 고른 항목이 없습니다.";
+  }
+
+  const saved = new Set(load());
+  boxes.forEach((b) => { b.checked = saved.has(b.value); b.addEventListener("change", render); });
+
+  document.addEventListener("click", async (ev) => {
+    const act = ev.target.closest("button")?.dataset.act;
+    if (!act) return;
+    if (act === "core") boxes.forEach((b) => { if (!b.dataset.group) b.checked = b.dataset.core === "1"; });
+    if (act === "clear") boxes.forEach((b) => (b.checked = false));
+    if (act === "copy") {
+      try { await navigator.clipboard.writeText(out.value); copied.textContent = "복사했습니다."; }
+      catch { out.select(); copied.textContent = "선택된 글을 Cmd+C로 복사해 주세요."; }
+      return;
+    }
+    render();
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>
