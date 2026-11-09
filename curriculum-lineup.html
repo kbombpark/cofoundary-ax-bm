@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex,nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AX 커리큘럼 라인업</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500&family=Plus+Jakarta+Sans:wght@500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+/* Layout: single reading column (max 880px) with wide tables in scroll boxes; Cofoundary Brand System (company-landing): navy #050B16, brand blue #1E70FF, Plus Jakarta Sans + JetBrains Mono, Pretendard for Korean */
+:root{
+  --bg:#F8FAFC; --surface:#FFFFFF; --ink:#050B16; --muted:#4A5768; --line:#E2E8F0;
+  --accent:#1E70FF; --accent-soft:#E8F0FF; --navy:#050B16; --on-navy:#F8FAFC; --on-navy-2:#8E9CAE; --good:#15803D;
+  --glow:rgba(30,112,255,.3);
+  --f-display:"Plus Jakarta Sans","Pretendard Variable",Pretendard,system-ui,sans-serif;
+  --f-body:"Pretendard Variable",Pretendard,"Plus Jakarta Sans",system-ui,-apple-system,"Apple SD Gothic Neo",sans-serif;
+  --f-num:"JetBrains Mono",ui-monospace,"SFMono-Regular",monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#000000; --surface:#050B16; --ink:#FFFFFF; --muted:#8E9CAE; --line:#1A2433;
+  --accent:#4D8DFF; --accent-soft:#0B1A33; --navy:#050B16; --on-navy:#FFFFFF; --on-navy-2:#8E9CAE; --good:#4ADE80; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#000000; --surface:#050B16; --ink:#FFFFFF; --muted:#8E9CAE; --line:#1A2433;
+  --accent:#4D8DFF; --accent-soft:#0B1A33; --navy:#050B16; --on-navy:#FFFFFF; --on-navy-2:#8E9CAE; --good:#4ADE80; color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15.5px;line-height:1.7;letter-spacing:-0.01em;word-break:keep-all;overflow-wrap:break-word;-webkit-font-smoothing:antialiased;padding-inline:20px;padding-block:40px 72px}
+.wrap{max-width:880px;margin:0 auto;display:flex;flex-direction:column;gap:48px}
+header{display:flex;flex-direction:column;gap:12px;background:var(--navy);color:var(--on-navy);border:1px solid var(--line);border-radius:16px;padding:36px 32px;background-image:radial-gradient(60% 90% at 90% 0%,var(--glow),transparent 70%)}
+header .meta{color:var(--on-navy-2)}
+header .eyebrow{color:#4D8DFF}
+.eyebrow{font-family:var(--f-num);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+h1{font-family:var(--f-display);font-weight:800;letter-spacing:-0.02em;font-size:clamp(28px,5vw,40px);line-height:1.25;margin:0;text-wrap:balance}
+h2{font-family:var(--f-display);font-weight:700;font-size:22px;margin:0 0 4px;text-wrap:balance}
+h3{font-family:var(--f-display);font-size:15px;margin:8px 0 0}
+p{margin:0;max-width:68ch}
+.lead{font-size:17px}
+.meta{font-size:13px;color:var(--muted)}
+section{display:flex;flex-direction:column;gap:16px}
+.note{font-size:13px;color:var(--muted)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-top:3px solid var(--accent);border-radius:10px;padding:16px 18px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.kpi b{font-family:var(--f-num);font-size:22px;color:var(--accent);font-weight:500}
+.kpi span{font-size:13px;color:var(--muted)}
+ul,ol{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:6px;max-width:72ch}
+.scroll{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:14px}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:12.5px;color:var(--muted);font-weight:500;background:color-mix(in srgb,var(--bg) 60%,var(--surface))}
+tr:last-child td{border-bottom:0}
+td:first-child{white-space:nowrap}
+td.num{font-family:var(--f-num);font-variant-numeric:tabular-nums;white-space:nowrap}
+.pill{display:inline-block;font-size:12px;padding:1px 9px;border-radius:999px;border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.pill.on{border-color:var(--good);color:var(--good)}
+.pill.new{border-color:var(--accent);color:var(--accent)}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px 20px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.card h3{margin:0;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.card .price{font-family:var(--f-num);color:var(--accent);font-size:14px}
+.card ul{font-size:14px}
+.fig{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px;overflow-x:auto}
+.fig svg{display:block;width:100%;min-width:680px;height:auto}
+.fig figcaption{font-size:12.5px;color:var(--muted);padding:6px 4px 0}
+figure{margin:0}
+.callout{background:var(--navy);color:var(--on-navy);border-radius:10px;padding:18px 20px;display:flex;flex-direction:column;gap:6px}
+.callout b{color:var(--accent)}
+.tasks{list-style:none;padding:0}
+.tasks li{display:flex;gap:10px;align-items:flex-start}
+.tasks li::before{content:"";flex:0 0 16px;height:16px;margin-top:5px;border:1.5px solid var(--muted);border-radius:4px}
+footer{font-size:12.5px;color:var(--muted);border-top:1px solid var(--line);padding-top:20px}
+/* svg tokens */
+.s-ink{fill:var(--ink)} .s-muted{fill:var(--muted)} .s-box{fill:var(--surface);stroke:var(--line)}
+.s-hi{fill:var(--accent-soft);stroke:var(--accent)} .s-line{stroke:var(--muted);fill:none}
+.s-acc{stroke:var(--accent);fill:none} .s-accfill{fill:var(--accent)} .s-mutedfill{fill:var(--muted)}
+@media (max-width:520px){body{padding-inline:16px}}
+
+h2 .sub{font-family:var(--f-body);font-size:14px;font-weight:500;color:var(--muted);margin-left:6px}
+.plain{list-style:none;padding:0;font-size:14px}
+.plain .code{font-family:var(--f-num);font-size:12px;color:var(--accent);margin-right:4px}
+table td:first-child{font-family:var(--f-num);color:var(--accent)}
+</style>
+</head>
+
+<body>
+<div class="wrap">
+
+<header>
+  <div class="eyebrow">Cofoundary · 팀 논의용 초안 · 2026.11.09</div>
+  <h1>AX 커리큘럼 라인업</h1>
+  <p class="lead">기술 교육이 아니라 <strong>AI를 도구로 사업을 다시 짜는 비즈니스 코칭</strong>입니다. 다섯 상품(AX Learn · Coffee Chat · Sprint · Advise · Partner)마다 제공할 수 있는 커리큘럼을 정리했습니다. 모두 32개입니다.</p>
+  <p class="meta">단계: 진단 → 자동화 → 자율화 → 조직 → 재설계 → 신사업. ★는 지금 가장 먼저 팔 수 있는 대표 커리큘럼입니다. 길이와 형식은 가안입니다.</p>
+</header>
+
+<section>
+  <h2>원칙</h2>
+  <ul>
+    <li><strong>이름은 사업 질문으로:</strong> 'Claude Code 활용' 대신 '비개발자를 위한 사내 도구 만들기'처럼 무엇이 바뀌는지로 이름을 붙입니다.</li>
+    <li><strong>실습은 줄이지 않습니다:</strong> 대표가 직접 만들어 돌려 보는 것이 일반 경영 코칭과 다른 점입니다.</li>
+    <li><strong>결과는 숫자로:</strong> 줄인 시간, 사람 개입 횟수, 고객 반응 수로 잽니다.</li>
+    <li><strong>같은 내용, 다른 깊이:</strong> Learn으로 배우고, Sprint로 함께 만들고, Advise로 검토받고, Partner로 회사 안에 심습니다.</li>
+  </ul>
+</section>
+<section>
+  <h2>AX Learn <span class="sub">AI 사업 입문 강의 · 온라인</span></h2>
+  <p>누구나 혼자 들을 수 있는 강의. 대표와 실무자가 같은 언어로 AX를 시작하게 합니다.</p>
+  <div class="scroll"><table>
+    <thead><tr><th>코드</th><th>강의</th><th>길이</th><th>대상</th><th>결과물</th><th>단계</th></tr></thead>
+    <tbody>
+<tr><td>L1</td><td>AI로 우리 사업 다시 보기 ★</td><td>3주</td><td>대표 · 실무자</td><td>문제 지도, 자동화 1개, 과제 정의서</td><td><span class="pill">진단 · 자동화</span></td></tr>
+<tr><td>L2</td><td>대표를 위한 AI 업무 맡기기</td><td>2시간</td><td>대표</td><td>업무별 지시문 모음, 검증 체크리스트</td><td><span class="pill">자동화</span></td></tr>
+<tr><td>L3</td><td>반복 업무 자동화 실습 (문서 · 엑셀 · 브라우저)</td><td>4편 × 1시간</td><td>실무자</td><td>자동화 3개</td><td><span class="pill">자동화</span></td></tr>
+<tr><td>L4</td><td>비개발자를 위한 사내 도구 만들기</td><td>3시간</td><td>실무자</td><td>동작하는 내부 도구 1개</td><td><span class="pill">자동화</span></td></tr>
+<tr><td>L5</td><td>AI 에이전트로 일이 혼자 돌게 만들기</td><td>3시간</td><td>대표 · 실무자</td><td>자율 운영 흐름도, 판단 기준표</td><td><span class="pill">자율화</span></td></tr>
+<tr><td>L6</td><td>AI 보안 · 개인정보 체크리스트</td><td>1시간</td><td>대표 (필수)</td><td>우리 회사 위험 점검표</td><td><span class="pill">자율화 · 조직</span></td></tr>
+<tr><td>L7</td><td>AI 시대 비용 구조와 가격 다시 계산하기</td><td>2시간</td><td>대표</td><td>비용 구조 전·후 비교표</td><td><span class="pill">재설계</span></td></tr>
+<tr><td>L8</td><td>AI로 신사업 하루 만에 검증하기</td><td>3시간</td><td>대표</td><td>랜딩페이지, 인터뷰 질문지</td><td><span class="pill">신사업</span></td></tr>
+<tr><td>L9</td><td>업종별 AX 사례 시리즈 (건설 · 제조 · 유통 · 서비스)</td><td>편당 30분</td><td>대표</td><td>우리 업종 적용 아이디어</td><td><span class="pill">진단</span></td></tr>
+    </tbody>
+  </table></div>
+</section>
+<section>
+  <h2>AX Coffee Chat <span class="sub">1:1 커피챗 1시간</span></h2>
+  <p>한 시간 안에 한 가지 질문에 답합니다. 상담 뒤 요약 1장과 다음 단계 추천을 보냅니다.</p>
+  <div class="scroll"><table>
+    <thead><tr><th>코드</th><th>주제</th><th>질문</th><th>결과물</th><th>다음 단계</th><th>단계</th></tr></thead>
+    <tbody>
+<tr><td>C1</td><td>AX 진단</td><td>우리 회사는 어디서 시간과 돈이 새는가</td><td>개선 후보 3개</td><td>Sprint · Learn</td><td><span class="pill">진단</span></td></tr>
+<tr><td>C2</td><td>과제 정의서 리뷰</td><td>이 과제를 4주 안에 만들 수 있나</td><td>수정한 과제 정의서</td><td>Sprint</td><td><span class="pill">진단</span></td></tr>
+<tr><td>C3</td><td>AI 도입 비용 빠른 계산</td><td>얼마를 쓰면 얼마가 남나</td><td>ROI 한 장</td><td>Advise</td><td><span class="pill">재설계</span></td></tr>
+<tr><td>C4</td><td>신사업 아이디어 1차 점검</td><td>AI로 새로 할 수 있는 일이 맞나</td><td>검증 계획</td><td>Sprint (신사업) · Advise</td><td><span class="pill">신사업</span></td></tr>
+<tr><td>C5</td><td>다음 단계 상담</td><td>Sprint · Advise · Partner 중 무엇이 맞나</td><td>추천 상품과 일정</td><td>전체</td><td><span class="pill">진단</span></td></tr>
+    </tbody>
+  </table></div>
+</section>
+<section>
+  <h2>AX Sprint <span class="sub">4주 함께 만들기</span></h2>
+  <p>W0 과제 정의 → W1 기본 구조 → W2–3 실제 데이터로 수정 → W4 데모와 다음 단계. 트랙만 다르고 진행 방식은 같습니다.</p>
+  <div class="scroll"><table>
+    <thead><tr><th>코드</th><th>트랙</th><th>4주 뒤 결과</th><th>맞는 회사</th><th>재는 숫자</th><th>단계</th></tr></thead>
+    <tbody>
+<tr><td>S1</td><td>자동화 Sprint ★</td><td>실제로 돌아가는 반복 업무 자동화 1~2개</td><td>반복 업무가 많은 회사</td><td>주당 줄인 시간</td><td><span class="pill">자동화</span></td></tr>
+<tr><td>S2</td><td>사내 도구 Sprint ★</td><td>관리 화면 · 입력 도구 · 대시보드</td><td>엑셀과 손작업으로 버티는 회사</td><td>처리 시간, 오류 수</td><td><span class="pill">자동화</span></td></tr>
+<tr><td>S3</td><td>데이터 Sprint</td><td>흩어진 데이터 연결과 경영 대시보드</td><td>숫자를 모으는 데 시간을 쓰는 회사</td><td>보고서 작성 시간</td><td><span class="pill">자동화 · 재설계</span></td></tr>
+<tr><td>S4</td><td>자율 운영 Sprint</td><td>판단 기준표 + 사람 없이 1주 돈 흐름 1개</td><td>자동화를 이미 해 본 회사</td><td>주간 사람 개입 횟수</td><td><span class="pill">자율화</span></td></tr>
+<tr><td>S5</td><td>신사업 Sprint</td><td>신상품 시제품 + 고객 반응 5건 이상</td><td>AI로 새 상품을 내려는 회사</td><td>고객 반응 수</td><td><span class="pill">신사업</span></td></tr>
+    </tbody>
+  </table></div>
+</section>
+<section>
+  <h2>AX Advise <span class="sub">자문 크레딧 + 멤버십</span></h2>
+  <p>필요할 때 맞는 멘토에게 1:1로 묻습니다. 진단 · 조언 · 검토까지이고 구현은 Sprint로 넘깁니다.</p>
+  <div class="scroll"><table>
+    <thead><tr><th>코드</th><th>자문 주제</th><th>멘토</th><th>형식</th><th>결과물</th><th>단계</th></tr></thead>
+    <tbody>
+<tr><td>A1</td><td>구현 방향 검토</td><td>기술 멘토</td><td>1:1 60분 · 문서 리뷰</td><td>도구 · 구조 선택 메모</td><td><span class="pill">자동화 · 자율화</span></td></tr>
+<tr><td>A2</td><td>AI 사용 정책과 보안 점검</td><td>기술 멘토</td><td>1:1 60분</td><td>사용 가이드라인 초안</td><td><span class="pill">조직</span></td></tr>
+<tr><td>A3</td><td>비용 구조와 가격 모델 재설계</td><td>사업 멘토</td><td>1:1 60분 × 2</td><td>수익 모델 대안</td><td><span class="pill">재설계</span></td></tr>
+<tr><td>A4</td><td>조직 · 역할 재설계, AX 담당자 육성</td><td>사업 멘토</td><td>1:1 60분 · 월 1회</td><td>새 역할표, 담당자 계획</td><td><span class="pill">조직</span></td></tr>
+<tr><td>A5</td><td>신사업 가설 · 사업계획 · IR 검토</td><td>사업 멘토 · 선배 대표</td><td>문서 리뷰 + 1:1</td><td>보완한 사업계획 · IR 자료</td><td><span class="pill">신사업</span></td></tr>
+<tr><td>A6</td><td>정부 지원사업 · 바우처 신청 자문</td><td>사업 멘토</td><td>문서 리뷰</td><td>신청서 검토 의견</td><td><span class="pill">신사업</span></td></tr>
+<tr><td>A7</td><td>분기 AX 점검 (100크레딧 포함)</td><td>기술 + 사업 멘토</td><td>분기 1회 2시간</td><td>분기 점검 리포트</td><td><span class="pill">전체</span></td></tr>
+<tr><td>A8</td><td>월간 대표 조찬 (멤버십)</td><td>초청 연사 · 멤버 대표</td><td>월 1회 조찬</td><td>동료 대표 네트워크</td><td><span class="pill">전체</span></td></tr>
+    </tbody>
+  </table></div>
+</section>
+<section>
+  <h2>AX Partner <span class="sub">주 1일 상주 · 월 계약</span></h2>
+  <p>회사 안에 AX를 이끌 사람이 없을 때 매주 하루 우리가 그 역할을 맡습니다.</p>
+  <div class="scroll"><table>
+    <thead><tr><th>코드</th><th>월간 프로그램</th><th>주기</th><th>하는 일</th><th>결과물</th><th>단계</th></tr></thead>
+    <tbody>
+<tr><td>P1</td><td>AX 로드맵과 우선순위</td><td>월 1회</td><td>분기 목표를 정하고 월별 과제로 나눔</td><td>월간 로드맵</td><td><span class="pill">진단 · 재설계</span></td></tr>
+<tr><td>P2</td><td>사내 AX 담당자 코칭</td><td>매주</td><td>담당자와 함께 일하며 역량 이전</td><td>담당자 성장 기록</td><td><span class="pill">조직</span></td></tr>
+<tr><td>P3</td><td>임직원 워크숍</td><td>월 1회</td><td>Learn 강의를 회사 업무에 맞춰 실습</td><td>팀별 자동화</td><td><span class="pill">자동화 · 조직</span></td></tr>
+<tr><td>P4</td><td>운영 중인 자동화 · 자율 흐름 관리</td><td>매주</td><td>점검, 개선, 실패 대응</td><td>운영 점검표</td><td><span class="pill">자율화</span></td></tr>
+<tr><td>P5</td><td>분기 성과 리뷰</td><td>분기 1회</td><td>세 숫자로 성과를 보고 다음 분기 계획</td><td>분기 리포트</td><td><span class="pill">전체</span></td></tr>
+    </tbody>
+  </table></div>
+</section>
+<section>
+  <h2>단계 × 상품 한눈에 보기</h2>
+  <p>어느 단계를 어느 상품으로 채우는지 보여 줍니다. 빈칸('—')은 아직 커리큘럼이 없는 곳입니다.</p>
+  <div class="scroll"><table>
+    <thead><tr><th>단계</th><th>Learn</th><th>Coffee Chat</th><th>Sprint</th><th>Advise</th><th>Partner</th></tr></thead>
+    <tbody>
+<tr><td><strong>진단</strong></td><td class="num">L1 · L9</td><td class="num">C1 · C2 · C5</td><td class="num">—</td><td class="num">A7 · A8</td><td class="num">P1 · P5</td></tr>
+<tr><td><strong>자동화</strong></td><td class="num">L1 · L2 · L3 · L4</td><td class="num">—</td><td class="num">S1 · S2 · S3</td><td class="num">A1 · A7 · A8</td><td class="num">P3 · P5</td></tr>
+<tr><td><strong>자율화</strong></td><td class="num">L5 · L6</td><td class="num">—</td><td class="num">S4</td><td class="num">A1 · A7 · A8</td><td class="num">P4 · P5</td></tr>
+<tr><td><strong>조직</strong></td><td class="num">L6</td><td class="num">—</td><td class="num">—</td><td class="num">A2 · A4 · A7 · A8</td><td class="num">P2 · P3 · P5</td></tr>
+<tr><td><strong>재설계</strong></td><td class="num">L7</td><td class="num">C3</td><td class="num">S3</td><td class="num">A3 · A7 · A8</td><td class="num">P1 · P5</td></tr>
+<tr><td><strong>신사업</strong></td><td class="num">L8</td><td class="num">C4</td><td class="num">S5</td><td class="num">A5 · A6 · A7 · A8</td><td class="num">P5</td></tr>
+    </tbody>
+  </table></div>
+</section>
+<section>
+  <h2>묶음 · 특별 형식</h2>
+  <p>위 커리큘럼을 묶어서 다른 형태로도 제공합니다.</p>
+  <div class="scroll"><table>
+    <thead><tr><th>형식</th><th>구성</th><th>용도</th></tr></thead>
+    <tbody>
+<tr><td>AX Lab 기수제 (8주)</td><td>Learn + Coffee Chat + Sprint를 묶은 오프라인 기수 과정. 1~3주 자동화, 4~5주 자율화, 6~7주 재설계와 신사업, 8주 데모데이.</td><td><span class="pill">2기</span></td></tr>
+<tr><td>기업 맞춤 임직원 교육</td><td>Learn 강의를 한 회사 업무에 맞춰 반일 또는 1일 워크숍으로 진행합니다.</td><td><span class="pill">B2B</span></td></tr>
+<tr><td>업종별 기수</td><td>건설, 제조, 유통처럼 같은 업종 대표끼리 모아 사례와 과제를 공유합니다.</td><td><span class="pill">확장</span></td></tr>
+<tr><td>파트너 세미나</td><td>디캠프, 드림플러스, AC 포트폴리오 대상 90분 세미나 + 현장 Coffee Chat.</td><td><span class="pill">유입</span></td></tr>
+<tr><td>대표 조찬 특강</td><td>멤버십 대표 대상 월 1회 조찬. 업종 사례와 외부 연사.</td><td><span class="pill">멤버십</span></td></tr>
+    </tbody>
+  </table></div>
+</section>
+<section>
+  <h2>만드는 순서 (제안)</h2>
+  <p>1기 자료로 바로 낼 수 있는 것부터 시작하고, 2기 전에 자율화와 조직 쪽을 채웁니다.</p>
+  <div class="cards">
+<div class="card"><h3>바로 가능 (1기 자료 재사용) <span class="pill">10개</span></h3><ul class="plain"><li><span class="code">L1</span> AI로 우리 사업 다시 보기</li><li><span class="code">L2</span> 대표를 위한 AI 업무 맡기기</li><li><span class="code">L3</span> 반복 업무 자동화 실습 (문서 · 엑셀 · 브라우저)</li><li><span class="code">C1</span> AX 진단</li><li><span class="code">C2</span> 과제 정의서 리뷰</li><li><span class="code">C5</span> 다음 단계 상담</li><li><span class="code">S1</span> 자동화 Sprint</li><li><span class="code">S2</span> 사내 도구 Sprint</li><li><span class="code">A1</span> 구현 방향 검토</li><li><span class="code">A8</span> 월간 대표 조찬 (멤버십)</li></ul></div>
+<div class="card"><h3>2기 전 제작 <span class="pill">11개</span></h3><ul class="plain"><li><span class="code">L4</span> 비개발자를 위한 사내 도구 만들기</li><li><span class="code">L5</span> AI 에이전트로 일이 혼자 돌게 만들기</li><li><span class="code">L6</span> AI 보안 · 개인정보 체크리스트</li><li><span class="code">C3</span> AI 도입 비용 빠른 계산</li><li><span class="code">S3</span> 데이터 Sprint</li><li><span class="code">S4</span> 자율 운영 Sprint</li><li><span class="code">A2</span> AI 사용 정책과 보안 점검</li><li><span class="code">A3</span> 비용 구조와 가격 모델 재설계</li><li><span class="code">A4</span> 조직 · 역할 재설계, AX 담당자 육성</li><li><span class="code">P1</span> AX 로드맵과 우선순위</li><li><span class="code">P3</span> 임직원 워크숍</li></ul></div>
+<div class="card"><h3>이후 확장 <span class="pill">11개</span></h3><ul class="plain"><li><span class="code">L7</span> AI 시대 비용 구조와 가격 다시 계산하기</li><li><span class="code">L8</span> AI로 신사업 하루 만에 검증하기</li><li><span class="code">L9</span> 업종별 AX 사례 시리즈 (건설 · 제조 · 유통 · 서비스)</li><li><span class="code">C4</span> 신사업 아이디어 1차 점검</li><li><span class="code">S5</span> 신사업 Sprint</li><li><span class="code">A5</span> 신사업 가설 · 사업계획 · IR 검토</li><li><span class="code">A6</span> 정부 지원사업 · 바우처 신청 자문</li><li><span class="code">A7</span> 분기 AX 점검 (100크레딧 포함)</li><li><span class="code">P2</span> 사내 AX 담당자 코칭</li><li><span class="code">P4</span> 운영 중인 자동화 · 자율 흐름 관리</li><li><span class="code">P5</span> 분기 성과 리뷰</li></ul></div>
+  </div>
+</section>
+
+<footer>Cofoundary · AX 커리큘럼 라인업 · 2026년 11월 9일 기준 · 내부 논의용 초안</footer>
+
+</div>
+</body>
+</html>
