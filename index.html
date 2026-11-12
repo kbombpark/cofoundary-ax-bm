@@ -153,22 +153,33 @@ td:first-child{white-space:nowrap}
 .pl-step.pl-wide::before{content:"↕ "}
 .pl-step.pl-close::before{content:"≈ "}
 .pl-head .pl-price,.pl-head .pl-stepcell{font-size:12px;color:var(--muted);font-family:var(--f-body)}
+
+/* positioning map */
+.pm-frame{fill:none;stroke:var(--line)}
+.pm-mid{stroke:var(--line);stroke-dasharray:4 4}
+.pm-hit{fill:transparent}
+.pm-dot{fill:var(--accent);stroke:var(--surface);stroke-width:2}
+.pm-dot-1{fill:var(--surface);stroke:var(--muted);stroke-width:2}
+.pm-ring{fill:none;stroke:var(--accent);stroke-width:1.5}
+.pm-pt{cursor:default;outline:none}
+.pm-pt:hover .pm-dot,.pm-pt:focus .pm-dot{stroke:var(--ink)}
+.pm-pt:hover .pm-dot-1,.pm-pt:focus .pm-dot-1{stroke:var(--ink)}
 </style>
 </head>
 <body>
 <div class="wrap">
 
 <header>
-  <div class="eyebrow">Cofoundary · 팀 논의용 초안 · 2026.11.09</div>
+  <div class="eyebrow">Cofoundary · 팀 논의용 초안 · 2026.11.12</div>
   <h1>교육 AX Business Model</h1>
-  <p class="lead">지난주에는 강의 → 커피챗 → 4주 컨설팅 → 크레딧 → Fractional로 올라가는 사다리였습니다. 이번 안은 여섯 상품을 <strong>각각 따로 판매</strong>하고, 앞 상품을 산 고객이 다음 상품을 사면 <strong>혜택</strong>을 주는 구조입니다.</p>
+  <p class="lead">지난주에는 강의 → 커피챗 → 4주 컨설팅 → 크레딧 → Fractional로 올라가는 사다리였습니다. 이번 안은 여섯 상품 중 어느 것이든 바로 살 수 있고, 앞 상품을 산 고객이 다음 상품을 사면 <strong>혜택</strong>을 주는 구조입니다.</p>
 </header>
 
 
 
 <section>
   <h2>전체 구조: 유입 → 강의 → 상품</h2>
-  <p>고객은 <strong>무료 콘텐츠</strong>로 우리를 알게 되고, <strong>온라인 강의(AX Learn)</strong>로 배우고, <strong>Coffee Chat</strong>에서 상담한 뒤 <strong>상품</strong>을 고릅니다. 이 흐름은 권하는 길일 뿐이고, <strong>상품은 흐름을 거치지 않아도 바로 살 수 있습니다.</strong> 아래 '전체 흐름'부터는 상품을 파는 방식(개별 판매 + 연계 혜택)입니다.</p>
+  <p>고객은 <strong>무료 콘텐츠</strong>로 우리를 알게 되고, <strong>온라인 강의(AX Learn)</strong>로 배우고, <strong>Coffee Chat</strong>에서 상담한 뒤 <strong>상품</strong>을 고릅니다. 이 흐름은 권하는 길일 뿐이고, <strong>상품은 흐름을 거치지 않아도 바로 살 수 있습니다.</strong> 아래 '전체 흐름'부터는 상품을 파는 방식과 연계 혜택입니다.</p>
   <figure class="fig">
     <svg viewBox="0 0 800 352" role="img" aria-label="유튜브와 뉴스레터로 알게 된 고객이 무료 강의, 유료 강의를 거쳐 AX Coffee Chat에서 상담한 뒤 AX Sprint, Agent, Advise, Partner 중 하나를 고르는 흐름입니다. 상품은 이 흐름을 거치지 않고 바로 살 수도 있습니다.">
       <defs><marker id="tf-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="s-mutedfill"/></marker></defs>
@@ -468,20 +479,38 @@ td:first-child{white-space:nowrap}
   <div class="scroll"><table>
     <thead><tr><th>경로</th><th>순서</th><th>누구</th><th>받는 혜택</th></tr></thead>
     <tbody>
-      <tr><td>배우기만</td><td>Learn</td><td>AI를 혼자 배워 보려는 사람</td><td>—</td></tr>
-      <tr><td>정석 경로</td><td>Learn → Coffee Chat → Sprint → Advise → Partner</td><td>단계를 밟는 대표</td><td>모든 연계 혜택</td></tr>
-      <tr><td>상담만</td><td>Coffee Chat</td><td>방향만 듣고 싶은 대표</td><td>—</td></tr>
-      <tr><td>상담 후 실행</td><td>Coffee Chat → Sprint</td><td>파트너 오피스아워로 온 대표</td><td>Coffee Chat 비용 5만 원 차감</td></tr>
-      <tr><td>바로 실행</td><td>Sprint</td><td>신규 사업을 빨리 내려는 창업자·회사</td><td>W0 과제 정의 포함</td></tr>
-      <tr><td>운영 맡기기</td><td>Coffee Chat → Agent</td><td>운영 업무가 많은 회사</td><td>Coffee Chat 비용 5만 원 차감</td></tr>
-      <tr><td>만든 뒤 운영</td><td>Sprint → Agent</td><td>새 서비스를 낸 창업자·회사</td><td>50만 원 차감</td></tr>
-      <tr><td>실행 후 자문</td><td>Sprint → Advise</td><td>만든 뒤 계속 검토가 필요한 회사</td><td>웰컴 2cr + 20%</td></tr>
-      <tr><td>작게 시작</td><td>Advise 스타터 3cr → 10cr 이상</td><td>개발팀이 있는 회사</td><td>90만 원 차감</td></tr>
-      <tr><td>자문 후 실행</td><td>Advise → Sprint · Agent</td><td>상담하다 구현이 필요해진 회사</td><td>잔여 크레딧 계약금 전환</td></tr>
-      <tr><td>상주 직행</td><td>Partner</td><td>중견·성장 기업</td><td>—</td></tr>
-      <tr><td>상주로 확장</td><td>Sprint · Agent · Advise → Partner</td><td>관계가 쌓인 회사</td><td>첫 달 우대 · 잔여 전환</td></tr>
+      <tr><td>① 배우기만</td><td>Learn</td><td>AI를 혼자 배워 보려는 사람</td><td>—</td></tr>
+      <tr><td>② 정석 경로</td><td>Learn → Coffee Chat → Sprint → Advise → Partner</td><td>단계를 밟는 대표</td><td>모든 연계 혜택</td></tr>
+      <tr><td>③ 상담만</td><td>Coffee Chat</td><td>방향만 듣고 싶은 대표</td><td>—</td></tr>
+      <tr><td>④ 상담 후 실행</td><td>Coffee Chat → Sprint</td><td>파트너 오피스아워로 온 대표</td><td>Coffee Chat 비용 5만 원 차감</td></tr>
+      <tr><td>⑤ 바로 실행</td><td>Sprint</td><td>신규 사업을 빨리 내려는 창업자·회사</td><td>W0 과제 정의 포함</td></tr>
+      <tr><td>⑥ 운영 맡기기</td><td>Coffee Chat → Agent</td><td>운영 업무가 많은 회사</td><td>Coffee Chat 비용 5만 원 차감</td></tr>
+      <tr><td>⑦ 만든 뒤 운영</td><td>Sprint → Agent</td><td>새 서비스를 낸 창업자·회사</td><td>50만 원 차감</td></tr>
+      <tr><td>⑧ 실행 후 자문</td><td>Sprint → Advise</td><td>만든 뒤 계속 검토가 필요한 회사</td><td>웰컴 2cr + 20%</td></tr>
+      <tr><td>⑨ 작게 시작</td><td>Advise 스타터 3cr → 10cr 이상</td><td>개발팀이 있는 회사</td><td>90만 원 차감</td></tr>
+      <tr><td>⑩ 자문 후 실행</td><td>Advise → Sprint · Agent</td><td>상담하다 구현이 필요해진 회사</td><td>잔여 크레딧 계약금 전환</td></tr>
+      <tr><td>⑪ 상주 직행</td><td>Partner</td><td>중견·성장 기업</td><td>—</td></tr>
+      <tr><td>⑫ 상주로 확장</td><td>Sprint · Agent · Advise → Partner</td><td>관계가 쌓인 회사</td><td>첫 달 우대 · 잔여 전환</td></tr>
     </tbody>
   </table></div>
+
+  <h3>대표 경로 포지셔닝 맵</h3>
+  <p>12가지 경로를 두 기준으로 놓았습니다. 가로는 <strong>누가 실행하는가</strong>(고객이 직접 ↔ 우리가 대신), 세로는 <strong>관계 기간</strong>(한 번 ↔ 계속)입니다. 점 모양은 고객 한 곳에서 생기는 매출 크기입니다.</p>
+  <figure class="fig pm">
+    <svg viewBox="0 0 800 580" role="img" aria-label="대표 경로 12가지 포지셔닝 맵. 왼쪽 아래 혼자 배우기 칸에 배우기만과 상담만, 오른쪽 아래 함께 만들기 칸에 상담 후 실행, 바로 실행, 운영 맡기기, 만든 뒤 운영, 자문 후 실행, 왼쪽 위 자문 칸에 작게 시작과 실행 후 자문, 오른쪽 위 맡기고 계속 칸에 정석 경로, 상주 직행, 상주로 확장이 있습니다.">
+      <rect x="100" y="50" width="660" height="440" rx="8" class="pm-frame"/><line x1="430.0" y1="50" x2="430.0" y2="490" class="pm-mid"/><line x1="100" y1="270.0" x2="760" y2="270.0" class="pm-mid"/><text x="112" y="72" text-anchor="start" font-size="12.5" font-weight="700" class="s-muted">직접 하며 계속 자문</text><text x="112" y="88" text-anchor="start" font-size="11.5" class="s-muted">크레딧 구독</text><text x="748" y="72" text-anchor="end" font-size="12.5" font-weight="700" class="s-muted">맡기고 계속</text><text x="748" y="88" text-anchor="end" font-size="11.5" class="s-muted">반복 매출</text><text x="112" y="464" text-anchor="start" font-size="12.5" font-weight="700" class="s-muted">혼자 배우기 · 한 번</text><text x="112" y="480" text-anchor="start" font-size="11.5" class="s-muted">유입 (돈은 거의 안 됨)</text><text x="748" y="464" text-anchor="end" font-size="12.5" font-weight="700" class="s-muted">함께 만들기 · 몇 주</text><text x="748" y="480" text-anchor="end" font-size="11.5" class="s-muted">핵심 매출 프로젝트</text><text x="100" y="514" font-size="11.5" class="s-muted">고객이 직접 한다 (배우기 · 자문)</text><text x="760" y="514" text-anchor="end" font-size="11.5" class="s-muted">우리가 대신 한다 (구현 · 상주)</text><text x="430.0" y="534" text-anchor="middle" font-size="12.5" font-weight="700" class="s-ink">누가 실행하는가 →</text><text x="88" y="490" text-anchor="end" font-size="11.5" class="s-muted">한 번</text><text x="88" y="60" text-anchor="end" font-size="11.5" class="s-muted">계속</text><text transform="translate(66 270.0) rotate(-90)" text-anchor="middle" font-size="12.5" font-weight="700" class="s-ink">관계 기간 →</text><g class="pm-pt" tabindex="0"><title>① 배우기만 · Learn · 고객당 0원~클래스비</title><circle cx="166" cy="428" r="16" class="pm-hit"/><circle cx="166" cy="428" r="7" class="pm-dot-1"/><text x="182" y="433" text-anchor="start" font-size="12.5" font-weight="600" class="s-ink">① 배우기만</text></g><g class="pm-pt" tabindex="0"><title>② 정석 경로 · Learn → Coffee Chat → Sprint → Advise → Partner · 고객당 약 700만 원 + Partner 월 계약</title><circle cx="536" cy="76" r="16" class="pm-hit"/><circle cx="536" cy="76" r="11.5" class="pm-ring"/><circle cx="536" cy="76" r="7" class="pm-dot"/><text x="520" y="81" text-anchor="end" font-size="12.5" font-weight="600" class="s-ink">② 정석 경로</text></g><g class="pm-pt" tabindex="0"><title>③ 상담만 · Coffee Chat · 고객당 5만 원</title><circle cx="272" cy="393" r="16" class="pm-hit"/><circle cx="272" cy="393" r="7" class="pm-dot-1"/><text x="288" y="398" text-anchor="start" font-size="12.5" font-weight="600" class="s-ink">③ 상담만</text></g><g class="pm-pt" tabindex="0"><title>④ 상담 후 실행 · Coffee Chat → Sprint · 고객당 450만 원</title><circle cx="463" cy="362" r="16" class="pm-hit"/><circle cx="463" cy="362" r="7" class="pm-dot"/><text x="447" y="367" text-anchor="end" font-size="12.5" font-weight="600" class="s-ink">④ 상담 후 실행</text></g><g class="pm-pt" tabindex="0"><title>⑤ 바로 실행 · Sprint · 고객당 450만 원</title><circle cx="509" cy="411" r="16" class="pm-hit"/><circle cx="509" cy="411" r="7" class="pm-dot"/><text x="525" y="415" text-anchor="start" font-size="12.5" font-weight="600" class="s-ink">⑤ 바로 실행</text></g><g class="pm-pt" tabindex="0"><title>⑥ 운영 맡기기 · Coffee Chat → Agent · 고객당 390만 원</title><circle cx="602" cy="349" r="16" class="pm-hit"/><circle cx="602" cy="349" r="7" class="pm-dot"/><text x="618" y="354" text-anchor="start" font-size="12.5" font-weight="600" class="s-ink">⑥ 운영 맡기기</text></g><g class="pm-pt" tabindex="0"><title>⑦ 만든 뒤 운영 · Sprint → Agent · 고객당 790만 원</title><circle cx="575" cy="301" r="16" class="pm-hit"/><circle cx="575" cy="301" r="7" class="pm-dot"/><text x="591" y="305" text-anchor="start" font-size="12.5" font-weight="600" class="s-ink">⑦ 만든 뒤 운영</text></g><g class="pm-pt" tabindex="0"><title>⑧ 실행 후 자문 · Sprint → Advise · 고객당 700만 원~</title><circle cx="404" cy="226" r="16" class="pm-hit"/><circle cx="404" cy="226" r="7" class="pm-dot"/><text x="420" y="230" text-anchor="start" font-size="12.5" font-weight="600" class="s-ink">⑧ 실행 후 자문</text></g><g class="pm-pt" tabindex="0"><title>⑨ 작게 시작 · Advise 스타터 3cr → 10cr 이상 · 고객당 250만 원~</title><circle cx="272" cy="200" r="16" class="pm-hit"/><circle cx="272" cy="200" r="7" class="pm-dot"/><text x="288" y="204" text-anchor="start" font-size="12.5" font-weight="600" class="s-ink">⑨ 작게 시작</text></g><g class="pm-pt" tabindex="0"><title>⑩ 자문 후 실행 · Advise → Sprint · Agent · 고객당 약 400만~700만 원</title><circle cx="456" cy="288" r="16" class="pm-hit"/><circle cx="456" cy="288" r="7" class="pm-dot"/><text x="440" y="292" text-anchor="end" font-size="12.5" font-weight="600" class="s-ink">⑩ 자문 후 실행</text></g><g class="pm-pt" tabindex="0"><title>⑪ 상주 직행 · Partner · 고객당 월 계약 (협의)</title><circle cx="714" cy="164" r="16" class="pm-hit"/><circle cx="714" cy="164" r="11.5" class="pm-ring"/><circle cx="714" cy="164" r="7" class="pm-dot"/><text x="698" y="169" text-anchor="end" font-size="12.5" font-weight="600" class="s-ink">⑪ 상주 직행</text></g><g class="pm-pt" tabindex="0"><title>⑫ 상주로 확장 · Sprint · Agent · Advise → Partner · 고객당 앞 상품 + 월 계약</title><circle cx="654" cy="112" r="16" class="pm-hit"/><circle cx="654" cy="112" r="11.5" class="pm-ring"/><circle cx="654" cy="112" r="7" class="pm-dot"/><text x="638" y="116" text-anchor="end" font-size="12.5" font-weight="600" class="s-ink">⑫ 상주로 확장</text></g><circle cx="107" cy="562" r="7" class="pm-dot-1"/><text x="120" y="566" font-size="11.5" class="s-muted">유입 (10만 원 미만)</text><circle cx="267" cy="562" r="7" class="pm-dot"/><text x="280" y="566" font-size="11.5" class="s-muted">프로젝트 (고객당 수백만 원)</text><circle cx="467" cy="562" r="11.5" class="pm-ring"/><circle cx="467" cy="562" r="7" class="pm-dot"/><text x="484" y="566" font-size="11.5" class="s-muted">반복 (월 계약 포함)</text>
+    </svg>
+    <figcaption>점에 마우스를 올리면 순서와 고객당 금액이 보입니다. 위치는 상품 성격을 기준으로 잡은 상대 위치이고, 측정값이 아닙니다. VAT 별도.</figcaption>
+  </figure>
+
+  <h3>맵 요약</h3>
+  <ul>
+    <li><strong>오른쪽 아래가 몰려 있습니다 (④⑤⑥⑦⑩).</strong> Sprint·Agent 프로젝트 경로가 한곳에 모여 고객이 헷갈리기 쉽습니다. 고객에게는 "새 사업이면 Sprint, 지금 운영이면 Agent" 한 문장으로 나눠 안내합니다.</li>
+    <li><strong>가장 값진 오른쪽 위(②⑪⑫)에 가격이 없습니다.</strong> 세 경로 모두 Partner '협의'로 끝납니다. Partner 월 금액을 정하는 것이 이 맵에서 가장 급한 일입니다.</li>
+    <li><strong>왼쪽 아래(①③)는 다음 칸으로 가는 길이 약합니다.</strong> Learn → Coffee Chat은 혜택이 없고, 상담만 받고 끝나는 고객에게 줄 다음 제안이 '제안' 상태입니다. Coffee Chat → Advise 스타터 5만 원 차감을 확정하면 왼쪽 위로 가는 길이 생깁니다.</li>
+    <li><strong>왼쪽 위(⑧⑨)는 코치가 조언만 하는 경로입니다.</strong> 개발팀이 있는 회사용이고, 구현이 없어 코치 시간이 적게 듭니다. 코치 인원이 부족할 때 늘리기 좋은 칸입니다.</li>
+    <li><strong>영업의 방향은 왼쪽 아래 → 오른쪽 위입니다.</strong> 오른쪽 위로 갈수록 고객당 금액이 커지므로, 연계 혜택은 고객을 한 칸씩 옮기는 데 씁니다.</li>
+  </ul>
 </section>
 
 <section>
@@ -539,7 +568,7 @@ td:first-child{white-space:nowrap}
   </ul>
 </section>
 
-<footer>Cofoundary · 교육 AX Business Model · 2026년 11월 9일 기준 · 내부 공유용 초안</footer>
+<footer>Cofoundary · 교육 AX Business Model · 2026년 11월 12일 기준 · 내부 공유용 초안</footer>
 
 </div>
 </body>
