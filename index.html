@@ -80,7 +80,7 @@ footer{font-size:12.5px;color:var(--muted);border-top:1px solid var(--line);padd
 .doors-band{display:flex;align-items:center;gap:10px;font-size:12.5px;color:var(--muted);margin-bottom:-6px}
 .doors-band span{font-family:var(--f-num);letter-spacing:.06em}
 .doors-band i{flex:1;height:0;border-top:1px dashed var(--line)}
-.doors{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+.doors{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px 10px}
 @media (max-width:860px){.doors{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:480px){.doors{grid-template-columns:1fr}}
 .door{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 14px 14px;display:flex;flex-direction:column;gap:4px;min-width:0}
@@ -109,7 +109,7 @@ footer{font-size:12.5px;color:var(--muted);border-top:1px solid var(--line);padd
 .lg.m-none::before{background:transparent}
 .lg.m-same::before{background:color-mix(in srgb,var(--line) 60%,transparent)}
 /* transition matrix */
-table.matrix{min-width:760px;table-layout:fixed}
+table.matrix{min-width:880px;table-layout:fixed}
 table.matrix th,table.matrix td{font-size:12.5px;padding:9px 10px;vertical-align:top;white-space:normal;border-left:1px solid var(--line)}
 table.matrix thead th{text-align:center}
 table.matrix tbody th{font-size:13px;color:var(--ink);font-weight:700;background:color-mix(in srgb,var(--bg) 60%,var(--surface));width:84px}
@@ -129,6 +129,30 @@ td:first-child{white-space:nowrap}
 .mf-def{fill:var(--accent)} .mf-new{fill:var(--good)} .mf-sug{fill:var(--muted)}
 .pill-def,.pill-new,.pill-sug{fill:var(--surface);stroke-width:1px} .pill-def{stroke:var(--accent)} .pill-new{stroke:var(--good)} .pill-sug{stroke:var(--line);stroke-dasharray:3 2}
 .t-def{fill:var(--accent);font-weight:600} .t-new{fill:var(--good);font-weight:600} .t-sug{fill:var(--muted)}
+
+/* price ladder (log-scale dot plot) */
+.pl .pl-wrap{min-width:660px;display:flex;flex-direction:column}
+.pl-row{display:grid;grid-template-columns:150px minmax(0,1fr) 92px 108px;align-items:center;gap:12px;min-height:40px;border-bottom:1px solid var(--line);padding:2px 4px}
+.pl-row:last-child{border-bottom:0}
+.pl-head{min-height:30px;font-size:12px;color:var(--muted)}
+.pl-name{display:flex;flex-direction:column;line-height:1.3;font-size:13px}
+.pl-name span{font-size:11.5px;color:var(--muted)}
+.pl-track{position:relative;height:28px}
+.pl-axis{height:20px}
+.pl-tick{position:absolute;top:2px;transform:translateX(-50%);font-family:var(--f-num);font-size:11px;color:var(--muted);white-space:nowrap}
+.pl-grid{position:absolute;top:0;bottom:0;width:0;border-left:1px solid var(--line)}
+.pl-dot{position:absolute;top:50%;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 2px var(--surface);cursor:default}
+.pl-dot::before,.pl-band::before{content:"";position:absolute;inset:-8px}
+.pl-band{position:absolute;top:50%;height:14px;margin-top:-7px;border:1.5px dashed var(--muted);border-radius:7px;background:color-mix(in srgb,var(--muted) 10%,transparent)}
+.pl-dot:hover::after,.pl-dot:focus::after,.pl-band:hover::after,.pl-band:focus::after{content:attr(data-tip);position:absolute;left:50%;bottom:calc(100% + 8px);transform:translateX(-50%);white-space:nowrap;background:var(--navy);color:var(--on-navy);font-size:12px;padding:4px 9px;border-radius:6px;border:1px solid var(--line);z-index:2;pointer-events:none}
+.pl-price{font-family:var(--f-num);font-size:13px;text-align:right;white-space:nowrap}
+.pl-row-tbd .pl-price{font-family:var(--f-body);color:var(--muted)}
+.pl-stepcell{font-size:12px}
+.pl-step{font-family:var(--f-num);color:var(--muted);white-space:nowrap}
+.pl-step.pl-wide,.pl-step.pl-close{font-family:var(--f-body);font-weight:600;color:var(--ink);border:1px solid var(--line);border-radius:999px;padding:1px 8px}
+.pl-step.pl-wide::before{content:"↕ "}
+.pl-step.pl-close::before{content:"≈ "}
+.pl-head .pl-price,.pl-head .pl-stepcell{font-size:12px;color:var(--muted);font-family:var(--f-body)}
 </style>
 </head>
 <body>
@@ -137,23 +161,59 @@ td:first-child{white-space:nowrap}
 <header>
   <div class="eyebrow">Cofoundary · 팀 논의용 초안 · 2026.11.09</div>
   <h1>AX 프로그램 BM: 개별 판매 + 연계 혜택</h1>
-  <p class="lead">지난주에는 강의 → 커피챗 → 4주 컨설팅 → 크레딧 → Fractional로 올라가는 사다리였습니다. 이번 안은 다섯 상품을 <strong>각각 따로 판매</strong>하고, 앞 상품을 산 고객이 다음 상품을 사면 <strong>혜택</strong>을 주는 구조입니다.</p>
-  <p class="meta">기준: 2026.11.06 사업구조 재설계안 + 2026.10.19 대표 방향(어드바이저리 크레딧 + 멤버십) + 11.09 논의(개별 판매, 다채널 강의, 대표 타겟). 상품 이름은 AX Learn(강의) · AX Coffee Chat(커피챗) · AX Sprint(4주 컨설팅) · AX Advise(크레딧) · AX Partner(Fractional)입니다. 이익률은 이후에 정합니다. 가격은 VAT 별도이고, 강의만 소비자가입니다.</p>
+  <p class="lead">지난주에는 강의 → 커피챗 → 4주 컨설팅 → 크레딧 → Fractional로 올라가는 사다리였습니다. 이번 안은 여섯 상품을 <strong>각각 따로 판매</strong>하고, 앞 상품을 산 고객이 다음 상품을 사면 <strong>혜택</strong>을 주는 구조입니다.</p>
+  <p class="meta">기준: 2026.11.06 사업구조 재설계안 + 2026.10.19 대표 방향(어드바이저리 크레딧 + 멤버십) + 11.09 논의(개별 판매, 다채널 강의, 대표 타겟). 상품 이름은 AX Learn(유·무료 온라인 강의) · AX Coffee Chat(커피챗) · AX Sprint(4주 신규 사업) · AX Agent(3주 멀티 에이전트) · AX Advise(크레딧) · AX Partner(Fractional)입니다. 이익률은 이후에 정합니다. 가격은 VAT 별도이고, 강의만 소비자가입니다.</p>
 </header>
 
 
 
 <section>
+  <h2>전체 구조: 유입 → 강의 → 상품</h2>
+  <p>고객은 <strong>무료 콘텐츠</strong>로 우리를 알게 되고, <strong>온라인 강의(AX Learn)</strong>로 배우고, <strong>Coffee Chat</strong>에서 상담한 뒤 <strong>상품</strong>을 고릅니다. 이 흐름은 권하는 길일 뿐이고, <strong>상품은 흐름을 거치지 않아도 바로 살 수 있습니다.</strong> 아래 '전체 흐름'부터는 상품을 파는 방식(개별 판매 + 연계 혜택)입니다.</p>
+  <figure class="fig">
+    <svg viewBox="0 0 800 352" role="img" aria-label="유튜브와 뉴스레터로 알게 된 고객이 무료 강의, 유료 강의를 거쳐 AX Coffee Chat에서 상담한 뒤 AX Sprint, Agent, Advise, Partner 중 하나를 고르는 흐름입니다. 상품은 이 흐름을 거치지 않고 바로 살 수도 있습니다.">
+      <defs><marker id="tf-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="s-mutedfill"/></marker></defs>
+      <text x="115" y="24" text-anchor="middle" font-size="12.5" font-weight="700" class="s-accfill">① 유입 채널 · 무료</text><text x="335" y="24" text-anchor="middle" font-size="12.5" font-weight="700" class="s-accfill">② AX Learn · 온라인 강의</text><text x="530" y="24" text-anchor="middle" font-size="12.5" font-weight="700" class="s-accfill">③ 상담</text><text x="715" y="24" text-anchor="middle" font-size="12.5" font-weight="700" class="s-accfill">④ 상품</text><rect x="20" y="44" width="190" height="96" rx="9" class="s-box"/><text x="115" y="68" text-anchor="middle" font-size="14" font-weight="700" class="s-ink">유튜브</text><text x="115" y="90" text-anchor="middle" font-size="12" class="s-ink">쉽게 따라 하는 콘텐츠</text><text x="115" y="110" text-anchor="middle" font-size="11.5" class="s-muted">예) grokbot 세팅·사용</text><text x="115" y="130" text-anchor="middle" font-size="11.5" class="s-muted">멀티 에이전트 구축</text><line x1="30" y1="150" x2="200" y2="150" class="s-line" stroke-dasharray="2 4"/><rect x="20" y="160" width="190" height="92" rx="9" class="s-box"/><text x="115" y="184" text-anchor="middle" font-size="14" font-weight="700" class="s-ink">뉴스레터</text><text x="115" y="206" text-anchor="middle" font-size="12" class="s-ink">관련 최신 콘텐츠</text><text x="115" y="226" text-anchor="middle" font-size="11.5" class="s-muted">Static Project로 생성·관리</text><text x="115" y="246" text-anchor="middle" font-size="11.5" class="s-muted">메일리로 발송</text><rect x="250" y="44" width="170" height="80" rx="9" class="s-box"/><text x="335" y="68" text-anchor="middle" font-size="14" font-weight="700" class="s-ink">무료 강의</text><text x="335" y="90" text-anchor="middle" font-size="12" class="s-ink">기본 개념</text><text x="335" y="110" text-anchor="middle" font-size="11.5" class="s-muted">누구나 · 0원</text><line x1="335" y1="124" x2="335" y2="156" class="s-line" stroke-width="1.5" marker-end="url(#tf-arrow)"/><rect x="250" y="160" width="170" height="80" rx="9" class="s-box"/><text x="335" y="184" text-anchor="middle" font-size="14" font-weight="700" class="s-ink">유료 강의</text><text x="335" y="206" text-anchor="middle" font-size="12" class="s-ink">다양한 사례 기반</text><text x="335" y="226" text-anchor="middle" font-size="11.5" class="s-muted">클래스별 가격 상이</text><rect x="455" y="102" width="150" height="84" rx="9" class="s-hi"/><text x="530" y="126" text-anchor="middle" font-size="13.5" font-weight="700" class="s-ink">AX Coffee Chat</text><text x="530" y="148" text-anchor="middle" font-size="12" class="s-ink">1:1 상담 1시간</text><text x="530" y="168" text-anchor="middle" font-size="11.5" class="s-muted">상품으로 넘어가는 다리</text><rect x="640" y="36" width="150" height="52" rx="9" class="s-hi"/><text x="715" y="60" text-anchor="middle" font-size="13.5" font-weight="700" class="s-ink">AX Sprint</text><text x="715" y="82" text-anchor="middle" font-size="11.5" class="s-muted">4주 · 450만 원</text><line x1="605" y1="144" x2="636" y2="62" class="s-line" stroke-width="1.5" marker-end="url(#tf-arrow)"/><rect x="640" y="93" width="150" height="52" rx="9" class="s-hi"/><text x="715" y="117" text-anchor="middle" font-size="13.5" font-weight="700" class="s-ink">AX Agent</text><text x="715" y="138" text-anchor="middle" font-size="11.5" class="s-muted">3주 · 390만 원</text><line x1="605" y1="144" x2="636" y2="119" class="s-line" stroke-width="1.5" marker-end="url(#tf-arrow)"/><rect x="640" y="150" width="150" height="52" rx="9" class="s-hi"/><text x="715" y="174" text-anchor="middle" font-size="13.5" font-weight="700" class="s-ink">AX Advise</text><text x="715" y="196" text-anchor="middle" font-size="11.5" class="s-muted">크레딧 · 90만 원~</text><line x1="605" y1="144" x2="636" y2="176" class="s-line" stroke-width="1.5" marker-end="url(#tf-arrow)"/><rect x="640" y="207" width="150" height="52" rx="9" class="s-hi"/><text x="715" y="231" text-anchor="middle" font-size="13.5" font-weight="700" class="s-ink">AX Partner</text><text x="715" y="252" text-anchor="middle" font-size="11.5" class="s-muted">상주 · 협의</text><line x1="605" y1="144" x2="636" y2="233" class="s-line" stroke-width="1.5" marker-end="url(#tf-arrow)"/><rect x="630" y="30" width="168" height="236" rx="12" class="s-acc" stroke-width="1.5" stroke-dasharray="5 4"/><rect x="630" y="286" width="168" height="56" rx="9" class="s-box"/><text x="714" y="310" text-anchor="middle" font-size="13.5" font-weight="700" class="s-ink">바로 구매</text><text x="714" y="332" text-anchor="middle" font-size="11.5" class="s-muted">흐름 없이 단독 구매 가능</text><line x1="714" y1="286" x2="714" y2="270" class="s-line" stroke-width="1.5" marker-end="url(#tf-arrow)"/><text x="20" y="320" font-size="11.5" class="s-muted">④ 상품은 위 흐름을 거치지 않아도 각각 바로 살 수 있습니다.</text><line x1="210" y1="92" x2="246" y2="84" class="s-line" stroke-width="1.5" marker-end="url(#tf-arrow)"/><line x1="210" y1="196" x2="246" y2="104" class="s-line" stroke-width="1.5" marker-end="url(#tf-arrow)"/><line x1="420" y1="200" x2="451" y2="160" class="s-line" stroke-width="1.5" marker-end="url(#tf-arrow)"/>
+    </svg>
+    <figcaption>유입 채널과 AX Learn은 사람을 데려오는 단계이고, 돈을 버는 곳은 ④ 상품입니다. Coffee Chat이 강의와 상품을 잇고, 상품은 흐름 없이 바로 살 수도 있습니다.</figcaption>
+  </figure>
+
+  <h3>① 유입 채널</h3>
+  <div class="scroll"><table>
+    <thead><tr><th>채널</th><th>역할</th><th>콘텐츠</th><th>다음 단계</th></tr></thead>
+    <tbody>
+      <tr><td><strong>유튜브</strong></td><td>처음 알게 되는 곳</td><td>쉽게 따라 할 수 있는 콘텐츠<br><span class="note">예) grokbot 세팅·사용, 멀티 에이전트 구축</span></td><td>무료 강의</td></tr>
+      <tr><td><strong>뉴스레터</strong></td><td>관계를 이어 가는 곳</td><td>관련 최신 콘텐츠<br><span class="note">Static Project 기반으로 생성·관리, 메일리로 발송</span></td><td>무료 강의 · 새 유료 강의 안내</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>② AX Learn · 온라인 강의</h3>
+  <div class="scroll"><table>
+    <thead><tr><th>단계</th><th>내용</th><th>가격</th><th>다음 단계</th></tr></thead>
+    <tbody>
+      <tr><td><strong>무료 강의</strong></td><td>기본 개념</td><td class="num">0원</td><td>유료 강의</td></tr>
+      <tr><td><strong>유료 강의</strong></td><td>다양한 사례 기반<br><span class="note">무료 강의 다음 단계로 설계</span></td><td>클래스별 상이</td><td>AX Coffee Chat</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>③ 상담 · ④ 상품</h3>
+  <ul>
+    <li><strong>AX Coffee Chat</strong>: 강의를 들은 고객이 상품으로 넘어가는 다리입니다. 1:1 상담 1시간이고, 지금은 AX Learn 수료자에게 무료입니다.</li>
+    <li><strong>상품</strong>: AX Sprint · AX Agent · AX Advise · AX Partner. 위 흐름을 거치지 않아도 각각 따로 살 수 있습니다. 정의와 가격은 아래 '상품별 정의'에 있습니다.</li>
+  </ul>
+</section>
+
+<section>
   <h2>전체 흐름</h2>
-  <p>다섯 상품은 <strong>모두 따로 살 수 있습니다.</strong> 순서를 지킬 필요는 없고, 앞 상품을 산 고객이 다음 상품을 사면 혜택을 받습니다.</p>
+  <p>여섯 상품은 <strong>모두 따로 살 수 있습니다.</strong> 순서를 지킬 필요는 없고, 앞 상품을 산 고객이 다음 상품을 사면 혜택을 받습니다.</p>
   <div class="doors-band" aria-hidden><span>고객 · 어느 상품으로든 바로 구매</span><i></i></div>
   <div class="doors">
       <article class="door">
         <p class="buy"><span aria-hidden>✓</span> 단독 구매</p>
         <p class="stage">입구</p>
         <h3>AX Learn</h3>
-        <p class="kor">AI 사업 입문 강의</p>
-        <p class="price">5만 원</p>
+        <p class="kor">유·무료 온라인 강의</p>
+        <p class="price">무료~</p>
         <p class="who">AI를 처음 써 보는 대표·실무자</p>
         <p class="inc-h">앞 상품이 있으면</p><p class="inc-none">첫 입구라 받는 혜택 없음</p>
       </article>
@@ -170,10 +230,19 @@ td:first-child{white-space:nowrap}
         <p class="buy"><span aria-hidden>✓</span> 단독 구매</p>
         <p class="stage">핵심 매출</p>
         <h3>AX Sprint</h3>
-        <p class="kor">4주 함께 만들기</p>
+        <p class="kor">4주 신규 사업 만들기</p>
         <p class="price">450만 원</p>
-        <p class="who">결과물이 빨리 필요한 회사</p>
+        <p class="who">1인 창업자 · 신규 사업을 내는 회사</p>
         <p class="inc-h">앞 상품이 있으면</p><ul class="inc"><li class="b-new"><span class="from">Coffee Chat</span><span class="arrow" aria-hidden>→</span><span class="ben">5만 원 차감</span></li><li class="b-def"><span class="from">Learn 수료</span><span class="arrow" aria-hidden>→</span><span class="ben">W0 단축</span></li><li class="b-def"><span class="from">Advise 잔여 크레딧</span><span class="arrow" aria-hidden>→</span><span class="ben">계약금 전환</span></li></ul>
+      </article>
+      <article class="door door-hi">
+        <p class="buy"><span aria-hidden>✓</span> 단독 구매</p>
+        <p class="stage">핵심 매출</p>
+        <h3>AX Agent</h3>
+        <p class="kor">3주 멀티 에이전트 구축</p>
+        <p class="price">390만 원</p>
+        <p class="who">회사 일을 AI 팀에 맡기려는 회사</p>
+        <p class="inc-h">앞 상품이 있으면</p><ul class="inc"><li class="b-new"><span class="from">Coffee Chat</span><span class="arrow" aria-hidden>→</span><span class="ben">5만 원 차감</span></li><li class="b-new"><span class="from">Sprint</span><span class="arrow" aria-hidden>→</span><span class="ben">50만 원 차감</span></li><li class="b-new"><span class="from">Advise 잔여 크레딧</span><span class="arrow" aria-hidden>→</span><span class="ben">계약금 전환</span></li></ul>
       </article>
       <article class="door door-hi">
         <p class="buy"><span aria-hidden>✓</span> 단독 구매</p>
@@ -182,7 +251,7 @@ td:first-child{white-space:nowrap}
         <p class="kor">자문 크레딧 + 멤버십</p>
         <p class="price">90만 원~</p>
         <p class="who">직접 만들 사람이 있는 회사</p>
-        <p class="inc-h">앞 상품이 있으면</p><ul class="inc"><li class="b-def"><span class="from">Sprint</span><span class="arrow" aria-hidden>→</span><span class="ben">웰컴 2cr · +20%</span></li><li class="b-new"><span class="from">스타터 3cr</span><span class="arrow" aria-hidden>→</span><span class="ben">90만 원 차감</span></li></ul>
+        <p class="inc-h">앞 상품이 있으면</p><ul class="inc"><li class="b-def"><span class="from">Sprint · Agent</span><span class="arrow" aria-hidden>→</span><span class="ben">웰컴 2cr · +20%</span></li><li class="b-new"><span class="from">스타터 3cr</span><span class="arrow" aria-hidden>→</span><span class="ben">90만 원 차감</span></li></ul>
       </article>
       <article class="door">
         <p class="buy"><span aria-hidden>✓</span> 단독 구매</p>
@@ -191,7 +260,7 @@ td:first-child{white-space:nowrap}
         <p class="kor">주 1일 상주 · 월 계약</p>
         <p class="price">협의</p>
         <p class="who">AX를 이끌 사람이 없는 회사</p>
-        <p class="inc-h">앞 상품이 있으면</p><ul class="inc"><li class="b-new"><span class="from">Sprint · Advise</span><span class="arrow" aria-hidden>→</span><span class="ben">첫 달 우대</span></li><li class="b-def"><span class="from">Advise 잔여 크레딧</span><span class="arrow" aria-hidden>→</span><span class="ben">계약금 전환</span></li></ul>
+        <p class="inc-h">앞 상품이 있으면</p><ul class="inc"><li class="b-new"><span class="from">Sprint · Agent · Advise</span><span class="arrow" aria-hidden>→</span><span class="ben">첫 달 우대</span></li><li class="b-def"><span class="from">Advise 잔여 크레딧</span><span class="arrow" aria-hidden>→</span><span class="ben">계약금 전환</span></li></ul>
       </article>
   </div>
   <div class="legend">
@@ -204,10 +273,10 @@ td:first-child{white-space:nowrap}
   <h2>상품별 정의</h2>
   <div class="cards">
     <div class="card">
-      <h3>① AX Learn · 입문 강의 <span class="pill">유입</span></h3>
-      <div class="price">5만 원 · 완강 시 90% 환급</div>
+      <h3>① AX Learn · 온라인 강의 <span class="pill">유입</span></h3>
+      <div class="price">무료 강의 + 유료 클래스 (클래스별 가격 상이)</div>
       <ul>
-        <li><strong>내용:</strong> 1기 1~3주차 이론. 문제 정의 → Claude Code 활용 → 과제 정의서.</li>
+        <li><strong>내용:</strong> 무료 강의는 기본 개념, 유료 클래스는 다양한 사례 기반입니다. 무료 다음 단계로 유료 클래스를 듣습니다.</li>
         <li><strong>대상:</strong> AI를 처음 써 보려는 대표·실무자.</li>
         <li><strong>결과물:</strong> 우리 회사 과제 정의서.</li>
         <li><strong>채널:</strong> 인프런, 클래스101, EO School, 자사 사이트, 유튜브 티저.</li>
@@ -222,22 +291,34 @@ td:first-child{white-space:nowrap}
         <li><strong>대상:</strong> 무엇부터 할지 정하고 싶은 대표.</li>
         <li><strong>결과물:</strong> 과제 요약 1장 + 추천 상품.</li>
         <li><strong>채널:</strong> 자사 사이트, 파트너(디캠프·드림플러스·AC).</li>
-        <li><strong>다음 혜택:</strong> 30일 안에 Sprint를 계약하면 5만 원 차감. <span class="pill new">신규</span></li>
+        <li><strong>다음 혜택:</strong> 30일 안에 Sprint 또는 Agent를 계약하면 5만 원 차감. <span class="pill new">신규</span></li>
       </ul>
     </div>
     <div class="card">
-      <h3>③ AX Sprint · 4주 함께 만들기 <span class="pill on">핵심 매출</span></h3>
+      <h3>③ AX Sprint · 4주 신규 사업 만들기 <span class="pill on">핵심 매출</span></h3>
       <div class="price">450만 원 · 회사당</div>
       <ul>
-        <li><strong>내용:</strong> 기본 구조를 우리가 먼저 만들고, 4주 동안 함께 완성합니다.</li>
+        <li><strong>내용:</strong> 새 사업(서비스)의 기본 구조를 우리가 먼저 만들고, 4주 동안 함께 완성합니다.</li>
         <li><strong>단독 구매 시:</strong> W0에 과제 정의 세션(2시간)을 넣어 Coffee Chat을 대신합니다.</li>
-        <li><strong>대상:</strong> 만들 것이 정해졌거나, 빠르게 결과물이 필요한 회사.</li>
-        <li><strong>결과물:</strong> 회사 안에서 돌아가는 버전 + 데모.</li>
+        <li><strong>대상:</strong> 1인 창업자, 회사 안에서 신규 사업(서비스)을 내려는 팀.</li>
+        <li><strong>결과물:</strong> 고객에게 보여 줄 서비스 첫 버전 + 데모.</li>
         <li><strong>다음 혜택:</strong> 웰컴 2크레딧 + 3개월 멤버십 체험. 체험 기간 안에 크레딧을 사면 +20%.</li>
       </ul>
     </div>
     <div class="card">
-      <h3>④ AX Advise · 자문 크레딧 <span class="pill on">핵심 매출</span></h3>
+      <h3>④ AX Agent · 3주 멀티 에이전트 <span class="pill on">핵심 매출</span> <span class="pill new">신규</span></h3>
+      <div class="price">390만 원 · 회사당</div>
+      <ul>
+        <li><strong>내용:</strong> 역할이 다른 AI 에이전트 여러 개가 회사 데이터를 함께 쓰며 일을 나눠 처리하게 만듭니다. 사람은 정해진 지점에서 승인만 합니다.</li>
+        <li><strong>구성:</strong> W0 업무·데이터 지도 → W1 데이터 연결·역할별 에이전트 → W2 조율 에이전트로 묶기 → W3 1주 실제 운영·인수.</li>
+        <li><strong>기본 범위:</strong> 역할별 에이전트 3개 + 조율 에이전트 1개. 더 붙이면 추가 계약 또는 Partner.</li>
+        <li><strong>대상:</strong> 반복 운영 업무가 많고, 사람 손을 줄이고 싶은 회사.</li>
+        <li><strong>결과물:</strong> 1주 운영한 멀티 에이전트 + 운영 매뉴얼. 재는 숫자는 주간 사람 개입 횟수.</li>
+        <li><strong>다음 혜택:</strong> 웰컴 2크레딧 + 3개월 안 크레딧 구매 시 +20% (Sprint와 같음). Partner 첫 달 우대.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>⑤ AX Advise · 자문 크레딧 <span class="pill on">핵심 매출</span></h3>
       <div class="price">3cr 90만 · 10cr 250만 · 30cr 660만 · 100cr 2,000만</div>
       <ul>
         <li><strong>내용:</strong> 1크레딧 = 일반 멘토 60분 (시니어 2크레딧). 진단·조언·검토. 구현은 범위 밖입니다.</li>
@@ -245,74 +326,165 @@ td:first-child{white-space:nowrap}
         <li><strong>포함:</strong> 10cr부터 기간 동안 멤버십(조찬·커뮤니티). 100cr은 2인 + 분기 AX 점검.</li>
         <li><strong>대상:</strong> 직접 만들 사람이 있고 방향 검토가 필요한 회사.</li>
         <li><strong>유효기간:</strong> 3개월 / 6개월 / 1년 / 1년. 남으면 소멸, 3개월 연장 1회.</li>
-        <li><strong>다음 혜택:</strong> 남은 크레딧을 Sprint·Partner 계약금으로 전환.</li>
+        <li><strong>다음 혜택:</strong> 남은 크레딧을 Sprint·Agent·Partner 계약금으로 전환.</li>
       </ul>
     </div>
     <div class="card">
-      <h3>⑤ AX Partner · 주 1일 상주 <span class="pill">반복 매출</span></h3>
+      <h3>⑥ AX Partner · 주 1일 상주 <span class="pill">반복 매출</span></h3>
       <div class="price">협의 · 월 단위 계약</div>
       <ul>
         <li><strong>내용:</strong> 매주 하루 회사에 방문해 AX를 맡습니다.</li>
         <li><strong>대상:</strong> 회사 안에 AX를 이끌 사람이 없는 중견·성장 기업.</li>
         <li><strong>결과물:</strong> 월간 AX 로드맵과 실행 관리.</li>
         <li><strong>채널:</strong> 대표 직접 영업, 투자사·AC 소개.</li>
-        <li><strong>진입 혜택:</strong> Sprint·Advise 고객에게 첫 달 조건 우대(협의).</li>
+        <li><strong>진입 혜택:</strong> Sprint·Agent·Advise 고객에게 첫 달 조건 우대(협의).</li>
       </ul>
     </div>
   </div>
 </section>
 
 <section>
+  <h2>금액순으로 본 상품</h2>
+  <p>여섯 상품의 가격을 낮은 것부터 한 줄로 세웠습니다. 상품 사이 가격이 고르게 이어져야 고객이 다음 상품으로 자연스럽게 넘어갑니다. 금액 차이가 커서 로그 눈금(한 칸에 10배)으로 그렸고, 오른쪽 '앞 칸 대비'는 바로 앞 상품보다 몇 배 비싼지입니다.</p>
+  <figure class="fig pl">
+    <div class="pl-wrap">
+      <div class="pl-row pl-head">
+        <div class="pl-name">상품</div>
+        <div class="pl-track pl-axis"><span class="pl-tick" style="left:3.00%">0</span><span class="pl-tick" style="left:9.00%">1만</span><span class="pl-tick" style="left:35.17%">10만</span><span class="pl-tick" style="left:61.34%">100만</span><span class="pl-tick" style="left:87.51%">1,000만</span></div>
+        <div class="pl-price">가격</div>
+        <div class="pl-stepcell">앞 칸 대비</div>
+      </div>
+      <div class="pl-row">
+        <div class="pl-name"><strong>AX Learn</strong><span>무료 강의</span></div>
+        <div class="pl-track"><i class="pl-grid" style="left:3.00%"></i><i class="pl-grid" style="left:9.00%"></i><i class="pl-grid" style="left:35.17%"></i><i class="pl-grid" style="left:61.34%"></i><i class="pl-grid" style="left:87.51%"></i><span class="pl-dot" style="left:3.00%" tabindex="0" data-tip="AX Learn 무료 강의 · 0원"></span></div>
+        <div class="pl-price">0원</div>
+        <div class="pl-stepcell"><span class="pl-step">—</span></div>
+      </div>
+      <div class="pl-row">
+        <div class="pl-name"><strong>AX Coffee Chat</strong><span>1:1 상담 1시간</span></div>
+        <div class="pl-track"><i class="pl-grid" style="left:3.00%"></i><i class="pl-grid" style="left:9.00%"></i><i class="pl-grid" style="left:35.17%"></i><i class="pl-grid" style="left:61.34%"></i><i class="pl-grid" style="left:87.51%"></i><span class="pl-dot" style="left:27.29%" tabindex="0" data-tip="AX Coffee Chat 1:1 상담 1시간 · 5만 원"></span></div>
+        <div class="pl-price">5만 원</div>
+        <div class="pl-stepcell"><span class="pl-step">—</span></div>
+      </div>
+      <div class="pl-row pl-row-tbd">
+        <div class="pl-name"><strong>AX Learn</strong><span>유료 클래스</span></div>
+        <div class="pl-track"><i class="pl-grid" style="left:3.00%"></i><i class="pl-grid" style="left:9.00%"></i><i class="pl-grid" style="left:35.17%"></i><i class="pl-grid" style="left:61.34%"></i><i class="pl-grid" style="left:87.51%"></i><span class="pl-band" style="left:27.29%;width:32.85%" tabindex="0" data-tip="AX Learn 유료 클래스 · 클래스별 상이 · 이 구간에 오면 빈칸이 메워짐"></span></div>
+        <div class="pl-price">클래스별 상이</div>
+        <div class="pl-stepcell"><span class="pl-step pl-tbd">미정</span></div>
+      </div>
+      <div class="pl-row">
+        <div class="pl-name"><strong>AX Advise</strong><span>스타터 3크레딧</span></div>
+        <div class="pl-track"><i class="pl-grid" style="left:3.00%"></i><i class="pl-grid" style="left:9.00%"></i><i class="pl-grid" style="left:35.17%"></i><i class="pl-grid" style="left:61.34%"></i><i class="pl-grid" style="left:87.51%"></i><span class="pl-dot" style="left:60.14%" tabindex="0" data-tip="AX Advise 스타터 3크레딧 · 90만 원"></span></div>
+        <div class="pl-price">90만 원</div>
+        <div class="pl-stepcell"><span class="pl-step pl-wide">×18 · 빈 구간</span></div>
+      </div>
+      <div class="pl-row">
+        <div class="pl-name"><strong>AX Advise</strong><span>10크레딧 · 6개월</span></div>
+        <div class="pl-track"><i class="pl-grid" style="left:3.00%"></i><i class="pl-grid" style="left:9.00%"></i><i class="pl-grid" style="left:35.17%"></i><i class="pl-grid" style="left:61.34%"></i><i class="pl-grid" style="left:87.51%"></i><span class="pl-dot" style="left:71.76%" tabindex="0" data-tip="AX Advise 10크레딧 · 6개월 · 250만 원"></span></div>
+        <div class="pl-price">250만 원</div>
+        <div class="pl-stepcell"><span class="pl-step">×2.8</span></div>
+      </div>
+      <div class="pl-row">
+        <div class="pl-name"><strong>AX Agent</strong><span>3주 멀티 에이전트</span></div>
+        <div class="pl-track"><i class="pl-grid" style="left:3.00%"></i><i class="pl-grid" style="left:9.00%"></i><i class="pl-grid" style="left:35.17%"></i><i class="pl-grid" style="left:61.34%"></i><i class="pl-grid" style="left:87.51%"></i><span class="pl-dot" style="left:76.81%" tabindex="0" data-tip="AX Agent 3주 멀티 에이전트 · 390만 원"></span></div>
+        <div class="pl-price">390만 원</div>
+        <div class="pl-stepcell"><span class="pl-step">×1.56</span></div>
+      </div>
+      <div class="pl-row">
+        <div class="pl-name"><strong>AX Sprint</strong><span>4주 신규 사업</span></div>
+        <div class="pl-track"><i class="pl-grid" style="left:3.00%"></i><i class="pl-grid" style="left:9.00%"></i><i class="pl-grid" style="left:35.17%"></i><i class="pl-grid" style="left:61.34%"></i><i class="pl-grid" style="left:87.51%"></i><span class="pl-dot" style="left:78.44%" tabindex="0" data-tip="AX Sprint 4주 신규 사업 · 450만 원"></span></div>
+        <div class="pl-price">450만 원</div>
+        <div class="pl-stepcell"><span class="pl-step pl-close">×1.15 · 가까움</span></div>
+      </div>
+      <div class="pl-row">
+        <div class="pl-name"><strong>AX Advise</strong><span>30크레딧 · 1년</span></div>
+        <div class="pl-track"><i class="pl-grid" style="left:3.00%"></i><i class="pl-grid" style="left:9.00%"></i><i class="pl-grid" style="left:35.17%"></i><i class="pl-grid" style="left:61.34%"></i><i class="pl-grid" style="left:87.51%"></i><span class="pl-dot" style="left:82.79%" tabindex="0" data-tip="AX Advise 30크레딧 · 1년 · 660만 원"></span></div>
+        <div class="pl-price">660만 원</div>
+        <div class="pl-stepcell"><span class="pl-step">×1.47</span></div>
+      </div>
+      <div class="pl-row pl-row-tbd">
+        <div class="pl-name"><strong>AX Partner</strong><span>월 계약 · 계약 총액</span></div>
+        <div class="pl-track"><i class="pl-grid" style="left:3.00%"></i><i class="pl-grid" style="left:9.00%"></i><i class="pl-grid" style="left:35.17%"></i><i class="pl-grid" style="left:61.34%"></i><i class="pl-grid" style="left:87.51%"></i><span class="pl-band" style="left:82.79%;width:12.60%" tabindex="0" data-tip="AX Partner 월 계약 · 계약 총액 · 협의 · 이 구간에 오면 빈칸이 메워짐"></span></div>
+        <div class="pl-price">협의</div>
+        <div class="pl-stepcell"><span class="pl-step pl-tbd">미정</span></div>
+      </div>
+      <div class="pl-row">
+        <div class="pl-name"><strong>AX Advise</strong><span>100크레딧 · 1년</span></div>
+        <div class="pl-track"><i class="pl-grid" style="left:3.00%"></i><i class="pl-grid" style="left:9.00%"></i><i class="pl-grid" style="left:35.17%"></i><i class="pl-grid" style="left:61.34%"></i><i class="pl-grid" style="left:87.51%"></i><span class="pl-dot" style="left:95.39%" tabindex="0" data-tip="AX Advise 100크레딧 · 1년 · 2,000만 원"></span></div>
+        <div class="pl-price">2,000만 원</div>
+        <div class="pl-stepcell"><span class="pl-step">×3.0</span></div>
+      </div>
+    </div>
+    <figcaption>점은 정해진 가격, 점선 칸은 가격이 아직 없는 상품이 들어가면 빈칸이 메워지는 구간입니다. VAT 별도. 이 문서에서는 앞 칸 대비 3.5배를 넘으면 '빈 구간', 1.3배보다 작으면 '가까움'으로 표시했습니다.</figcaption>
+  </figure>
+
+  <h3>읽은 것</h3>
+  <ul>
+    <li><strong>입구 쪽이 비어 있습니다 (5만 → 90만 원, 18배).</strong> Coffee Chat 다음에 바로 살 수 있는 상품이 Advise 스타터 90만 원뿐입니다. 유료 클래스 가격을 이 사이(예: 10만~30만 원대)에 두면 계단이 생깁니다.</li>
+    <li><strong>가운데 핵심 매출은 촘촘합니다 (250 · 390 · 450 · 660만 원, 1.15~1.56배).</strong> 고객이 예산에 맞춰 고르기 좋은 구간입니다.</li>
+    <li><strong>Agent 390만 원과 Sprint 450만 원은 가깝습니다 (1.15배).</strong> 다만 Sprint는 신규 사업, Agent는 회사 운영으로 고객과 목적이 달라 서로 뺏지 않습니다. 같은 고객에게 둘 다 권할 때는 Sprint → Agent 50만 원 차감이 다리가 됩니다.</li>
+    <li><strong>위쪽이 비어 있습니다 (660만 → 2,000만 원, 3배).</strong> Partner(협의, 월 계약)가 이 구간을 맡아야 합니다. 몇 개월 계약 총액이 660만~2,000만 원 사이에 오면 사다리가 끊기지 않습니다.</li>
+  </ul>
+  <div class="callout">
+    <p><b>정할 것</b></p>
+    <p>유료 클래스 가격(입구 빈칸)과 Partner 월 금액·최소 계약 기간(위쪽 빈칸)을 정하면 0원부터 2,000만 원까지 끊김 없이 이어집니다.</p>
+  </div>
+</section>
+
+<section>
   <h2>연계 혜택: 모든 경우의 수</h2>
-  <p>원칙: 앞 상품에 쓴 돈은 다음 상품에서 돌려받습니다. 할인율 대신 <strong>차감 · 크레딧 · 전환</strong>으로 줍니다. 아래 표는 '앞에 산 상품(왼쪽)'에서 '다음에 사는 상품(위쪽)'으로 가는 25가지 경우를 모두 적었습니다.</p>
+  <p>원칙: 앞 상품에 쓴 돈은 다음 상품에서 돌려받습니다. 할인율 대신 <strong>차감 · 크레딧 · 전환</strong>으로 줍니다. 아래 표는 '앞에 산 상품(왼쪽)'에서 '다음에 사는 상품(위쪽)'으로 가는 36가지 경우를 모두 적었습니다.</p>
   <figure class="fig flowmap">
-    <svg viewBox="0 0 800 520" role="img" aria-label="다섯 상품 사이의 모든 연계 혜택. 위쪽 화살표는 다음 단계로 이어 사는 경우, 아래쪽 화살표는 거꾸로 이어 사는 경우입니다.">
+    <svg viewBox="0 0 800 470" role="img" aria-label="여섯 상품 사이의 모든 연계 혜택. 위쪽 화살표는 다음 단계로 이어 사는 경우, 아래쪽 화살표는 거꾸로 이어 사는 경우입니다.">
       <defs><marker id="m-def" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="mf-def"/></marker><marker id="m-new" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="mf-new"/></marker><marker id="m-sug" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="mf-sug"/></marker></defs>
       <text x="12" y="22" font-size="11.5" class="s-muted">↑ 위쪽: 다음 단계로 이어 사기</text>
-      <text x="12" y="506" font-size="11.5" class="s-muted">↓ 아래쪽: 거꾸로 이어 사기</text>
-      <path d="M116 252 Q168 192 219 252" class="f-def" stroke-width="2" fill="none" marker-end="url(#m-def)"/><path d="M271 252 Q322 192 374 252" class="f-new" stroke-width="2" fill="none" marker-end="url(#m-new)"/><path d="M426 252 Q478 192 529 252" class="f-def" stroke-width="2" fill="none" marker-end="url(#m-def)"/><path d="M581 252 Q632 192 684 252" class="f-def" stroke-width="2" fill="none" marker-end="url(#m-def)"/><path d="M128 252 Q245 104 362 252" class="f-def" stroke-width="2" fill="none" marker-end="url(#m-def)"/><path d="M438 252 Q555 104 672 252" class="f-new" stroke-width="2" fill="none" marker-end="url(#m-new)"/><path d="M283 252 Q400 20 517 252" class="f-sug" stroke-width="1.5" fill="none" stroke-dasharray="5 4" marker-end="url(#m-sug)"/><path d="M295 252 Q478 -64 660 252" class="f-sug" stroke-width="1.5" fill="none" stroke-dasharray="5 4" marker-end="url(#m-sug)"/><path d="M140 252 Q322 -148 505 252" class="f-sug" stroke-width="1.5" fill="none" stroke-dasharray="5 4" marker-end="url(#m-sug)"/><path d="M529 308 Q478 376 426 308" class="f-def" stroke-width="2" fill="none" marker-end="url(#m-def)"/><path d="M684 308 Q632 376 581 308" class="f-sug" stroke-width="1.5" fill="none" stroke-dasharray="5 4" marker-end="url(#m-sug)"/><path d="M672 308 Q555 476 438 308" class="f-sug" stroke-width="1.5" fill="none" stroke-dasharray="5 4" marker-end="url(#m-sug)"/><path d="M648 308 Q400 580 152 308" class="f-sug" stroke-width="1.5" fill="none" stroke-dasharray="5 4" marker-end="url(#m-sug)"/><path d="M546 308 C533 338 577 338 564 308" class="f-new" stroke-width="2" fill="none" marker-end="url(#m-new)"/><rect x="150" y="202" width="35" height="18" rx="9" class="pill-def"/><text x="168" y="215" text-anchor="middle" font-size="11.5" class="t-def">무료</text><rect x="284" y="202" width="78" height="18" rx="9" class="pill-new"/><text x="322" y="215" text-anchor="middle" font-size="11.5" class="t-new">5만 원 차감</text><rect x="424" y="202" width="108" height="18" rx="9" class="pill-def"/><text x="478" y="215" text-anchor="middle" font-size="11.5" class="t-def">웰컴 2cr · +20%</text><rect x="580" y="202" width="106" height="18" rx="9" class="pill-def"/><text x="632" y="215" text-anchor="middle" font-size="11.5" class="t-def">잔여 크레딧 전환</text><rect x="218" y="158" width="55" height="18" rx="9" class="pill-def"/><text x="245" y="171" text-anchor="middle" font-size="11.5" class="t-def">W0 단축</text><rect x="519" y="158" width="71" height="18" rx="9" class="pill-new"/><text x="555" y="171" text-anchor="middle" font-size="11.5" class="t-new">첫 달 우대</text><rect x="361" y="116" width="78" height="18" rx="9" class="pill-sug"/><text x="400" y="129" text-anchor="middle" font-size="11.5" class="t-sug">5만 원 차감</text><rect x="425" y="74" width="106" height="18" rx="9" class="pill-sug"/><text x="478" y="87" text-anchor="middle" font-size="11.5" class="t-sug">첫 미팅으로 인정</text><rect x="269" y="32" width="107" height="18" rx="9" class="pill-sug"/><text x="322" y="45" text-anchor="middle" font-size="11.5" class="t-sug">수료 쿠폰 5만 원</text><rect x="425" y="344" width="106" height="18" rx="9" class="pill-def"/><text x="478" y="357" text-anchor="middle" font-size="11.5" class="t-def">잔여 크레딧 전환</text><rect x="593" y="344" width="80" height="18" rx="9" class="pill-sug"/><text x="632" y="357" text-anchor="middle" font-size="11.5" class="t-sug">크레딧 +10%</text><rect x="523" y="394" width="65" height="18" rx="9" class="pill-sug"/><text x="555" y="407" text-anchor="middle" font-size="11.5" class="t-sug">우선 배정</text><rect x="347" y="446" width="106" height="18" rx="9" class="pill-sug"/><text x="400" y="459" text-anchor="middle" font-size="11.5" class="t-sug">임직원 단체 할인</text><rect x="506" y="369" width="98" height="18" rx="9" class="pill-new"/><text x="555" y="382" text-anchor="middle" font-size="11.5" class="t-new">스타터 → 10cr</text>
-      <rect x="28" y="252" width="124" height="56" rx="9" class="s-box"/><text x="90" y="276" text-anchor="middle" font-size="13.5" font-weight="700" class="s-ink">AX Learn</text><text x="90" y="295" text-anchor="middle" font-size="11.5" class="s-muted">입문 강의 · 5만 원</text><rect x="183" y="252" width="124" height="56" rx="9" class="s-box"/><text x="245" y="276" text-anchor="middle" font-size="12.5" font-weight="700" class="s-ink">AX Coffee Chat</text><text x="245" y="295" text-anchor="middle" font-size="11.5" class="s-muted">1시간 · 5만 원</text><rect x="338" y="252" width="124" height="56" rx="9" class="s-hi"/><text x="400" y="276" text-anchor="middle" font-size="12.5" font-weight="700" class="s-ink">AX Sprint</text><text x="400" y="295" text-anchor="middle" font-size="11.5" class="s-muted">4주 · 450만 원</text><rect x="493" y="252" width="124" height="56" rx="9" class="s-hi"/><text x="555" y="276" text-anchor="middle" font-size="12.5" font-weight="700" class="s-ink">AX Advise</text><text x="555" y="295" text-anchor="middle" font-size="11.5" class="s-muted">크레딧 · 90만 원~</text><rect x="648" y="252" width="124" height="56" rx="9" class="s-box"/><text x="710" y="276" text-anchor="middle" font-size="12.5" font-weight="700" class="s-ink">AX Partner</text><text x="710" y="295" text-anchor="middle" font-size="11.5" class="s-muted">상주 · 협의</text>
+      <text x="12" y="456" font-size="11.5" class="s-muted">↓ 아래쪽: 거꾸로 이어 사기</text>
+      <path d="M86 200 Q134 148 181 200" class="f-def" stroke-width="2" fill="none" marker-end="url(#m-def)"/><path d="M219 200 Q266 148 314 200" class="f-new" stroke-width="2" fill="none" marker-end="url(#m-new)"/><path d="M352 200 Q400 148 447 200" class="f-new" stroke-width="2" fill="none" marker-end="url(#m-new)"/><path d="M485 200 Q532 148 580 200" class="f-new" stroke-width="2" fill="none" marker-end="url(#m-new)"/><path d="M618 200 Q666 148 713 200" class="f-def" stroke-width="2" fill="none" marker-end="url(#m-def)"/><path d="M95 200 Q200 76 305 200" class="f-def" stroke-width="2" fill="none" marker-end="url(#m-def)"/><path d="M228 200 Q333 76 438 200" class="f-new" stroke-width="2" fill="none" marker-end="url(#m-new)"/><path d="M361 200 Q466 76 571 200" class="f-def" stroke-width="2" fill="none" marker-end="url(#m-def)"/><path d="M494 200 Q599 76 704 200" class="f-new" stroke-width="2" fill="none" marker-end="url(#m-new)"/><path d="M237 200 Q400 0 562 200" class="f-sug" stroke-width="1.5" fill="none" stroke-dasharray="5 4" marker-end="url(#m-sug)"/><path d="M370 200 Q532 0 695 200" class="f-new" stroke-width="2" fill="none" marker-end="url(#m-new)"/><path d="M113 200 Q333 -80 553 200" class="f-sug" stroke-width="1.5" fill="none" stroke-dasharray="5 4" marker-end="url(#m-sug)"/><path d="M246 200 Q466 -80 686 200" class="f-sug" stroke-width="1.5" fill="none" stroke-dasharray="5 4" marker-end="url(#m-sug)"/><path d="M447 256 Q400 316 352 256" class="f-sug" stroke-width="1.5" fill="none" stroke-dasharray="5 4" marker-end="url(#m-sug)"/><path d="M580 256 Q532 316 485 256" class="f-new" stroke-width="2" fill="none" marker-end="url(#m-new)"/><path d="M713 256 Q666 316 618 256" class="f-sug" stroke-width="1.5" fill="none" stroke-dasharray="5 4" marker-end="url(#m-sug)"/><path d="M571 256 Q466 396 361 256" class="f-def" stroke-width="2" fill="none" marker-end="url(#m-def)"/><path d="M704 256 Q599 396 494 256" class="f-sug" stroke-width="1.5" fill="none" stroke-dasharray="5 4" marker-end="url(#m-sug)"/><path d="M695 256 Q532 464 370 256" class="f-sug" stroke-width="1.5" fill="none" stroke-dasharray="5 4" marker-end="url(#m-sug)"/><path d="M677 256 Q400 536 122 256" class="f-sug" stroke-width="1.5" fill="none" stroke-dasharray="5 4" marker-end="url(#m-sug)"/><path d="M590 256 C577 286 621 286 608 256" class="f-new" stroke-width="2" fill="none" marker-end="url(#m-new)"/><rect x="116" y="154" width="35" height="18" rx="9" class="pill-def"/><text x="134" y="167" text-anchor="middle" font-size="11.5" class="t-def">무료</text><rect x="228" y="154" width="78" height="18" rx="9" class="pill-new"/><text x="266" y="167" text-anchor="middle" font-size="11.5" class="t-new">5만 원 차감</text><rect x="357" y="154" width="84" height="18" rx="9" class="pill-new"/><text x="400" y="167" text-anchor="middle" font-size="11.5" class="t-new">50만 원 차감</text><rect x="502" y="154" width="61" height="18" rx="9" class="pill-new"/><text x="532" y="167" text-anchor="middle" font-size="11.5" class="t-new">웰컴 2cr</text><rect x="613" y="154" width="106" height="18" rx="9" class="pill-def"/><text x="666" y="167" text-anchor="middle" font-size="11.5" class="t-def">잔여 크레딧 전환</text><rect x="173" y="118" width="55" height="18" rx="9" class="pill-def"/><text x="200" y="131" text-anchor="middle" font-size="11.5" class="t-def">W0 단축</text><rect x="294" y="118" width="78" height="18" rx="9" class="pill-new"/><text x="333" y="131" text-anchor="middle" font-size="11.5" class="t-new">5만 원 차감</text><rect x="412" y="118" width="108" height="18" rx="9" class="pill-def"/><text x="466" y="131" text-anchor="middle" font-size="11.5" class="t-def">웰컴 2cr · +20%</text><rect x="563" y="118" width="71" height="18" rx="9" class="pill-new"/><text x="599" y="131" text-anchor="middle" font-size="11.5" class="t-new">첫 달 우대</text><rect x="361" y="80" width="78" height="18" rx="9" class="pill-sug"/><text x="400" y="93" text-anchor="middle" font-size="11.5" class="t-sug">5만 원 차감</text><rect x="497" y="80" width="71" height="18" rx="9" class="pill-new"/><text x="532" y="93" text-anchor="middle" font-size="11.5" class="t-new">첫 달 우대</text><rect x="279" y="40" width="107" height="18" rx="9" class="pill-sug"/><text x="333" y="53" text-anchor="middle" font-size="11.5" class="t-sug">수료 쿠폰 5만 원</text><rect x="413" y="40" width="106" height="18" rx="9" class="pill-sug"/><text x="466" y="53" text-anchor="middle" font-size="11.5" class="t-sug">첫 미팅으로 인정</text><rect x="372" y="288" width="55" height="18" rx="9" class="pill-sug"/><text x="400" y="301" text-anchor="middle" font-size="11.5" class="t-sug">W0 단축</text><rect x="480" y="288" width="106" height="18" rx="9" class="pill-new"/><text x="532" y="301" text-anchor="middle" font-size="11.5" class="t-new">잔여 크레딧 전환</text><rect x="626" y="288" width="80" height="18" rx="9" class="pill-sug"/><text x="666" y="301" text-anchor="middle" font-size="11.5" class="t-sug">크레딧 +10%</text><rect x="413" y="328" width="106" height="18" rx="9" class="pill-def"/><text x="466" y="341" text-anchor="middle" font-size="11.5" class="t-def">잔여 크레딧 전환</text><rect x="567" y="328" width="65" height="18" rx="9" class="pill-sug"/><text x="599" y="341" text-anchor="middle" font-size="11.5" class="t-sug">우선 배정</text><rect x="500" y="362" width="65" height="18" rx="9" class="pill-sug"/><text x="532" y="375" text-anchor="middle" font-size="11.5" class="t-sug">우선 배정</text><rect x="347" y="398" width="106" height="18" rx="9" class="pill-sug"/><text x="400" y="411" text-anchor="middle" font-size="11.5" class="t-sug">임직원 단체 할인</text><rect x="550" y="392" width="98" height="18" rx="9" class="pill-new"/><text x="599" y="405" text-anchor="middle" font-size="11.5" class="t-new">스타터 → 10cr</text>
+      <rect x="8" y="200" width="118" height="56" rx="9" class="s-box"/><text x="67" y="224" text-anchor="middle" font-size="13.5" font-weight="700" class="s-ink">AX Learn</text><text x="67" y="243" text-anchor="middle" font-size="11.5" class="s-muted">온라인 강의 · 무료~</text><rect x="141" y="200" width="118" height="56" rx="9" class="s-box"/><text x="200" y="224" text-anchor="middle" font-size="12.5" font-weight="700" class="s-ink">AX Coffee Chat</text><text x="200" y="243" text-anchor="middle" font-size="11.5" class="s-muted">1시간 · 5만 원</text><rect x="274" y="200" width="118" height="56" rx="9" class="s-hi"/><text x="333" y="224" text-anchor="middle" font-size="12.5" font-weight="700" class="s-ink">AX Sprint</text><text x="333" y="243" text-anchor="middle" font-size="11.5" class="s-muted">4주 · 450만 원</text><rect x="407" y="200" width="118" height="56" rx="9" class="s-hi"/><text x="466" y="224" text-anchor="middle" font-size="13.5" font-weight="700" class="s-ink">AX Agent</text><text x="466" y="243" text-anchor="middle" font-size="11.5" class="s-muted">3주 · 390만 원</text><rect x="540" y="200" width="118" height="56" rx="9" class="s-hi"/><text x="599" y="224" text-anchor="middle" font-size="12.5" font-weight="700" class="s-ink">AX Advise</text><text x="599" y="243" text-anchor="middle" font-size="11.5" class="s-muted">크레딧 · 90만 원~</text><rect x="673" y="200" width="118" height="56" rx="9" class="s-box"/><text x="732" y="224" text-anchor="middle" font-size="12.5" font-weight="700" class="s-ink">AX Partner</text><text x="732" y="243" text-anchor="middle" font-size="11.5" class="s-muted">상주 · 협의</text>
       <g font-size="11.5">
-        <line x1="470" y1="502" x2="496" y2="502" class="f-def" stroke-width="2"/><text x="502" y="506" class="s-muted">대표 안</text>
-        <line x1="560" y1="502" x2="586" y2="502" class="f-new" stroke-width="2"/><text x="592" y="506" class="s-muted">이번 가안</text>
-        <line x1="662" y1="502" x2="688" y2="502" class="f-sug" stroke-width="1.5" stroke-dasharray="5 4"/><text x="694" y="506" class="s-muted">제안</text>
+        <line x1="470" y1="452" x2="496" y2="452" class="f-def" stroke-width="2"/><text x="502" y="456" class="s-muted">대표 안</text>
+        <line x1="560" y1="452" x2="586" y2="452" class="f-new" stroke-width="2"/><text x="592" y="456" class="s-muted">이번 가안</text>
+        <line x1="662" y1="452" x2="688" y2="452" class="f-sug" stroke-width="1.5" stroke-dasharray="5 4"/><text x="694" y="456" class="s-muted">제안</text>
       </g>
     </svg>
     <figcaption>화살표 하나가 '앞 상품 → 다음 상품'으로 갈 때 받는 혜택입니다. 혜택이 없는 경우와 재구매는 뺐고, 자세한 조건은 아래 표에 있습니다.</figcaption>
   </figure>
   <div class="scroll"><table class="matrix">
-    <thead><tr><th>앞 ↓ / 다음 →</th><th>Learn</th><th>Coffee Chat</th><th>Sprint</th><th>Advise</th><th>Partner</th></tr></thead>
+    <thead><tr><th>앞 ↓ / 다음 →</th><th>Learn</th><th>Coffee Chat</th><th>Sprint</th><th>Agent</th><th>Advise</th><th>Partner</th></tr></thead>
     <tbody>
-      <tr><th scope="row">Learn</th><td class="m-same"><span class="tag">재구매</span>다시 살 일 없음</td><td class="m-def"><span class="tag">대표 안</span>수료하면 무료</td><td class="m-def"><span class="tag">대표 안</span>과제 정의서로 W0 단축 (가격 같음)</td><td class="m-sug"><span class="tag">제안</span>수료 쿠폰 5만 원 차감 (스타터 이상)</td><td class="m-none"><span class="tag">없음</span>—</td></tr>
-      <tr><th scope="row">Coffee Chat</th><td class="m-none"><span class="tag">없음</span>— (정가)</td><td class="m-same"><span class="tag">재구매</span>추가 Coffee Chat은 정가</td><td class="m-new"><span class="tag">이번 가안</span>30일 안 계약 시 5만 원 차감</td><td class="m-sug"><span class="tag">제안</span>30일 안 스타터 이상 구매 시 5만 원 차감</td><td class="m-sug"><span class="tag">제안</span>Coffee Chat을 Partner 첫 진단 미팅으로 인정</td></tr>
-      <tr><th scope="row">Sprint</th><td class="m-none"><span class="tag">없음</span>—</td><td class="m-none"><span class="tag">없음</span>필요 없음 (담당 코치가 대신)</td><td class="m-same"><span class="tag">재구매</span>다음 과제 재계약 (협의)</td><td class="m-def"><span class="tag">대표 안</span>웰컴 2크레딧 + 3개월 안 구매 시 +20%</td><td class="m-new"><span class="tag">이번 가안</span>첫 달 조건 우대</td></tr>
-      <tr><th scope="row">Advise</th><td class="m-none"><span class="tag">없음</span>—</td><td class="m-none"><span class="tag">없음</span>필요 없음 (Advise로 상담)</td><td class="m-def"><span class="tag">대표 안</span>잔여 크레딧 계약금 전환</td><td class="m-new"><span class="tag">이번 가안</span>스타터 → 10cr 이상: 90만 원 차감 · 재구매 시 기간 이어 붙임</td><td class="m-def"><span class="tag">대표 안</span>잔여 크레딧 계약금 전환 + 첫 달 우대</td></tr>
-      <tr><th scope="row">Partner</th><td class="m-sug"><span class="tag">제안</span>임직원 단체 수강 할인</td><td class="m-none"><span class="tag">없음</span>필요 없음</td><td class="m-sug"><span class="tag">제안</span>Sprint 우선 배정</td><td class="m-sug"><span class="tag">제안</span>임직원용 Advise 크레딧 +10%</td><td class="m-same"><span class="tag">재구매</span>연장 (협의)</td></tr>
+      <tr><th scope="row">Learn</th><td class="m-same"><span class="tag">재구매</span>다시 살 일 없음</td><td class="m-def"><span class="tag">대표 안</span>수료하면 무료</td><td class="m-def"><span class="tag">대표 안</span>과제 정의서로 W0 단축 (가격 같음)</td><td class="m-sug"><span class="tag">제안</span>수료 쿠폰 5만 원 차감</td><td class="m-sug"><span class="tag">제안</span>수료 쿠폰 5만 원 차감 (스타터 이상)</td><td class="m-none"><span class="tag">없음</span>—</td></tr>
+      <tr><th scope="row">Coffee Chat</th><td class="m-none"><span class="tag">없음</span>— (정가)</td><td class="m-same"><span class="tag">재구매</span>추가 Coffee Chat은 정가</td><td class="m-new"><span class="tag">이번 가안</span>30일 안 계약 시 5만 원 차감</td><td class="m-new"><span class="tag">이번 가안</span>30일 안 계약 시 5만 원 차감</td><td class="m-sug"><span class="tag">제안</span>30일 안 스타터 이상 구매 시 5만 원 차감</td><td class="m-sug"><span class="tag">제안</span>Coffee Chat을 Partner 첫 진단 미팅으로 인정</td></tr>
+      <tr><th scope="row">Sprint</th><td class="m-none"><span class="tag">없음</span>—</td><td class="m-none"><span class="tag">없음</span>필요 없음 (담당 코치가 대신)</td><td class="m-same"><span class="tag">재구매</span>다음 과제 재계약 (협의)</td><td class="m-new"><span class="tag">이번 가안</span>새 서비스 운영을 에이전트로 넘길 때 50만 원 차감 (340만 원)</td><td class="m-def"><span class="tag">대표 안</span>웰컴 2크레딧 + 3개월 안 구매 시 +20%</td><td class="m-new"><span class="tag">이번 가안</span>첫 달 조건 우대</td></tr>
+      <tr><th scope="row">Agent</th><td class="m-none"><span class="tag">없음</span>—</td><td class="m-none"><span class="tag">없음</span>필요 없음 (담당 코치가 대신)</td><td class="m-sug"><span class="tag">제안</span>신규 사업 시 데이터 연결 재사용, W0 단축</td><td class="m-same"><span class="tag">재구매</span>에이전트 추가 재계약 (협의)</td><td class="m-new"><span class="tag">이번 가안</span>웰컴 2크레딧 + 3개월 안 구매 시 +20%</td><td class="m-new"><span class="tag">이번 가안</span>첫 달 조건 우대 + 운영 중인 에이전트 관리 이어 받음</td></tr>
+      <tr><th scope="row">Advise</th><td class="m-none"><span class="tag">없음</span>—</td><td class="m-none"><span class="tag">없음</span>필요 없음 (Advise로 상담)</td><td class="m-def"><span class="tag">대표 안</span>잔여 크레딧 계약금 전환</td><td class="m-new"><span class="tag">이번 가안</span>잔여 크레딧 계약금 전환</td><td class="m-new"><span class="tag">이번 가안</span>스타터 → 10cr 이상: 90만 원 차감 · 재구매 시 기간 이어 붙임</td><td class="m-def"><span class="tag">대표 안</span>잔여 크레딧 계약금 전환 + 첫 달 우대</td></tr>
+      <tr><th scope="row">Partner</th><td class="m-sug"><span class="tag">제안</span>임직원 단체 수강 할인</td><td class="m-none"><span class="tag">없음</span>필요 없음</td><td class="m-sug"><span class="tag">제안</span>Sprint 우선 배정</td><td class="m-sug"><span class="tag">제안</span>Agent 우선 배정</td><td class="m-sug"><span class="tag">제안</span>임직원용 Advise 크레딧 +10%</td><td class="m-same"><span class="tag">재구매</span>연장 (협의)</td></tr>
     </tbody>
   </table></div>
   <div class="legend">
     <span class="lg m-def">대표 안 5</span>
-    <span class="lg m-new">이번 가안 3</span>
-    <span class="lg m-sug">제안 (빈칸 메우기) 6</span>
-    <span class="lg m-none">혜택 없음 7</span>
-    <span class="lg m-same">재구매 4</span>
+    <span class="lg m-new">이번 가안 8</span>
+    <span class="lg m-sug">제안 (빈칸 메우기) 9</span>
+    <span class="lg m-none">혜택 없음 9</span>
+    <span class="lg m-same">재구매 5</span>
   </div>
   <p class="note">'제안'은 혜택이 비어 있던 칸을 메우는 안으로, 아직 정하지 않았습니다. '혜택 없음'은 일부러 비워 둔 칸입니다 (예: Sprint 고객은 담당 코치가 있어 Coffee Chat이 필요 없음).</p>
 
-  <h3>대표 경로 10가지</h3>
+  <h3>대표 경로 12가지</h3>
   <div class="scroll"><table>
     <thead><tr><th>경로</th><th>순서</th><th>누구</th><th>받는 혜택</th></tr></thead>
     <tbody>
-      <tr><td>배우기만</td><td>Learn</td><td>AI를 혼자 배워 보려는 사람</td><td>완강 시 90% 환급</td></tr>
+      <tr><td>배우기만</td><td>Learn</td><td>AI를 혼자 배워 보려는 사람</td><td>—</td></tr>
       <tr><td>정석 경로</td><td>Learn → Coffee Chat → Sprint → Advise → Partner</td><td>단계를 밟는 대표</td><td>모든 연계 혜택</td></tr>
       <tr><td>상담만</td><td>Coffee Chat</td><td>방향만 듣고 싶은 대표</td><td>—</td></tr>
       <tr><td>상담 후 실행</td><td>Coffee Chat → Sprint</td><td>파트너 오피스아워로 온 대표</td><td>Coffee Chat 비용 5만 원 차감</td></tr>
-      <tr><td>바로 실행</td><td>Sprint</td><td>소개로 온, 결과가 급한 대표</td><td>W0 과제 정의 포함</td></tr>
+      <tr><td>바로 실행</td><td>Sprint</td><td>신규 사업을 빨리 내려는 창업자·회사</td><td>W0 과제 정의 포함</td></tr>
+      <tr><td>운영 맡기기</td><td>Coffee Chat → Agent</td><td>운영 업무가 많은 회사</td><td>Coffee Chat 비용 5만 원 차감</td></tr>
+      <tr><td>만든 뒤 운영</td><td>Sprint → Agent</td><td>새 서비스를 낸 창업자·회사</td><td>50만 원 차감</td></tr>
       <tr><td>실행 후 자문</td><td>Sprint → Advise</td><td>만든 뒤 계속 검토가 필요한 회사</td><td>웰컴 2cr + 20%</td></tr>
       <tr><td>작게 시작</td><td>Advise 스타터 3cr → 10cr 이상</td><td>개발팀이 있는 회사</td><td>90만 원 차감</td></tr>
-      <tr><td>자문 후 실행</td><td>Advise → Sprint</td><td>상담하다 구현이 필요해진 회사</td><td>잔여 크레딧 계약금 전환</td></tr>
+      <tr><td>자문 후 실행</td><td>Advise → Sprint · Agent</td><td>상담하다 구현이 필요해진 회사</td><td>잔여 크레딧 계약금 전환</td></tr>
       <tr><td>상주 직행</td><td>Partner</td><td>중견·성장 기업</td><td>—</td></tr>
-      <tr><td>상주로 확장</td><td>Sprint · Advise → Partner</td><td>관계가 쌓인 회사</td><td>첫 달 우대 · 잔여 전환</td></tr>
+      <tr><td>상주로 확장</td><td>Sprint · Agent · Advise → Partner</td><td>관계가 쌓인 회사</td><td>첫 달 우대 · 잔여 전환</td></tr>
     </tbody>
   </table></div>
 </section>
@@ -322,11 +494,12 @@ td:first-child{white-space:nowrap}
   <div class="scroll"><table>
     <thead><tr><th>고객</th><th>들어오는 곳</th><th>첫 상품</th><th>다음 상품</th></tr></thead>
     <tbody>
-      <tr><td>A. 탐색형 대표</td><td>강의 플랫폼, 유튜브</td><td>Learn</td><td>Coffee Chat → Sprint</td></tr>
-      <tr><td>B. 고민 중인 대표</td><td>파트너 오피스아워, 조찬</td><td>Coffee Chat</td><td>Sprint</td></tr>
+      <tr><td>A. 탐색형 대표</td><td>강의 플랫폼, 유튜브</td><td>Learn</td><td>Coffee Chat → Agent</td></tr>
+      <tr><td>B. 고민 중인 대표</td><td>파트너 오피스아워, 조찬</td><td>Coffee Chat</td><td>Agent · Sprint</td></tr>
       <tr><td>C. 결과가 급한 대표</td><td>AC·투자사 소개</td><td>Sprint</td><td>Advise</td></tr>
-      <tr><td>D. 개발팀이 있는 회사</td><td>소개, 멤버십 조찬</td><td>Advise 스타터 3크레딧</td><td>10크레딧 이상, Sprint (전환)</td></tr>
-      <tr><td>E. 중견·성장 기업</td><td>대표 직접 영업</td><td>Partner</td><td>Advise (임직원)</td></tr>
+      <tr><td>D. 개발팀이 있는 회사</td><td>소개, 멤버십 조찬</td><td>Advise 스타터 3크레딧</td><td>10크레딧 이상, Agent (전환)</td></tr>
+      <tr><td>E. 중견·성장 기업</td><td>대표 직접 영업</td><td>Partner</td><td>Agent, Advise (임직원)</td></tr>
+      <tr><td>F. 신규 사업을 내는 대표 · 1인 창업자</td><td>커뮤니티, 유튜브, AC 소개</td><td>Sprint</td><td>Agent (운영), Advise</td></tr>
     </tbody>
   </table></div>
 </section>
@@ -337,10 +510,10 @@ td:first-child{white-space:nowrap}
     <thead><tr><th>채널</th><th>곳</th><th>파는 상품</th></tr></thead>
     <tbody>
       <tr><td>강의 플랫폼</td><td>인프런, 클래스101, EO School(이오스쿨), 자사 사이트, 유튜브</td><td>강의</td></tr>
-      <tr><td>입주·커뮤니티</td><td>디캠프, 드림플러스, 내러티브클럽</td><td>Coffee Chat, Sprint</td></tr>
+      <tr><td>입주·커뮤니티</td><td>디캠프, 드림플러스, 내러티브클럽</td><td>Coffee Chat, Sprint, Agent</td></tr>
       <tr><td>AC·투자사 포트폴리오</td><td>퓨처플레이, 스파크랩 등, 기존 투자자</td><td>포트폴리오 패키지 (Coffee Chat 무료 + Advise 스타터 + Sprint)</td></tr>
       <tr><td>미디어</td><td>EO, 디스콰이엇</td><td>Learn, 세미나 → Coffee Chat</td></tr>
-      <tr><td>정부 지원</td><td>혁신바우처, AI 바우처, 서울 AI 허브</td><td>Sprint, Advise</td></tr>
+      <tr><td>정부 지원</td><td>혁신바우처, AI 바우처, 서울 AI 허브</td><td>Agent, Sprint, Advise</td></tr>
       <tr><td>직접 영업</td><td>대표 네트워크, 월간 조찬</td><td>Partner, Advise 100cr</td></tr>
     </tbody>
   </table></div>
